@@ -57,8 +57,8 @@
     <div class="row justify-content-md-center align-items-center">
       <div class="col col-md-6  col-lg-5 col-xl-4">
         <ul class="nav nav-tabs tab-lg" role="tablist">
-          <li role="presentation" class="nav-item"><a class="nav-link" href="signin.html">Sign In</a></li>
-          <li role="presentation" class="nav-item"><a class="nav-link active" href="register.html">Register</a></li>
+          <li role="presentation" class="nav-item"><a class="nav-link" href="signin.php">Sign In</a></li>
+          <li role="presentation" class="nav-item"><a class="nav-link active" href="register.php">Register</a></li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="login">
@@ -115,5 +115,4 @@
   <script src="js/gmap3.js"></script>
   <script src="js/main.js"></script>
 </body>
-<!-- Mirrored from uilove.in/realestate/listo/preview/forgot-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Dec 2017 02:23:19 GMT -->
 </html>
