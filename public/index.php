@@ -16,6 +16,7 @@ array_shift($url_array); // remove first value as it's empty
 $action = $url_array[0];
 // get the method
 $method = $_SERVER['REQUEST_METHOD'];
+$response = new Response;
 
 
 if( $action === 'user'){
@@ -25,16 +26,33 @@ if( $action === 'user'){
         {
             $json = file_get_contents('php://input');
             $post = json_decode($json,true); 
-            return $user->store($post);                  
+            if(is_array($post))
+            {
+                return $user->store($post);                  
+            }
+            $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);
         }
         else
         {
             if($url_array[1] === "register")
             {
-
+                $json = file_get_contents('php://input');
+                $post = json_decode($json,true); 
+                if(is_array($post))
+                {
+                    return $user->store($post);                  
+                }
+                $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);    
             }
             if($url_array[1] === "login")
             {
+                $json = file_get_contents('php://input');
+                $post = json_decode($json,true); 
+                if(is_array($post))
+                {
+                    return $user->login($post);                  
+                }
+                $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);    
 
             }
             if($url_array[1] === 'activate')
@@ -65,6 +83,5 @@ if( $action === 'user'){
 }
 
 // Set default HTTP response of 'Not Found'
-$response = new Response;
 $response->response(['status'=>404,"data"=>['error'=>'Sorry the endpoint you are looking for could not be found']]);
 

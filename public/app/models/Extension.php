@@ -33,7 +33,14 @@ class Extension
             {
                 $query .= "AND ";
             }
-            $query .= $key." = ".$value." ";
+           if(is_string($value))
+            {
+                $query .= $key." = '".$value."' ";
+            }
+            else
+            {
+                $query .= $key." = ".$value." ";
+            }
         }
         
         $response = $this->connection->query("SELECT * FROM ".$this->table.$query )->fetchAll(\PDO::FETCH_ASSOC);
@@ -54,7 +61,14 @@ class Extension
            {
                $query .= "AND ";
            }
-           $query .= $key." = ".$value." ";
+           if(is_string($value))
+            {
+                $query .= $key." = '".$value."' ";
+            }
+            else
+            {
+                $query .= $key." = ".$value." ";
+            }
        }
        if($order != "")
        {
@@ -71,19 +85,19 @@ class Extension
 
    function new(array $items)
    {
-        $this->database->insert($this->table, $items);
-        return $this->database->id();
+        $this->connection->insert($this->table, $items);
+        return $this->connection->id();
    }
 
    function update(array $conditions,array $items)
    {
-        $this->database->update($this->table, $items, $conditions);
+        $this->connection->update($this->table, $items, $conditions);
         return true;
    }
 
    function remove(array $condition)
    {
-       $this->database->delete($this->table, $condition);
+       $this->connection->delete($this->table, $condition);
        return true;
    }
 }
