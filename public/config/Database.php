@@ -2,7 +2,7 @@
 namespace Config;
 
 use Medoo\Medoo;
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 
 class Database

@@ -1,7 +1,8 @@
 <?php
+namespace App\Model;
 
 
-class SubscriptionController extends Extension
+class User extends Extension
 {
 
     protected $table = 'users';
@@ -14,20 +15,5 @@ class SubscriptionController extends Extension
         parent::__construct();
     }
 
-
-    function checkSubscriptionExpired($user_id)
-    {
-
-    }
-    
-    function requestPayment()
-    {
-
-    }
-
-    function confirmPayment()
-    {
-
-    }
  
 }
