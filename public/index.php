@@ -57,14 +57,34 @@ if( $action === 'user'){
             }
             if($url_array[1] === 'activate')
             {
-
+                $json = file_get_contents('php://input');
+                $post = json_decode($json,true); 
+                if(is_array($post))
+                {
+                    return $user->activate($post);                  
+                }
+                $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);    
             }
             if($url_array[1] === 'request-code')
             {
+                $json = file_get_contents('php://input');
+                $post = json_decode($json,true); 
+                if(is_string($post))
+                {
+                    return $user->forgotPassword($post);                  
+                }
+                $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);    
 
             }
             if($url_array[1] === 'set-password-forgot-code')
             {
+                $json = file_get_contents('php://input');
+                $post = json_decode($json,true); 
+                if(is_array($post))
+                {
+                    return $user->setForgotPassword($post);                  
+                }
+                $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);    
 
             }
         }
