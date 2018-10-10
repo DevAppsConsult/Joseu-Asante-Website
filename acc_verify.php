@@ -53,7 +53,7 @@
        
                 <div class="col-md-offset-3 col-md-6">
                   <div class="form-group">
-                    <label>Payment verification Code</label>
+                    <label>Account verification Code</label>
                     <input type="text" class="form-control form-control-lg" placeholder="" value="">
                   </div>
               <div class="form-group action">

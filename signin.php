@@ -62,7 +62,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" class="form-control form-control-lg" placeholder="Password">
               </div>
-              <p class="text-lg-right"><a href="forgot-password.html">Forgot Password</a></p>
+              <p class="text-lg-right"><a href="forgot-password.php">Forgot Password</a></p>
               
               <button type="submit" class="tg-btn">Sign In</button>
             </form>
