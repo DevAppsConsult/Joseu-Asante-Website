@@ -1,10 +1,13 @@
-<?php if(!isset($Translation)){ @header('Location: index.php'); exit; } ?>
-  <?php include_once("{$currDir}/header-user.php"); ?>
-  <?php @include("{$currDir}/hooks/links-home.php"); ?>
+<?php if (!isset($Translation)) {
+    @header('Location: index.php');
+    exit;
+} ?>
+    <?php require_once "{$currDir}/header-user.php"; ?>
+    <?php @require "{$currDir}/hooks/links-home.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+    <title></title>
 </head>
 <!--cards-->
  <div class="row">
@@ -16,7 +19,7 @@
                     <i class="fa fa-rss fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading"><?php countrecords("blogs","all");?></p>
+                    <p class="announcement-heading"><?php countrecords("blogs", "all");?></p>
                     <p class="announcement-text"><strong>Blogs</strong></p>
                   </div>
                 </div>
@@ -70,7 +73,7 @@
                     <i class="fa fa-check fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading"><?php countrecords("blogs","publish");?></p>
+                    <p class="announcement-heading"><?php countrecords("blogs", "publish");?></p>
                     <p class="announcement-text"><strong>Published</strong></p>
                   </div>
                 </div>
@@ -97,7 +100,7 @@
                     <i class="fa fa-tasks fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading"><?php countrecords("blogs","draft");?></p>
+                    <p class="announcement-heading"><?php countrecords("blogs", "draft");?></p>
                     <p class="announcement-text"><strong>Drafts</strong></p>
                   </div>
                 </div>
@@ -118,12 +121,12 @@
           </div>
         </div><!-- /.row -->
         <?php
-  $usernow=getLoggedMemberID();
-  if ($usernow=="admin") {
-        # code...show more widgets for admin only
-    include_once('adminview.php');
-  }
-  ?>
+        $usernow=getLoggedMemberID();
+        if ($usernow=="admin") {
+            // code...show more widgets for admin only
+            include_once 'adminview.php';
+        }
+        ?>
   
       </div><!-- /#page-wrapper -->
 

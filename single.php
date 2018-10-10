@@ -1,11 +1,11 @@
 <?php require("libs/fetch_data.php");?>
 <?php //code to get the item using its id
 include("database/conn.php");//database config file
-$id=$_REQUEST['id']; $query="SELECT * from blogs where id='".$id."'"; $result=mysqli_query($GLOBALS["___mysqli_ston"],$query) or die ( ((is_object($GLOBALS["___mysqli_ston"]))? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ?$___mysqli_res : true))); 
+$id=$_REQUEST['id']; $query="SELECT * from blogs where id='".$id."'"; $result=mysqli_query($GLOBALS["___mysqli_ston"], $query) or die(((is_object($GLOBALS["___mysqli_ston"]))? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ?$___mysqli_res : true)));
 $row = mysqli_fetch_assoc($result);
 //pageview count query
 $page=$row['title'];
-$count="SELECT * FROM page_hits WHERE page='".$page."'";$feedback=mysqli_query($GLOBALS["___mysqli_ston"],$count) or die ( ((is_object($GLOBALS["___mysqli_ston"]))? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ?$___mysqli_res : true))); 
+$count="SELECT * FROM page_hits WHERE page='".$page."'";$feedback=mysqli_query($GLOBALS["___mysqli_ston"], $count) or die(((is_object($GLOBALS["___mysqli_ston"]))? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ?$___mysqli_res : true)));
 $roo=mysqli_fetch_assoc($feedback);?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -44,10 +44,10 @@ $roo=mysqli_fetch_assoc($feedback);?>
 	<!--//header-->
 	<!--update database on page views-->
 	<?php  require_once('adminstats/conn.php');
-	require_once('counter.php');
-	$pn=updateCounter(''.$row['title'].''); // Updates page hits
-	echo $pn;
-	updateInfo(); // Updates hit info ?>
+    require_once('counter.php');
+    $pn=updateCounter(''.$row['title'].''); // Updates page hits
+    echo $pn;
+    updateInfo(); // Updates hit info?>
 	<div class="tg-innerbanner tg-haslayout tg-parallax tg-bginnerbanner" data-z-index="-100" data-appear-top-offset="600" data-parallax="scroll" data-image-src="images/parallax/bgparallax-07.jpg">
 			
 		</div>

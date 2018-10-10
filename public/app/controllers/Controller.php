@@ -9,13 +9,12 @@ use PHPMailer\PHPMailer\Exception;
 class Controller
 {
     protected $response;
-    function  __construct()
+    public function __construct()
     {
         $this->response = new Response;
-
     }
 
-    function sendMail($subject="",$message,$recipient,$recipient_name="")
+    public function sendMail($subject="", $message, $recipient, $recipient_name="")
     {
         $mail = new PHPMailer();                              // Passing `true` enables exceptions
         try {
@@ -47,5 +46,4 @@ class Controller
             //echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
         }
     }
-
 }

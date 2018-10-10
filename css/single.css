@@ -305,11 +305,11 @@ h5.mt-0 {
         min-height: 370px;
     }
     .blog_info.blog-right {
-		min-height: 370px;
-		width: 100%;
-	}
-	.blog_info.blog-right.two {
-		min-height: 369px;
+        min-height: 370px;
+        width: 100%;
+    }
+    .blog_info.blog-right.two {
+        min-height: 369px;
     }
     .single-gd h4 {
         font-size: 1em;
@@ -318,11 +318,11 @@ h5.mt-0 {
 
 @media screen and (max-width: 1024px) {
     .blog_info.blog-right {
-		min-height: 372px;
-	}
-	.blog_info.blog-right.two {
-		min-height: 373px;
-	}
+        min-height: 372px;
+    }
+    .blog_info.blog-right.two {
+        min-height: 373px;
+    }
 }
 
 @media screen and (max-width: 991px) {

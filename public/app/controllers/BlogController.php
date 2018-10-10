@@ -10,7 +10,4 @@ class BlogController extends Controller
         $blog = new Blog;
         return $blog->getAll();
     }
-
-    
-
 }

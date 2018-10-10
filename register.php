@@ -1,4 +1,4 @@
-<?php require("libs/fetch_data.php");?>
+<?php require "libs/fetch_data.php";?>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -26,7 +26,7 @@
 </head>
 <body oncontextmenu="return false">
   <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
-  <?php include("header.php");?>
+    <?php require "header.php";?>
     <!--************************************
         Inner Banner Start
     *************************************-->
@@ -99,7 +99,7 @@
     <!--************************************
         Footer Start
     *************************************-->
-          <?php include("footer.php");?>
+            <?php require "footer.php";?>
 </div>
 
   <script src="js/vendor/jquery-library.js"></script>

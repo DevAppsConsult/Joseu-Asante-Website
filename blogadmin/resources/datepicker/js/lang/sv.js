@@ -1,6 +1,6 @@
 // Swedish
 var fdLocale = {
-        months:[
+    months:[
                 "Januari",
                 "Februari",
                 "Mars",
@@ -14,7 +14,7 @@ var fdLocale = {
                 "November",
                 "December"
                 ],
-        fullDay:[
+    fullDay:[
                 "M\u00e5ndag",
                 "Tisdag",
                 "Onsdag",
@@ -32,7 +32,7 @@ var fdLocale = {
 
         firstDayOfWeek:0,
         */
-        titles:[
+    titles:[
                 "F\u00f6reg\u00e5ende m\u00e5nad",
                 "N\u00e4sta m\u00e5nad",
                 "F\u00f6reg\u00e5ende \u00e5r",

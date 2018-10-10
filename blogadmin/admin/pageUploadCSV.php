@@ -1,92 +1,104 @@
 <?php
-	$currDir = dirname(__FILE__);
-	require("{$currDir}/incCommon.php");
+    $currDir = dirname(__FILE__);
+    require("{$currDir}/incCommon.php");
 
-	$GLOBALS['DEBUG_MODE'] = false;
-	$csv = new CSV($_REQUEST);
+    $GLOBALS['DEBUG_MODE'] = false;
+    $csv = new CSV($_REQUEST);
 
-	class CSV{
-		private $curr_dir,
-				$curr_page,
-				$lang, /* translation text */
-				$request, /* assoc array that stores $_REQUEST */
-				$error_back_link,
-				$max_batch_size, /* max # of non-empty lines to insert per batch */
-				$max_data_length, /* max length of csv data in read per batch in bytes */
-				$initial_ts; /* initial timestamp */
+    class CSV
+    {
+        private $curr_dir;
+        private $curr_page;
+        private $lang;
+        private $request;
+        private $error_back_link;
+        private $max_batch_size;
+        private $max_data_length;
+        private $initial_ts; /* initial timestamp */
 
-		public function __construct($request = array()){
-			global $Translation;
+        public function __construct($request = array())
+        {
+            global $Translation;
 
-			$this->curr_dir = dirname(__FILE__);
-			$this->curr_page = basename(__FILE__);
-			$this->max_batch_size = 500;
-			$this->max_data_length = 0.5 * 1024 * 1024;
-			$this->initial_ts = microtime(true);
-			$this->lang = $Translation;
+            $this->curr_dir = dirname(__FILE__);
+            $this->curr_page = basename(__FILE__);
+            $this->max_batch_size = 500;
+            $this->max_data_length = 0.5 * 1024 * 1024;
+            $this->initial_ts = microtime(true);
+            $this->lang = $Translation;
 
-			/* back link to use in errors */
-			$this->error_back_link = '' .
-				'<div class="text-center vspacer-lg"><a href="' . $this->curr_page . '" class="btn btn-danger btn-lg">' .
-					'<i class="glyphicon glyphicon-chevron-left"></i> ' .
-					$this->lang['back and retry'] .
-				'</a></div>';
+            /* back link to use in errors */
+            $this->error_back_link = '' .
+                '<div class="text-center vspacer-lg"><a href="' . $this->curr_page . '" class="btn btn-danger btn-lg">' .
+                    '<i class="glyphicon glyphicon-chevron-left"></i> ' .
+                    $this->lang['back and retry'] .
+                '</a></div>';
 
-			/* process request to retrieve $this->request, and then execute the requested action */
-			$this->process_request($request);          
-			call_user_func_array(array($this, $this->request['action']), array());
-		}
+            /* process request to retrieve $this->request, and then execute the requested action */
+            $this->process_request($request);
+            call_user_func_array(array($this, $this->request['action']), array());
+        }
 
-		protected function debug($msg, $html = true){
-			if($GLOBALS['DEBUG_MODE'] && $html) return "<pre>DEBUG: {$msg}</pre>";
-			if($GLOBALS['DEBUG_MODE']) return " [DEBUG: {$msg}] ";
-			return '';
-		}
+        protected function debug($msg, $html = true)
+        {
+            if ($GLOBALS['DEBUG_MODE'] && $html) {
+                return "<pre>DEBUG: {$msg}</pre>";
+            }
+            if ($GLOBALS['DEBUG_MODE']) {
+                return " [DEBUG: {$msg}] ";
+            }
+            return '';
+        }
 
-		protected function elapsed(){
-			return number_format(microtime(true) - $this->initial_ts, 3);
-		}
+        protected function elapsed()
+        {
+            return number_format(microtime(true) - $this->initial_ts, 3);
+        }
 
-		protected function process_request($request){
-			/* action must be a valid controller, else set to default (show_load_form) */
-			$controller = isset($request['action']) ? $request['action'] : false;
-			if(!in_array($controller, $this->controllers())) $request['action'] = 'show_load_form';
+        protected function process_request($request)
+        {
+            /* action must be a valid controller, else set to default (show_load_form) */
+            $controller = isset($request['action']) ? $request['action'] : false;
+            if (!in_array($controller, $this->controllers())) {
+                $request['action'] = 'show_load_form';
+            }
 
-			$this->request = $request;
-		}
+            $this->request = $request;
+        }
 
-		/**
-		 *  discover the public functions in this class that can act as controllers
-		 *  
-		 *  @return array of public function names
-		 */
-		protected function controllers(){
-			$csv = new ReflectionClass($this);
-			$methods = $csv->getMethods(ReflectionMethod::IS_PUBLIC);
+        /**
+         *  discover the public functions in this class that can act as controllers
+         *
+         *  @return array of public function names
+         */
+        protected function controllers()
+        {
+            $csv = new ReflectionClass($this);
+            $methods = $csv->getMethods(ReflectionMethod::IS_PUBLIC);
 
-			$controllers = array();
-			foreach($methods as $mthd){
-				$controllers[] = $mthd->name;
-			}
+            $controllers = array();
+            foreach ($methods as $mthd) {
+                $controllers[] = $mthd->name;
+            }
 
-			return $controllers;
-		}
+            return $controllers;
+        }
 
-		/**
-		 * function to show form for uploading a CSV file or choosing one from the 'csv' folder
-		 */
-		public function show_load_form(){
-			/* get list of available CSV files */
-			$csv_files = $this->csv_files("{$this->curr_dir}/csv");
+        /**
+         * function to show form for uploading a CSV file or choosing one from the 'csv' folder
+         */
+        public function show_load_form()
+        {
+            /* get list of available CSV files */
+            $csv_files = $this->csv_files("{$this->curr_dir}/csv");
 
-			/* prepare tables drop-down */
-			$tables = getTableList();
-			$tables_dropdown = htmlSelect('table', array_keys($tables), array_values($tables), '');
-			$tables_dropdown = str_replace('<select ', '<select class="form-control input-lg" ', $tables_dropdown);
-			$tables_dropdown = preg_replace('/(<select .*?>)/i', "\$1<option value=\"\">{$this->lang['select a table']}</option>", $tables_dropdown);
+            /* prepare tables drop-down */
+            $tables = getTableList();
+            $tables_dropdown = htmlSelect('table', array_keys($tables), array_values($tables), '');
+            $tables_dropdown = str_replace('<select ', '<select class="form-control input-lg" ', $tables_dropdown);
+            $tables_dropdown = preg_replace('/(<select .*?>)/i', "\$1<option value=\"\">{$this->lang['select a table']}</option>", $tables_dropdown);
 
-			echo $this->header();
-			?>
+            echo $this->header(); ?>
 				<form method="post" action="<?php echo $this->curr_page; ?>" enctype="multipart/form-data">
 					<input type="hidden" name="action" value="upload">
 					<?php echo csrf_token(); ?>
@@ -120,7 +132,8 @@
 							<input type="file" name="upload_csv" id="upload_csv" accept=".csv, text/csv">
 							<button type="submit" class="btn btn-success btn-lg hspacer-lg hidden" id="start_upload"><i class="glyphicon glyphicon-upload"></i> <?php echo $this->lang['start upload']; ?></button>
 
-							<?php if(count($csv_files)){ ?>
+							<?php if (count($csv_files)) {
+                ?>
 								<hr>
 								<div class="panel panel-primary">
 									<div class="panel-heading">
@@ -128,18 +141,21 @@
 									</div>
 									<div class="panel-body hidden">
 										<div class="row" id="existing-csv-files">
-										   <?php foreach($csv_files as $csv_file){ ?>
+										   <?php foreach ($csv_files as $csv_file) {
+                    ?>
 											  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 csv-file">
 												  <button type="button" class="btn btn-link invisible delete-csv" data-csv="<?php echo html_attr($csv_file); ?>" title="<?php echo html_attr($this->lang['delete']); ?>"><i class="glyphicon glyphicon-trash text-danger"></i></button>
 												  <a href="<?php echo $this->curr_page; ?>?csv=<?php echo urlencode($csv_file); ?>&action=show_preview&table=">
 													  <i class="glyphicon glyphicon-file text-success"></i> <?php echo $csv_file; ?>
 												  </a>
 											  </div>
-										   <?php } ?>
+										   <?php
+                } ?>
 										</div>
 									</div>
 								</div>
-							<?php } ?>
+							<?php
+            } ?>
 						</div>
 					</div>
 				</form>
@@ -294,59 +310,69 @@
 					}
 				</style>
 			<?php
-			echo $this->footer();
-		}
+            echo $this->footer();
+        }
 
-		public function delete_csv(){
-			$deleted = false;
-			@header('Content-type: application/json');
+        public function delete_csv()
+        {
+            $deleted = false;
+            @header('Content-type: application/json');
 
-			$csv_folder = "{$this->curr_dir}/csv/";
-			$csv = $this->get_csv();
-			if($csv && @unlink($csv_folder . $csv)) $deleted = true;           
+            $csv_folder = "{$this->curr_dir}/csv/";
+            $csv = $this->get_csv();
+            if ($csv && @unlink($csv_folder . $csv)) {
+                $deleted = true;
+            }
 
-			echo json_encode(array('deleted' => $deleted));
-		}
+            echo json_encode(array('deleted' => $deleted));
+        }
 
-		private function csv_files($dir){
-			$csv_files = array();
+        private function csv_files($dir)
+        {
+            $csv_files = array();
 
-			if(!is_dir($dir)) @mkdir($dir);
+            if (!is_dir($dir)) {
+                @mkdir($dir);
+            }
 
-			$d = dir($dir);
-			while(false !== ($entry = $d->read())){
-				if(preg_match('/\.csv$/i', $entry)) $csv_files[] = urldecode($entry);
-			}
-			$d->close();
-			return $csv_files;
-		}
+            $d = dir($dir);
+            while (false !== ($entry = $d->read())) {
+                if (preg_match('/\.csv$/i', $entry)) {
+                    $csv_files[] = urldecode($entry);
+                }
+            }
+            $d->close();
+            return $csv_files;
+        }
 
-		/**
-		  * function to handle csv file upload request by validating and saving into the csv folder
-		  */
-		public function upload(){
-			if(!csrf_token(true)){
-				echo $this->header();
-				echo errorMsg("{$this->lang['csrf token expired or invalid']}<br>{$csv_file}{$this->error_back_link}" . $this->debug(__LINE__));
-				echo $this->footer();
+        /**
+          * function to handle csv file upload request by validating and saving into the csv folder
+          */
+        public function upload()
+        {
+            if (!csrf_token(true)) {
+                echo $this->header();
+                echo errorMsg("{$this->lang['csrf token expired or invalid']}<br>{$csv_file}{$this->error_back_link}" . $this->debug(__LINE__));
+                echo $this->footer();
 
-				return;
-			}
+                return;
+            }
 
-			$csv_file = getUploadedFile('upload_csv', PHP_INT_MAX, 'csv', true);
-			$table = $this->get_table();
-			if(!$table) return;
+            $csv_file = getUploadedFile('upload_csv', PHP_INT_MAX, 'csv', true);
+            $table = $this->get_table();
+            if (!$table) {
+                return;
+            }
 
-			if(!$csv_file || !is_readable($csv_file)){
-				echo $this->header();
-				echo errorMsg("{$this->lang['csv file upload error']}<br>{$csv_file}{$this->error_back_link}" . $this->debug(__LINE__));
-				echo $this->footer();
+            if (!$csv_file || !is_readable($csv_file)) {
+                echo $this->header();
+                echo errorMsg("{$this->lang['csv file upload error']}<br>{$csv_file}{$this->error_back_link}" . $this->debug(__LINE__));
+                echo $this->footer();
 
-				return;
-			}
+                return;
+            }
 
-			echo $this->header();
-			?>
+            echo $this->header(); ?>
 			<div class="alert alert-success vspacer-lg"><h2>
 				<i class="glyphicon glyphicon-ok"></i> 
 				<?php echo $this->lang['please wait and do not close']; ?>
@@ -357,127 +383,147 @@
 				});
 			</script>
 			<?php
-			echo $this->footer();
-		}
+            echo $this->footer();
+        }
 
-		/**
-		 *  @brief retrieve and validate the csv file specified in the request parameter 'csv'
-		 *  
-		 *  @param [in] $options optional assoc array of options ('htmlpage' => bool, displaying errors as html page)
-		 *  @return csv filename if valid, false otherwise.
-		 */
-		protected function get_csv($options = array()){
-			$csv_ok = true;
+        /**
+         *  @brief retrieve and validate the csv file specified in the request parameter 'csv'
+         *
+         *  @param [in] $options optional assoc array of options ('htmlpage' => bool, displaying errors as html page)
+         *  @return csv filename if valid, false otherwise.
+         */
+        protected function get_csv($options = array())
+        {
+            $csv_ok = true;
 
-			$csv = $this->request['csv'];
-			if(!$csv) $csv_ok = false;
+            $csv = $this->request['csv'];
+            if (!$csv) {
+                $csv_ok = false;
+            }
 
-			if($csv_ok){
-				$csv = basename($csv);
-				if(!is_readable("{$this->curr_dir}/csv/{$csv}")) $csv_ok = false;
-			}
+            if ($csv_ok) {
+                $csv = basename($csv);
+                if (!is_readable("{$this->curr_dir}/csv/{$csv}")) {
+                    $csv_ok = false;
+                }
+            }
 
-			if(!$csv_ok){
-				if(isset($options['htmlpage'])){
-					echo $this->header();
-					echo errorMsg($this->lang['csv file upload error'] . $this->error_back_link . $this->debug(__LINE__));
-					echo $this->footer();
-				}
-				return false;
-			}
+            if (!$csv_ok) {
+                if (isset($options['htmlpage'])) {
+                    echo $this->header();
+                    echo errorMsg($this->lang['csv file upload error'] . $this->error_back_link . $this->debug(__LINE__));
+                    echo $this->footer();
+                }
+                return false;
+            }
 
-			return $csv;
-		}
+            return $csv;
+        }
 
-		/**
-		 *  @brief Retrieve and validate name of table used for importing data
-		 *  
-		 *  @param [in] $silent (optional) boolean indicating no output to client if true, useful in ajax requests for example.
-		 *  @return table name, or false on error.
-		 */
-		protected function get_table($silent = false){
-			$table_ok = true;
+        /**
+         *  @brief Retrieve and validate name of table used for importing data
+         *
+         *  @param [in] $silent (optional) boolean indicating no output to client if true, useful in ajax requests for example.
+         *  @return table name, or false on error.
+         */
+        protected function get_table($silent = false)
+        {
+            $table_ok = true;
 
-			$table = $this->request['table'];
-			if(!$table) $table_ok = false;
+            $table = $this->request['table'];
+            if (!$table) {
+                $table_ok = false;
+            }
 
-			if($table_ok){
-				$tables = getTableList();
-				if(!array_key_exists($table, $tables)) $table_ok = false;
-			}
+            if ($table_ok) {
+                $tables = getTableList();
+                if (!array_key_exists($table, $tables)) {
+                    $table_ok = false;
+                }
+            }
 
-			if(!$table_ok){
-				if($silent) return false;
+            if (!$table_ok) {
+                if ($silent) {
+                    return false;
+                }
 
-				echo $this->header();
-				echo errorMsg(str_replace('<TABLENAME>', html_attr($table), $this->lang['table name title']) . ': ' . $this->lang['does not exist'] . $this->error_back_link . $this->debug(__LINE__));
-				echo $this->footer();
-				return false;
-			}
+                echo $this->header();
+                echo errorMsg(str_replace('<TABLENAME>', html_attr($table), $this->lang['table name title']) . ': ' . $this->lang['does not exist'] . $this->error_back_link . $this->debug(__LINE__));
+                echo $this->footer();
+                return false;
+            }
 
-			return $table;
-		}
+            return $table;
+        }
 
-		protected function table_fields($table){
-			$field_details = $fields = array();
+        protected function table_fields($table)
+        {
+            $field_details = $fields = array();
 
-			$res = sql("show fields from `{$table}`", $eo);
-			while($row = db_fetch_assoc($res)){
-				$fields[] = $row['Field'];
-				$field_details[] = $row;
-			}
+            $res = sql("show fields from `{$table}`", $eo);
+            while ($row = db_fetch_assoc($res)) {
+                $fields[] = $row['Field'];
+                $field_details[] = $row;
+            }
 
-			return $fields;
-		}
+            return $fields;
+        }
 
-		/**
-		  * show js-driven preview of 1st 10 lines, with live csv options and column mapping options
-		  */
-		public function show_preview(){
+        /**
+          * show js-driven preview of 1st 10 lines, with live csv options and column mapping options
+          */
+        public function show_preview()
+        {
 
-			/* retrieve and validate table to import to */
-			$table = $this->get_table();
-			if(!$table) return;
+            /* retrieve and validate table to import to */
+            $table = $this->get_table();
+            if (!$table) {
+                return;
+            }
 
-			/* retrieve fields of table */
-			$fields = $this->table_fields($table);
+            /* retrieve fields of table */
+            $fields = $this->table_fields($table);
 
-			/* retrieve and open requested csv file */
-			$csv = $this->get_csv(array('htmlpage' => true));
-			if(!$csv) return;
-			$csv_fp = fopen("{$this->curr_dir}/csv/{$csv}", 'r');
-			if(!$csv_fp) return;
+            /* retrieve and open requested csv file */
+            $csv = $this->get_csv(array('htmlpage' => true));
+            if (!$csv) {
+                return;
+            }
+            $csv_fp = fopen("{$this->curr_dir}/csv/{$csv}", 'r');
+            if (!$csv_fp) {
+                return;
+            }
 
-			/* get the first 50 lines of the csv */
-			$lines = array();
-			$line_num = 0;
-			while(($line = fgets($csv_fp)) && $line_num < 50){
-				if(!$line_num) $line = trim($this->no_bom($line), '"');
-				$lines[] = trim($line);
-				$line_num++;
-			}
+            /* get the first 50 lines of the csv */
+            $lines = array();
+            $line_num = 0;
+            while (($line = fgets($csv_fp)) && $line_num < 50) {
+                if (!$line_num) {
+                    $line = trim($this->no_bom($line), '"');
+                }
+                $lines[] = trim($line);
+                $line_num++;
+            }
 
-			$lines_json = @json_encode($lines);
-			if($lines_json === false && function_exists('json_last_error')){
-				if(json_last_error() == JSON_ERROR_UTF8){
-					$lines = $this->utf8ize($lines);
-					$lines_json = @json_encode($lines);
-				}
-			}
+            $lines_json = @json_encode($lines);
+            if ($lines_json === false && function_exists('json_last_error')) {
+                if (json_last_error() == JSON_ERROR_UTF8) {
+                    $lines = $this->utf8ize($lines);
+                    $lines_json = @json_encode($lines);
+                }
+            }
 
-			echo $this->header();
+            echo $this->header();
 
-			if($lines_json === false){
-				$lines_json = '[]';
-				echo "\n<!-- \n\t" .
-					$this->debug(implode("\n\t", $lines), false) .
-					"\n -->\n";
-				if(function_exists('json_last_error')){
-					echo "\n<!-- \n\t" . $this->debug('json error: ' . json_last_error()) . "\n -->\n";
-				}
-			}
-
-			?>
+            if ($lines_json === false) {
+                $lines_json = '[]';
+                echo "\n<!-- \n\t" .
+                    $this->debug(implode("\n\t", $lines), false) .
+                    "\n -->\n";
+                if (function_exists('json_last_error')) {
+                    echo "\n<!-- \n\t" . $this->debug('json error: ' . json_last_error()) . "\n -->\n";
+                }
+            } ?>
 
 			<script src="../resources/csv/jquery.csv.min.js"></script>
 
@@ -879,408 +925,471 @@
 			</style>
 
 			<?php
-			echo $this->footer();
-		}
-
-/* ------------------------------------------------------ */
-
-		/**
-		  * start/continue importing a csv file into the db (ajax-friendly)
-		  */
-		public function import(){
-			@header('Content-type: application/json');
-			$res = array(
-				'imported' => 0,
-				'failed' => 0,
-				'remaining' => 0,
-				'logs' => array()
-			);
-
-			$csv_status = $this->start();
-			if(isset($csv_status['error'])){
-				$res['logs'][] = $csv_status['error'];
-				echo json_encode($res);
-				return;
-			}
-
-			$start = $csv_status['start'];
-
-			$lines = $this->csv_lines();
-			if($start >= $lines){ // no more rows to import
-				$res['logs'][] = $this->lang['mission accomplished'];
-				echo json_encode($res);
-				$this->start(0);
-				return;
-			}
-
-			$settings = $this->get_csv_settings();
-			if($settings === false){
-				$res['logs'][] = $this->debug(__LINE__, false) . $this->lang['csv file upload error'];
-				echo json_encode($res);
-				return;
-			}
-			$data_lines = $lines - ($settings['has_titles'] ? 1 : 0);
-
-			$bkp_res = $this->backup_table($start, $settings);
-			if(isset($bkp_res['error'])){
-				$res['logs'][] = $this->debug(__LINE__, false) . $bkp_res['error'];
-				echo json_encode($res);
-				return;
-			}elseif(isset($bkp_res['status'])){
-				$res['logs'][] = $bkp_res['status'];
-			}
-
-			$csv_data = $this->get_csv_data($start, $settings);
-			if(!count($csv_data)){
-				$res['logs'][] = $this->lang['mission accomplished'];
-				echo json_encode($res);
-				$this->start(0);
-				return;
-			}
-
-			$res['logs'][] = str_replace(
-				array('<RECORDNUMBER>', '<RECORDS>'),
-				array(number_format($start + 1), number_format($data_lines)),
-				$this->lang['start at estimated record']
-			);
-
-			$res['imported'] = count($csv_data);
-			$new_start = $start + $res['imported'];
-			$res['remaining'] = $lines - $new_start;
-
-			$query_info = $eo = array();
-			$insert = $this->get_query($csv_data, $settings, $query_info);
-			if($insert === false){
-				$res['logs'][] = $this->debug(__LINE__, false) . $this->lang['csv file upload error'];
-				echo json_encode($res);
-				return;
-			}
-
-			if(!sql($insert, $eo)){
-				$res['logs'][] = $this->debug(__LINE__, false) . db_error();
-				echo json_encode($res);
-				return;
-			}
-
-			$res['logs'][count($res['logs']) - 1] .= " {$this->lang['ok']}";
-
-			if($new_start >= $lines){
-				$this->start(0); /* reset csv status after finishing */
-			}else{
-				$this->start($new_start); /* update csv status file to new start */
-			}
-
-			echo json_encode($res);
-		}
-
-		protected function request_or($var, $default){
-			return (isset($this->request[$var]) ? $this->request[$var] : $default);
-		}
-
-		/**
-		 *  @brief Retrieve and validate CSV settings from REQUEST
-		 *  
-		 *  @return false on error, or associative array (table, backup_table, update_pk, has_titles, ignore_lines, field_separator, field_delimiter, mappings[])
-		 */
-		protected function get_csv_settings(){
-			static $settings = array();
-			if(!empty($settings)) return $settings; // cache to avoid reprocessing
-
-			$settings = array(
-				'backup_table' => (bool) $this->request_or('backup_table', true),
-				'update_pk' => (bool) $this->request_or('update_pk', false),
-				'has_titles' => (bool) $this->request_or('has_titles', false),
-				'ignore_lines' => max(0, (int) $this->request_or('ignore_lines', 0)),
-				'field_separator' => $this->request_or('field_separator', ','),
-				'field_delimiter' => $this->request_or('field_delimiter', '"'),
-				'mappings' => $this->request_or('mappings', array())
-			);
-
-			if(!$settings['field_delimiter']) $settings['field_delimiter'] = '"';
-			if(!$settings['field_separator']) $settings['field_separator'] = ',';
-
-			$settings['table'] = $this->get_table(true);
-			if($settings['table'] === false) return false;
-
-			if(!is_array($settings['mappings']) || !count($settings['mappings'])) return false;
-
-			/* validate and trim field names */
-			$last_field_key = count($settings['mappings']) - 1;
-			$mappings = array();
-			for($i = 0; $i <= $last_field_key; $i++){
-				$fn = $settings['mappings'][$i];
-				$fn = trim($fn);
-				if(!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $fn) && $fn != 'ignore-field') return false;
-
-				/* make sure field is not already mapped to another column */
-				if(isset($mappgins[$fn])) return false;
-
-				$settings['mappings'][$i] = $fn;
-				if($fn == 'ignore-field'){
-					unset($settings['mappings'][$i]);
-				}else{
-					$mappgins[$fn] = true;
-				}
-			}
-
-			if(!count($settings['mappings'])) return false;
-
-			return $settings;
-		}
-
-		/**
-		 *  @brief Counts non-empty lines in the current csv file. Count is cached for performance.
-		 *  
-		 *  @return number of non-empty data lines in csv
-		 *  
-		 *  @details This function counts all non-empty, including the title column
-		 */
-		protected function csv_lines(){
-			$csv = $this->get_csv();
-			if(!$csv) return 0;
-
-			/*
-				store lines count server-side:
-				for each csv file being imported, create a count file in the csv folder named {csv-file-name.csv.count}
-				the file stores the # of non-empty lines.
-			*/
-			$count_file = "{$this->curr_dir}/csv/{$csv}.count";
-			$csv_file = "{$this->curr_dir}/csv/{$csv}";
-
-			/* if csv modified after counting its lines, force recount */
-			if(is_file($count_file) && filemtime($count_file) < filemtime($csv_file)){
-				@unlink($count_file);
-				return $this->csv_lines();
-			}
-
-			$lines = @file_get_contents($count_file);
-			if($lines !== false) return intval($lines);
-
-			/* this is a new import process */
-			$lines = 0;
-			$fp = @fopen($csv_file, 'r');
-			if($fp === false) return 0;
-
-			/* start counting non-empty lines of csv */
-			while($line = fgets($fp)){
-				if(strlen(trim($line))) $lines++;
-			}
-			fclose($fp);
-
-			@file_put_contents($count_file, $lines);
-			return $lines;
-		}
-
-		/**
-		 *  @brief if this is the beginning of the import process, perform table backup if requested
-		 *  
-		 *  @param $start current line in csv
-		 *  @param $settings assoc arry of csv settings
-		 *  @return assoc array, 'status' key and value if successful, 'error' key and value on error
-		 */
-		protected function backup_table($start, $settings){
-			if($start > 0) return array(); // no need to backup as we've passed the first batch
-			if(!$settings['backup_table']) return array(); // no backup requested
-
-			$table = $this->get_table(true);
-			if($table === false) return array('error' => $this->lang['no table name provided'] . $this->debug(__LINE__, false));
-
-			$stable = makeSafe($table);
-			if(!sqlValue("select count(1) from `{$stable}`")) // nothing to backup!
-				return array('status' => str_replace('<TABLE>', $table, $this->lang['table backup not done']));
-
-			$btn = $stable . '_backup_' . @date('YmdHis');
-			$eo = array();
-			sql("drop table if exists `{$btn}`", $eo);
-			if(!sql("create table if not exists `{$btn}` like `{$stable}`", $eo))
-				return array('error' => str_replace('<TABLE>', $table, $this->lang['error backing up table'] . $this->debug(__LINE__, false)));
-			if(!sql("insert `{$btn}` select * from `{$stable}`", $eo))
-				return array('error' => str_replace('<TABLE>', $table, $this->lang['error backing up table'] . $this->debug(__LINE__, false)));
-
-			return array(
-				'status' => str_replace(
-					array('<TABLE>', '<TABLENAME>'),
-					array($table, $btn),
-					$this->lang['table backed up']
-				)
-			);
-		}
-
-		protected function no_bom($str){
-			return preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $str);
-		}
-
-		/**
-		 *  @brief opens current csv file and reads several lines from it, starting at non-empty line $start
-		 *  
-		 *  @param $start non-empty line # to start reading from
-		 *  @param $settings csv settings array as retrieved from CSV::get_csv_settings
-		 *  @return numeric 2D array of csv data (row1array, row2array, ...)
-		 */
-		protected function get_csv_data($start, $settings){
-			if($settings === false) return array();
-
-			$csv = $this->get_csv();
-			$csv_file = "{$this->curr_dir}/csv/{$csv}";
-			$first_line = true;
-
-			$fp = @fopen($csv_file, 'r');
-			if(false === $fp) return array();
-
-			/* skip $start non-empty lines */
-			$skip = $start;
-
-			/* apply ignore_lines */
-			if($start < $settings['ignore_lines']) $skip = $settings['ignore_lines'];
-
-			/* get key of last mapping field -- used later here to apply ignored fields */
-			end($settings['mappings']);
-			$last_field_key = key($settings['mappings']);
-
-			/* skip title line */
-			$skip += ($settings['has_titles'] ? 1 : 0);
-
-			for($i = 0; $i < $skip; $i++){
-				/* keep reading till a non-empty line or EOF */
-				do{
-					$line = @implode('', @fgetcsv($fp));
-					if($first_line){
-						$line = $this->no_bom($line); /* remove BOM from 1st line */
-						$first_line = false;
-					}
-				}while(trim($line) === '' && $line !== false);
-
-				if(false === $line){ fclose($fp); return array(); } /* EOF before $start */
-			}
-
-			/* keep reading data from csv file till data size limit or EOF is reached */
-			$csv_data = array(); $raw_data = '';
-			do{
-				$data = fgetcsv($fp, pow(2, 15), $settings['field_separator'], $settings['field_delimiter']);
-				if($data === false){ fclose($fp); return $csv_data; } /* EOF */
-
-				if($first_line){
-					$data[0] = $this->no_bom($data[0]); /* remove BOM if 1st line */
-					$data[0] = trim($data[0], $settings['field_delimiter']); /* fix fgetcsv behavior with BOM */
-					$first_line = false;
-				}
-				if(count($data) == 1 && !$data[0]) continue; /* empty line */
-
-				/* handle ignored fields */
-				$last_key = max($last_field_key, count($data) - 1);
-				for($i = 0; $i <= $last_key; $i++){
-					if(!isset($data[$i])) $data[$i] = '';
-					if(!isset($settings['mappings'][$i])) unset($data[$i]);
-				}
-
-				$raw_data .= implode('', $data);
-				$csv_data[] = $data;
-			}while(strlen($raw_data) < $this->max_data_length && count($csv_data) < $this->max_batch_size);
-
-			fclose($fp);
-			return $csv_data;
-		}
-
-		/**
-		 *  @brief Prepare the insert/replace query
-		 *  
-		 *  @param [in] $csv_data 2D numeric array of data to insert/replace
-		 *  @param [in] $settings import settings assoc. array
-		 *  @param [in,out] $query_info assoc array for exchanging query info and options
-		 *  @return query string on success, false on error
-		 */
-		protected function get_query(&$csv_data, $settings, &$query_info){
-			/* make sure table name is provided */
-			$table = $this->get_table(true);
-			if($table === false){
-				$query_info['error'] = $this->lang['no table name provided'] . $this->debug(__LINE__, false);
-				return false;
-			}
-			$stable = makeSafe($table);
-
-			/* make sure mappings are provided */
-			if(!isset($settings['mappings']) || !is_array($settings['mappings']) || !count($settings['mappings'])){
-				$query_info['error'] = $this->lang['error reading csv data'] . $this->debug(__LINE__, false);
-				return false;
-			}
-
-			/* replace or insert? */
-			$query = "INSERT IGNORE INTO ";
-			if(isset($settings['update_pk']) && $settings['update_pk'] === true){
-				$query = "REPLACE ";
-			}
-			$query .= "`{$stable}` ";
-
-			/* use mappings to determine field names */
-			$query .= '(`' . implode('`,`', $settings['mappings']) . '`) VALUES ';
-
-			/* build query data */
-			$insert_data = array();
-			foreach($csv_data as $rec){
-				/* sanitize data for SQL */
-				foreach($rec as $i => $item){
-					$rec[$i] = "'" . makeSafe($item, false) . "'";
-					if($item === '') $rec[$i] = 'NULL';
-				}
-
-				$insert_data[] = '(' . implode(',', $rec) . ')';
-			}
-			$query .= implode(",\n", $insert_data);
-
-			return $query;
-		}
-
-		/**
-		 *  get/set the next start of current csv file
-		 *  
-		 *  @param $start optional, new start value to save into status file
-		 *  @return array('error' => error message) or array('start' => start line)
-		 */
-		protected function start($new_start = false){
-			$csv = $this->get_csv();
-			if(!$csv){
-				/* invalid csv file specified */
-				return array('error' => $this->debug(__LINE__, false) . $this->lang['csv file upload error']);
-			}
-
-			/*
-				store progress server-side:
-				for each csv file being imported, create a status file in the csv folder named {csv-file-name.csv.status}
-				the file stores the last imported line#.
-			*/
-			$status_file = "{$this->curr_dir}/csv/{$csv}.status";
-			if(!is_file($status_file)){
-				/* this is a new import process */
-				/* create a status file and store $new_start into it */
-				@file_put_contents($status_file, $new_start);
-			}
-
-			if($new_start !== false && intval($new_start) >= 0){
-				@file_put_contents($status_file, intval($new_start));
-				return array('start' => intval($new_start));
-			}
-
-			$start = @file_get_contents($status_file);
-			if(false === $start){
-				/* can't read file */
-				return array('error' => $this->debug(__LINE__, false) . $this->lang['csv file upload error']);
-			}
-
-			return array('start' => intval($start));
-		}
-
-		/**
-		  * show page to control and monitor csv import process
-		  * (launch import job via ajax and keep relaunching and showing progress till done)
-		  */
-		public function show_import_progress(){
-			echo $this->header();
-			if(!csrf_token(true)){
-				echo errorMsg("{$this->lang['csrf token expired or invalid']}<br>{$this->error_back_link}" . $this->debug(__LINE__));
-				echo $this->footer();
-				return;
-			}
-			?>
+            echo $this->footer();
+        }
+
+        /* ------------------------------------------------------ */
+
+        /**
+          * start/continue importing a csv file into the db (ajax-friendly)
+          */
+        public function import()
+        {
+            @header('Content-type: application/json');
+            $res = array(
+                'imported' => 0,
+                'failed' => 0,
+                'remaining' => 0,
+                'logs' => array()
+            );
+
+            $csv_status = $this->start();
+            if (isset($csv_status['error'])) {
+                $res['logs'][] = $csv_status['error'];
+                echo json_encode($res);
+                return;
+            }
+
+            $start = $csv_status['start'];
+
+            $lines = $this->csv_lines();
+            if ($start >= $lines) { // no more rows to import
+                $res['logs'][] = $this->lang['mission accomplished'];
+                echo json_encode($res);
+                $this->start(0);
+                return;
+            }
+
+            $settings = $this->get_csv_settings();
+            if ($settings === false) {
+                $res['logs'][] = $this->debug(__LINE__, false) . $this->lang['csv file upload error'];
+                echo json_encode($res);
+                return;
+            }
+            $data_lines = $lines - ($settings['has_titles'] ? 1 : 0);
+
+            $bkp_res = $this->backup_table($start, $settings);
+            if (isset($bkp_res['error'])) {
+                $res['logs'][] = $this->debug(__LINE__, false) . $bkp_res['error'];
+                echo json_encode($res);
+                return;
+            } elseif (isset($bkp_res['status'])) {
+                $res['logs'][] = $bkp_res['status'];
+            }
+
+            $csv_data = $this->get_csv_data($start, $settings);
+            if (!count($csv_data)) {
+                $res['logs'][] = $this->lang['mission accomplished'];
+                echo json_encode($res);
+                $this->start(0);
+                return;
+            }
+
+            $res['logs'][] = str_replace(
+                array('<RECORDNUMBER>', '<RECORDS>'),
+                array(number_format($start + 1), number_format($data_lines)),
+                $this->lang['start at estimated record']
+            );
+
+            $res['imported'] = count($csv_data);
+            $new_start = $start + $res['imported'];
+            $res['remaining'] = $lines - $new_start;
+
+            $query_info = $eo = array();
+            $insert = $this->get_query($csv_data, $settings, $query_info);
+            if ($insert === false) {
+                $res['logs'][] = $this->debug(__LINE__, false) . $this->lang['csv file upload error'];
+                echo json_encode($res);
+                return;
+            }
+
+            if (!sql($insert, $eo)) {
+                $res['logs'][] = $this->debug(__LINE__, false) . db_error();
+                echo json_encode($res);
+                return;
+            }
+
+            $res['logs'][count($res['logs']) - 1] .= " {$this->lang['ok']}";
+
+            if ($new_start >= $lines) {
+                $this->start(0); /* reset csv status after finishing */
+            } else {
+                $this->start($new_start); /* update csv status file to new start */
+            }
+
+            echo json_encode($res);
+        }
+
+        protected function request_or($var, $default)
+        {
+            return (isset($this->request[$var]) ? $this->request[$var] : $default);
+        }
+
+        /**
+         *  @brief Retrieve and validate CSV settings from REQUEST
+         *
+         *  @return false on error, or associative array (table, backup_table, update_pk, has_titles, ignore_lines, field_separator, field_delimiter, mappings[])
+         */
+        protected function get_csv_settings()
+        {
+            static $settings = array();
+            if (!empty($settings)) {
+                return $settings;
+            } // cache to avoid reprocessing
+
+            $settings = array(
+                'backup_table' => (bool) $this->request_or('backup_table', true),
+                'update_pk' => (bool) $this->request_or('update_pk', false),
+                'has_titles' => (bool) $this->request_or('has_titles', false),
+                'ignore_lines' => max(0, (int) $this->request_or('ignore_lines', 0)),
+                'field_separator' => $this->request_or('field_separator', ','),
+                'field_delimiter' => $this->request_or('field_delimiter', '"'),
+                'mappings' => $this->request_or('mappings', array())
+            );
+
+            if (!$settings['field_delimiter']) {
+                $settings['field_delimiter'] = '"';
+            }
+            if (!$settings['field_separator']) {
+                $settings['field_separator'] = ',';
+            }
+
+            $settings['table'] = $this->get_table(true);
+            if ($settings['table'] === false) {
+                return false;
+            }
+
+            if (!is_array($settings['mappings']) || !count($settings['mappings'])) {
+                return false;
+            }
+
+            /* validate and trim field names */
+            $last_field_key = count($settings['mappings']) - 1;
+            $mappings = array();
+            for ($i = 0; $i <= $last_field_key; $i++) {
+                $fn = $settings['mappings'][$i];
+                $fn = trim($fn);
+                if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $fn) && $fn != 'ignore-field') {
+                    return false;
+                }
+
+                /* make sure field is not already mapped to another column */
+                if (isset($mappgins[$fn])) {
+                    return false;
+                }
+
+                $settings['mappings'][$i] = $fn;
+                if ($fn == 'ignore-field') {
+                    unset($settings['mappings'][$i]);
+                } else {
+                    $mappgins[$fn] = true;
+                }
+            }
+
+            if (!count($settings['mappings'])) {
+                return false;
+            }
+
+            return $settings;
+        }
+
+        /**
+         *  @brief Counts non-empty lines in the current csv file. Count is cached for performance.
+         *
+         *  @return number of non-empty data lines in csv
+         *
+         *  @details This function counts all non-empty, including the title column
+         */
+        protected function csv_lines()
+        {
+            $csv = $this->get_csv();
+            if (!$csv) {
+                return 0;
+            }
+
+            /*
+                store lines count server-side:
+                for each csv file being imported, create a count file in the csv folder named {csv-file-name.csv.count}
+                the file stores the # of non-empty lines.
+            */
+            $count_file = "{$this->curr_dir}/csv/{$csv}.count";
+            $csv_file = "{$this->curr_dir}/csv/{$csv}";
+
+            /* if csv modified after counting its lines, force recount */
+            if (is_file($count_file) && filemtime($count_file) < filemtime($csv_file)) {
+                @unlink($count_file);
+                return $this->csv_lines();
+            }
+
+            $lines = @file_get_contents($count_file);
+            if ($lines !== false) {
+                return intval($lines);
+            }
+
+            /* this is a new import process */
+            $lines = 0;
+            $fp = @fopen($csv_file, 'r');
+            if ($fp === false) {
+                return 0;
+            }
+
+            /* start counting non-empty lines of csv */
+            while ($line = fgets($fp)) {
+                if (strlen(trim($line))) {
+                    $lines++;
+                }
+            }
+            fclose($fp);
+
+            @file_put_contents($count_file, $lines);
+            return $lines;
+        }
+
+        /**
+         *  @brief if this is the beginning of the import process, perform table backup if requested
+         *
+         *  @param $start current line in csv
+         *  @param $settings assoc arry of csv settings
+         *  @return assoc array, 'status' key and value if successful, 'error' key and value on error
+         */
+        protected function backup_table($start, $settings)
+        {
+            if ($start > 0) {
+                return array();
+            } // no need to backup as we've passed the first batch
+            if (!$settings['backup_table']) {
+                return array();
+            } // no backup requested
+
+            $table = $this->get_table(true);
+            if ($table === false) {
+                return array('error' => $this->lang['no table name provided'] . $this->debug(__LINE__, false));
+            }
+
+            $stable = makeSafe($table);
+            if (!sqlValue("select count(1) from `{$stable}`")) { // nothing to backup!
+                return array('status' => str_replace('<TABLE>', $table, $this->lang['table backup not done']));
+            }
+
+            $btn = $stable . '_backup_' . @date('YmdHis');
+            $eo = array();
+            sql("drop table if exists `{$btn}`", $eo);
+            if (!sql("create table if not exists `{$btn}` like `{$stable}`", $eo)) {
+                return array('error' => str_replace('<TABLE>', $table, $this->lang['error backing up table'] . $this->debug(__LINE__, false)));
+            }
+            if (!sql("insert `{$btn}` select * from `{$stable}`", $eo)) {
+                return array('error' => str_replace('<TABLE>', $table, $this->lang['error backing up table'] . $this->debug(__LINE__, false)));
+            }
+
+            return array(
+                'status' => str_replace(
+                    array('<TABLE>', '<TABLENAME>'),
+                    array($table, $btn),
+                    $this->lang['table backed up']
+                )
+            );
+        }
+
+        protected function no_bom($str)
+        {
+            return preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $str);
+        }
+
+        /**
+         *  @brief opens current csv file and reads several lines from it, starting at non-empty line $start
+         *
+         *  @param $start non-empty line # to start reading from
+         *  @param $settings csv settings array as retrieved from CSV::get_csv_settings
+         *  @return numeric 2D array of csv data (row1array, row2array, ...)
+         */
+        protected function get_csv_data($start, $settings)
+        {
+            if ($settings === false) {
+                return array();
+            }
+
+            $csv = $this->get_csv();
+            $csv_file = "{$this->curr_dir}/csv/{$csv}";
+            $first_line = true;
+
+            $fp = @fopen($csv_file, 'r');
+            if (false === $fp) {
+                return array();
+            }
+
+            /* skip $start non-empty lines */
+            $skip = $start;
+
+            /* apply ignore_lines */
+            if ($start < $settings['ignore_lines']) {
+                $skip = $settings['ignore_lines'];
+            }
+
+            /* get key of last mapping field -- used later here to apply ignored fields */
+            end($settings['mappings']);
+            $last_field_key = key($settings['mappings']);
+
+            /* skip title line */
+            $skip += ($settings['has_titles'] ? 1 : 0);
+
+            for ($i = 0; $i < $skip; $i++) {
+                /* keep reading till a non-empty line or EOF */
+                do {
+                    $line = @implode('', @fgetcsv($fp));
+                    if ($first_line) {
+                        $line = $this->no_bom($line); /* remove BOM from 1st line */
+                        $first_line = false;
+                    }
+                } while (trim($line) === '' && $line !== false);
+
+                if (false === $line) {
+                    fclose($fp);
+                    return array();
+                } /* EOF before $start */
+            }
+
+            /* keep reading data from csv file till data size limit or EOF is reached */
+            $csv_data = array();
+            $raw_data = '';
+            do {
+                $data = fgetcsv($fp, pow(2, 15), $settings['field_separator'], $settings['field_delimiter']);
+                if ($data === false) {
+                    fclose($fp);
+                    return $csv_data;
+                } /* EOF */
+
+                if ($first_line) {
+                    $data[0] = $this->no_bom($data[0]); /* remove BOM if 1st line */
+                    $data[0] = trim($data[0], $settings['field_delimiter']); /* fix fgetcsv behavior with BOM */
+                    $first_line = false;
+                }
+                if (count($data) == 1 && !$data[0]) {
+                    continue;
+                } /* empty line */
+
+                /* handle ignored fields */
+                $last_key = max($last_field_key, count($data) - 1);
+                for ($i = 0; $i <= $last_key; $i++) {
+                    if (!isset($data[$i])) {
+                        $data[$i] = '';
+                    }
+                    if (!isset($settings['mappings'][$i])) {
+                        unset($data[$i]);
+                    }
+                }
+
+                $raw_data .= implode('', $data);
+                $csv_data[] = $data;
+            } while (strlen($raw_data) < $this->max_data_length && count($csv_data) < $this->max_batch_size);
+
+            fclose($fp);
+            return $csv_data;
+        }
+
+        /**
+         *  @brief Prepare the insert/replace query
+         *
+         *  @param [in] $csv_data 2D numeric array of data to insert/replace
+         *  @param [in] $settings import settings assoc. array
+         *  @param [in,out] $query_info assoc array for exchanging query info and options
+         *  @return query string on success, false on error
+         */
+        protected function get_query(&$csv_data, $settings, &$query_info)
+        {
+            /* make sure table name is provided */
+            $table = $this->get_table(true);
+            if ($table === false) {
+                $query_info['error'] = $this->lang['no table name provided'] . $this->debug(__LINE__, false);
+                return false;
+            }
+            $stable = makeSafe($table);
+
+            /* make sure mappings are provided */
+            if (!isset($settings['mappings']) || !is_array($settings['mappings']) || !count($settings['mappings'])) {
+                $query_info['error'] = $this->lang['error reading csv data'] . $this->debug(__LINE__, false);
+                return false;
+            }
+
+            /* replace or insert? */
+            $query = "INSERT IGNORE INTO ";
+            if (isset($settings['update_pk']) && $settings['update_pk'] === true) {
+                $query = "REPLACE ";
+            }
+            $query .= "`{$stable}` ";
+
+            /* use mappings to determine field names */
+            $query .= '(`' . implode('`,`', $settings['mappings']) . '`) VALUES ';
+
+            /* build query data */
+            $insert_data = array();
+            foreach ($csv_data as $rec) {
+                /* sanitize data for SQL */
+                foreach ($rec as $i => $item) {
+                    $rec[$i] = "'" . makeSafe($item, false) . "'";
+                    if ($item === '') {
+                        $rec[$i] = 'NULL';
+                    }
+                }
+
+                $insert_data[] = '(' . implode(',', $rec) . ')';
+            }
+            $query .= implode(",\n", $insert_data);
+
+            return $query;
+        }
+
+        /**
+         *  get/set the next start of current csv file
+         *
+         *  @param $start optional, new start value to save into status file
+         *  @return array('error' => error message) or array('start' => start line)
+         */
+        protected function start($new_start = false)
+        {
+            $csv = $this->get_csv();
+            if (!$csv) {
+                /* invalid csv file specified */
+                return array('error' => $this->debug(__LINE__, false) . $this->lang['csv file upload error']);
+            }
+
+            /*
+                store progress server-side:
+                for each csv file being imported, create a status file in the csv folder named {csv-file-name.csv.status}
+                the file stores the last imported line#.
+            */
+            $status_file = "{$this->curr_dir}/csv/{$csv}.status";
+            if (!is_file($status_file)) {
+                /* this is a new import process */
+                /* create a status file and store $new_start into it */
+                @file_put_contents($status_file, $new_start);
+            }
+
+            if ($new_start !== false && intval($new_start) >= 0) {
+                @file_put_contents($status_file, intval($new_start));
+                return array('start' => intval($new_start));
+            }
+
+            $start = @file_get_contents($status_file);
+            if (false === $start) {
+                /* can't read file */
+                return array('error' => $this->debug(__LINE__, false) . $this->lang['csv file upload error']);
+            }
+
+            return array('start' => intval($start));
+        }
+
+        /**
+          * show page to control and monitor csv import process
+          * (launch import job via ajax and keep relaunching and showing progress till done)
+          */
+        public function show_import_progress()
+        {
+            echo $this->header();
+            if (!csrf_token(true)) {
+                echo errorMsg("{$this->lang['csrf token expired or invalid']}<br>{$this->error_back_link}" . $this->debug(__LINE__));
+                echo $this->footer();
+                return;
+            } ?>
 			<div class="page-header"><h1><?php echo $this->lang['importing CSV data']; ?></h1></div>
 			<div class="progress">
 				<div id="import-progress" class="progress-bar progress-bar-striped active progress-bar-info" style="width: 0">
@@ -1417,45 +1526,48 @@
 				}
 			</style>
 			<?php
-			echo $this->footer();
-		}
+            echo $this->footer();
+        }
 
-		protected function header(){
-			$Translation = $this->lang;
-			ob_start();
-			$GLOBALS['page_title'] = $Translation['importing CSV data'];
-			include("{$this->curr_dir}/incHeader.php");
-			$out = ob_get_contents();
-			ob_end_clean();
+        protected function header()
+        {
+            $Translation = $this->lang;
+            ob_start();
+            $GLOBALS['page_title'] = $Translation['importing CSV data'];
+            include("{$this->curr_dir}/incHeader.php");
+            $out = ob_get_contents();
+            ob_end_clean();
 
-			return $out;
-		}
+            return $out;
+        }
 
-		protected function footer(){
-			$Translation = $this->lang;
-			ob_start();
-			include("{$this->curr_dir}/incFooter.php");
-			$out = ob_get_contents();
-			ob_end_clean();
+        protected function footer()
+        {
+            $Translation = $this->lang;
+            ob_start();
+            include("{$this->curr_dir}/incFooter.php");
+            $out = ob_get_contents();
+            ob_end_clean();
 
-			return $out;
-		}
+            return $out;
+        }
 
-		/**
-		 *  @brief UTF8-encodes a string/array
-		 *  @see https://stackoverflow.com/a/26760943/1945185
-		 *  
-		 *  @param [in] $mixed string or array of strings to be UTF8-encoded
-		 *  @return UTF8-encoded array/string
-		 */
-		protected function utf8ize($mixed) {
-			if(is_array($mixed)){
-				foreach($mixed as $key => $value){
-					$mixed[$key] = $this->utf8ize($value);
-				}
-			}elseif(is_string($mixed)){
-				return utf8_encode($mixed);
-			}
-			return $mixed;
-		}
-	}
+        /**
+         *  @brief UTF8-encodes a string/array
+         *  @see https://stackoverflow.com/a/26760943/1945185
+         *
+         *  @param [in] $mixed string or array of strings to be UTF8-encoded
+         *  @return UTF8-encoded array/string
+         */
+        protected function utf8ize($mixed)
+        {
+            if (is_array($mixed)) {
+                foreach ($mixed as $key => $value) {
+                    $mixed[$key] = $this->utf8ize($value);
+                }
+            } elseif (is_string($mixed)) {
+                return utf8_encode($mixed);
+            }
+            return $mixed;
+        }
+    }

@@ -1,5 +1,5 @@
 var fdLocale = {
-        months:[
+    months:[
                 "Tammikuu",
                 "Helmikuu",
                 "Maaliskuu",
@@ -13,7 +13,7 @@ var fdLocale = {
                 "Marraskuu",
                 "Joulukuu"
                 ],
-        fullDay:[
+    fullDay:[
                 "Maanantai",
                 "Tiistai",
                 "Keskiviikko",
@@ -31,7 +31,7 @@ var fdLocale = {
 
         firstDayOfWeek:0,
         */
-        titles:[
+    titles:[
                 "Edellinen kuukausi",
                 "Seuraava kuukausi",
                 "Edellinen vuosi",

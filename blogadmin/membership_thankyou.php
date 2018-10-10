@@ -1,13 +1,13 @@
 <?php
-	$currDir=dirname(__FILE__);
-	include("$currDir/defaultLang.php");
-	include("$currDir/language.php");
-	include("$currDir/lib.php");
-	include_once("$currDir/header.php");
+    $currDir=dirname(__FILE__);
+    include("$currDir/defaultLang.php");
+    include("$currDir/language.php");
+    include("$currDir/lib.php");
+    include_once("$currDir/header.php");
 
-	if($_GET['redir']==1){
-		echo '<META HTTP-EQUIV="Refresh" CONTENT="5;url=index.php?signIn=1">';
-	}
+    if ($_GET['redir']==1) {
+        echo '<META HTTP-EQUIV="Refresh" CONTENT="5;url=index.php?signIn=1">';
+    }
 ?>
 
 <center>

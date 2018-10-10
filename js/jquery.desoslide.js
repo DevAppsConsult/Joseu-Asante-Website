@@ -7,15 +7,15 @@
 
 /*jslint browser: true, devel: true, eqeq: true, plusplus: true, unparam: true, vars: true, white: true */
 /*global $, jQuery*/
-(function($) {
+(function ($) {
 
     'use strict';
 
-    $.fn.desoSlide = function(options) {
+    $.fn.desoSlide = function (options) {
 
         /**
-        * Default values
-        */
+         * Default values
+         */
         var defaults = {
             main: {
                 container:  false,      /* Container for the main image */
@@ -46,24 +46,24 @@
         };
 
         /**
-        * Extend options
-        */
+         * Extend options
+         */
         var p = $.extend(true, {}, defaults, options);
 
         /**
-        * Delay
-        */
-        var delay = (function() {
+         * Delay
+         */
+        var delay = (function () {
             var timer = 0;
-            return function(callback, ms){
+            return function (callback, ms) {
                 clearTimeout(timer);
                 timer = setTimeout(callback, ms);
             };
         }());
 
         /**
-        * Working variables
-        */
+         * Working variables
+         */
         var
             $thumbs_container = this,
             $thumbs = $thumbs_container.find('li'),
@@ -84,14 +84,14 @@
 
 
         /**
-        * Main object
-        */
+         * Main object
+         */
         var app = {
 
             /**
-            * Function that checks the configuration
-            */
-            checks: function() {
+             * Function that checks the configuration
+             */
+            checks: function () {
                 /**
                 * If the container does not exist
                 */
@@ -114,8 +114,8 @@
                 }
 
                 /**
-                * Accepted overlay values
-                */
+                 * Accepted overlay values
+                 */
                 var overlay_values = ['always', 'hover', 'none'];
 
                 /**
@@ -135,9 +135,9 @@
             },
 
             /**
-            * Function that checks the markup
-            */
-            checkData: function() {
+             * Function that checks the markup
+             */
+            checkData: function () {
                 /**
                 * Captions checks
                 */
@@ -154,9 +154,9 @@
             },
 
             /**
-            * Function that initiliazes the plugin
-            */
-            init: function() {
+             * Function that initiliazes the plugin
+             */
+            init: function () {
                 /**
                 * Basic checks
                 */
@@ -189,26 +189,30 @@
             },
 
             /**
-            * Function that loads images
-            */
-            loadImages: function() {
+             * Function that loads images
+             */
+            loadImages: function () {
                 if(p.auto.load) {
-                    $thumbs.find('a').each(function(i, item) {
-                        $('<img>', {
-                            src: item.href,
-                            alt: ''
-                        }).hide().appendTo('body');
-                    });
+                    $thumbs.find('a').each(
+                        function (i, item) {
+                            $(
+                                '<img>', {
+                                    src: item.href,
+                                    alt: ''
+                                }
+                            ).hide().appendTo('body');
+                        }
+                    );
                 }
             },
 
             /**
-            * Function that handles the effect
-            */
-            effectHandler: function() {
+             * Function that handles the effect
+             */
+            effectHandler: function () {
                 /**
-                * Available effects with in/out matches
-                */
+                 * Available effects with in/out matches
+                 */
                 effects = {
                     'fade': { /* Default */
                         'in': 'fadeIn',
@@ -255,9 +259,9 @@
             },
 
             /**
-            * Function that makes the out image effect
-            */
-            outEffect: function() {
+             * Function that makes the out image effect
+             */
+            outEffect: function () {
                 /**
                 * Hiding the old one
                 */
@@ -266,50 +270,54 @@
                 /**
                 * Showing the new one
                 */
-                setTimeout(function() {
-                    app.displayImg();
-                }, 900);
+                setTimeout(
+                    function () {
+                        app.displayImg();
+                    }, 900
+                );
             },
 
             /**
-            * Function that adds the wrapper
-            */
-            addWrapper: function() {
+             * Function that adds the wrapper
+             */
+            addWrapper: function () {
                 /**
-                * The wrapper tag
-                */
-                var $wrapper = $('<div>', {
-                    'class': 'desoSlide-wrapper'
-                });
+                 * The wrapper tag
+                 */
+                var $wrapper = $(
+                    '<div>', {
+                        'class': 'desoSlide-wrapper'
+                    }
+                );
 
                 /**
-                * The img tag
-                */
+                 * The img tag
+                 */
                 var $img = $('<img>').addClass(p.main.cssClass).css('opacity', 0);
 
                 /**
                 * DOM insertion
                 */
                 switch(p.main.insertion) {
-                    case 'prepend':
-                        $img.prependTo($(p.main.container)).wrap($wrapper);
+                case 'prepend':
+                    $img.prependTo($(p.main.container)).wrap($wrapper);
                     break;
-                    case 'append':
-                        $img.appendTo($(p.main.container)).wrap($wrapper);
+                case 'append':
+                    $img.appendTo($(p.main.container)).wrap($wrapper);
                     break;
-                    case 'replace':
-                        $(p.main.container).html($img).wrapInner($wrapper);
+                case 'replace':
+                    $(p.main.container).html($img).wrapInner($wrapper);
                     break;
-                    default:
-                        app.resultHandler('error', 'Incorrect value for the "insertion" option. Check out the documentation.');
+                default:
+                    app.resultHandler('error', 'Incorrect value for the "insertion" option. Check out the documentation.');
                     break;
                 }
             },
 
             /**
-            * Function that adds the spinner
-            */
-            addSpinner: function() {
+             * Function that adds the spinner
+             */
+            addSpinner: function () {
                 /**
                 * The spinner
                 */
@@ -322,18 +330,18 @@
             },
 
             /**
-            * Function that removes the spinner
-            */
-            removeSpinner: function() {
+             * Function that removes the spinner
+             */
+            removeSpinner: function () {
                 if($spinner.length) {
                     $spinner.remove();
                 }
             },
 
             /**
-            * Function that displays the new image
-            */
-            displayImg: function() {
+             * Function that displays the new image
+             */
+            displayImg: function () {
                 /**
                 * Callback
                 */
@@ -344,7 +352,7 @@
                 /**
                 * Count reset
                 */
-                if(current_img < 0){
+                if(current_img < 0) {
                     current_img = total_thumbs - 1;
                 }
 
@@ -361,8 +369,8 @@
                 img_to_show = current_img;
 
                 /**
-                * Data
-                */
+                 * Data
+                 */
                 var src     = $thumbs.find('a').eq(img_to_show).attr('href');
                 alt     = $thumbs.find('img').eq(img_to_show).attr('alt');
                 caption = $thumbs.find('img').eq(img_to_show).data('desoslide-caption');
@@ -373,69 +381,79 @@
                 */
                 app.checkData();
 
-                $(p.main.container).find('img').attr({
-                    'src': src,
-                    'alt': alt,
-                    'data-desoslide-caption': caption
-                }).one('load', function() {
-                    /**
-                    * Showing
-                    */
-                    $(this).removeClass('animated '+ effects[p.effect].out).addClass('animated '+ effects[p.effect].in)
-                        /**
-                        * Animation done
-                        */
-                        .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-                            /**
-                            * Adding overlay
-                            */
-                            app.addOverlay();
-                    });
-
-                    /**
-                    * Starting the loop
-                    */
-                    if(p.auto.start) {
-                        current_img++;
-
-                        timer = setTimeout(function() {
-                            app.outEffect();
-                        }, ms);
+                $(p.main.container).find('img').attr(
+                    {
+                        'src': src,
+                        'alt': alt,
+                        'data-desoslide-caption': caption
                     }
-                });
+                ).one(
+                    'load', function () {
+                            /**
+                            * Showing
+                            */
+                            $(this).removeClass('animated '+ effects[p.effect].out).addClass('animated '+ effects[p.effect].in)
+                            /**
+                            * Animation done
+                            */
+                            .one(
+                                'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                                    /**
+                                    * Adding overlay
+                                    */
+                                    app.addOverlay();
+                                }
+                            );
+
+                            /**
+                            * Starting the loop
+                            */
+                        if(p.auto.start) {
+                            current_img++;
+
+                            timer = setTimeout(
+                                function () {
+                                    app.outEffect();
+                                }, ms
+                            );
+                        }
+                    }
+                );
             },
 
             /**
-            * Function that adjusts the overlay position
-            */
-            addOverlay: function() {
+             * Function that adjusts the overlay position
+             */
+            addOverlay: function () {
                 if(p.overlay !== 'none') {
                     if(p.caption || p.controls.enable) {
                         /**
-                        * Main image position
-                        */
+                         * Main image position
+                         */
                         var
                             pos = $(p.main.container).find('img').position(),
                             border = parseInt($(p.main.container).find('img').css('border-left-width'), 10);
 
                         /**
-                        * Main image height
-                        */
+                         * Main image height
+                         */
                         var
                             width_plus_border = $(p.main.container).find('img').width() + border,
                             height_plus_border = $(p.main.container).find('img').height() + border;
 
                         if($(p.main.container).find('.desoSlide-overlay').length === 0) {
-                            $('<div>', {
-                                'class': 'desoSlide-overlay'
-                            }).appendTo($(p.main.container).find('.desoSlide-wrapper'));
+                            $(
+                                '<div>', {
+                                    'class': 'desoSlide-overlay'
+                                }
+                            ).appendTo($(p.main.container).find('.desoSlide-wrapper'));
                         }
 
                         $overlay = $(p.main.container).find('.desoSlide-overlay');
 
                         /**
-                        * Calculate new height with paddings
-                        */
+                         * Calculate new height with paddings
+                         */
                         var
                             paddingTop = parseInt($overlay.css('padding-top').replace('px', ''), 10),
                             paddingBottom = parseInt($overlay.css('padding-bottom').replace('px', ''), 10),
@@ -452,19 +470,23 @@
                         /**
                         * Update the overlay position
                         */
-                        $overlay.css({
-                            'left':     left +'px',
-                            'top':      top +'px',
-                            'width':    width_plus_border +'px'
-                        });
+                        $overlay.css(
+                            {
+                                'left':     left +'px',
+                                'top':      top +'px',
+                                'width':    width_plus_border +'px'
+                            }
+                        );
 
                         /**
                         * Showing the overlay if needed
                         */
                         if(p.overlay === 'always') {
-                            $overlay.animate({
-                                opacity: 0.7
-                            }, 500);
+                            $overlay.animate(
+                                {
+                                    opacity: 0.7
+                                }, 500
+                            );
                         }
 
                         /**
@@ -489,27 +511,29 @@
             },
 
             /**
-            * Function that updates the caption
-            */
-            updateCaption: function() {
+             * Function that updates the caption
+             */
+            updateCaption: function () {
                 $overlay.html(caption);
             },
 
             /**
-            * Function that adds the link on the main image & caption
-            */
-            addLink: function() {
+             * Function that adds the link on the main image & caption
+             */
+            addLink: function () {
                 var anchor_exists = ($(p.main.container).find('a.desoslide-link').length > 0) ? true : false;
                 var href_exists = (href !== undefined && href !== '') ? true : false;
 
                 /**
-                * The link tag
-                */
-                var $a = $('<a>', {
-                    'class':    'desoslide-link',
-                    'href':     href,
-                    'target':   '_blank'
-                });
+                 * The link tag
+                 */
+                var $a = $(
+                    '<a>', {
+                        'class':    'desoslide-link',
+                        'href':     href,
+                        'target':   '_blank'
+                    }
+                );
 
                 if(anchor_exists && href_exists) {
                     /**
@@ -535,33 +559,37 @@
             },
 
             /**
-            * Function that adds the controls
-            */
-            addControls: function() {
+             * Function that adds the controls
+             */
+            addControls: function () {
                 $(p.main.container).find('.desoSlide-controls-wrapper').remove();
 
                 /**
-                * Controls buttons
-                */
+                 * Controls buttons
+                 */
                 var $prev   = '<a href="#prev"><span class="desoSlide-controls prev"></span></a>';
                 var $pause  = '<a href="#pause"><span class="desoSlide-controls pause"></span></a>';
                 var $play   = '<a href="#play"><span class="desoSlide-controls play"></span></a>';
                 var $next   = '<a href="#next"><span class="desoSlide-controls next"></span></a>';
 
                 /**
-                * The wrapper
-                */
-                var $controls = $('<div>', {
-                    'class': 'desoSlide-controls-wrapper'
-                }).append($prev + $pause + $play + $next);
+                 * The wrapper
+                 */
+                var $controls = $(
+                    '<div>', {
+                        'class': 'desoSlide-controls-wrapper'
+                    }
+                ).append($prev + $pause + $play + $next);
 
                 /**
                 * Dynamic positioning
                 */
-                $controls.css({
-                    'width': $overlay.css('width'),
-                    'left': $overlay.css('left')
-                });
+                $controls.css(
+                    {
+                        'width': $overlay.css('width'),
+                        'left': $overlay.css('left')
+                    }
+                );
 
                 /**
                 * Adding the controls wrapper
@@ -587,9 +615,9 @@
             },
 
             /**
-            * Function that pauses the diaporama
-            */
-            pause: function() {
+             * Function that pauses the diaporama
+             */
+            pause: function () {
                 if(p.auto.start && timer) {
                     p.auto.start = false;
 
@@ -603,9 +631,9 @@
             },
 
             /**
-            * Function that plays the diaporama
-            */
-            play: function() {
+             * Function that plays the diaporama
+             */
+            play: function () {
                 if(!p.auto.start) {
                     p.auto.start = true;
 
@@ -622,12 +650,12 @@
             },
 
             /**
-            * Function that handles the plugin "result"
-            *
-            * @param string type
-            * @param string msg
-            */
-            resultHandler: function(type, msg) {
+             * Function that handles the plugin "result"
+             *
+             * @param string type
+             * @param string msg
+             */
+            resultHandler: function (type, msg) {
                 /**
                 * It's not the first error
                 */
@@ -636,256 +664,286 @@
                     * Depending on the result
                     */
                     switch(type) {
-                        case 'error':
-                            /**
-                            * Logging
-                            */
-                            if(console !== undefined) {
-                                console.error('desoSlide: '+ msg);
-                            }
+                    case 'error':
+                        /**
+                        * Logging
+                        */
+                        if(console !== undefined) {
+                            console.error('desoSlide: '+ msg);
+                        }
 
-                            if(p.events.completed) {
-                                p.events.completed('error');
-                            }
+                        if(p.events.completed) {
+                            p.events.completed('error');
+                        }
 
-                            first_error = type;
+                        first_error = type;
                         break;
-                        case 'warning':
-                            /**
-                            * Logging
-                            */ 
-                            if(p.events.completed) {
-                                p.events.completed('warning');
-                            }
+                    case 'warning':
+                        /**
+                        * Logging
+                        */ 
+                        if(p.events.completed) {
+                            p.events.completed('warning');
+                        }
                         break;
-                        default:
-                            if(p.events.completed) {
-                                p.events.completed('success');
-                            }
+                    default:
+                        if(p.events.completed) {
+                            p.events.completed('success');
+                        }
                         break;
                     }
                 }
             },
 
             /**
-            * Function that handles the plugin events
-            */
-            events: function() {
+             * Function that handles the plugin events
+             */
+            events: function () {
 
                 /**
                 * Clicking on thumbnail
                 */
-                $thumbs.find('a').on('click', function(e) {
-                    e.preventDefault();
-                    var $this = $(this),
-                    index = $this.parent('li').index();
-
-                    /**
-                    * If the clicked image is not already displayed
-                    */
-                    if(index !== current_img) {
-                        /**
-                        * Hiding the overlay
-                        */
-                        $overlay.animate({ opacity: 0 });
+                $thumbs.find('a').on(
+                    'click', function (e) {
+                        e.preventDefault();
+                        var $this = $(this),
+                        index = $this.parent('li').index();
 
                         /**
-                        * Setting the current image index
+                        * If the clicked image is not already displayed
                         */
-                        current_img = index;
+                        if(index !== current_img) {
+                            /**
+                            * Hiding the overlay
+                            */
+                            $overlay.animate({ opacity: 0 });
+
+                            /**
+                            * Setting the current image index
+                            */
+                            current_img = index;
+
+                            /**
+                            * Calling the displayer
+                            */
+                            app.outEffect();
+
+                            /**
+                            * Pausing
+                            */
+                            app.pause();
+                        }
 
                         /**
-                        * Calling the displayer
+                        * Callback
                         */
-                        app.outEffect();
-
-                        /**
-                        * Pausing
-                        */
-                        app.pause();
+                        if(p.events.thumbClick) {
+                            p.events.thumbClick();
+                        }
                     }
-
-                    /**
-                    * Callback
-                    */
-                    if(p.events.thumbClick) {
-                        p.events.thumbClick();
-                    }
-                });
+                );
 
                 /**
                 * Hover on thumb
                 */
-                $thumbs.find('img').on({
-                    mouseover: function() {
-                        $(this).stop(true, true).animate({
-                            opacity: 0.7
-                        }, 'normal');
-                    },
-                    mouseout: function() {
-                        $(this).stop(true, true).animate({
-                            opacity: 1
-                        }, 'fast');
+                $thumbs.find('img').on(
+                    {
+                        mouseover: function () {
+                            $(this).stop(true, true).animate(
+                                {
+                                    opacity: 0.7
+                                }, 'normal'
+                            );
+                        },
+                        mouseout: function () {
+                            $(this).stop(true, true).animate(
+                                {
+                                    opacity: 1
+                                }, 'fast'
+                            );
+                        }
                     }
-                });
+                );
 
                 /**
                 * Hover on overlay
                 */
                 if(p.overlay === 'hover') {
-                    $(p.main.container).on({
-                        mouseover: function() {
-                            $overlay.stop().animate({
-                                opacity: 0.7
-                            }, 400);
-                        },
-                        mouseleave: function() {
-                            $overlay.stop().animate({
-                                opacity: 0
-                            }, 400);
+                    $(p.main.container).on(
+                        {
+                            mouseover: function () {
+                                $overlay.stop().animate(
+                                    {
+                                        opacity: 0.7
+                                    }, 400
+                                );
+                            },
+                            mouseleave: function () {
+                                $overlay.stop().animate(
+                                    {
+                                        opacity: 0
+                                    }, 400
+                                );
+                            }
                         }
-                    });
+                    );
                 }
 
                 if(p.controls.enable && p.controls.keys) {
                     /**
                     * Keys binder
                     */
-                    $(document).on('keydown', function(e){
-                        switch(e.which) {
+                    $(document).on(
+                        'keydown', function (e) {
+                            switch(e.which) {
                             case 37: /* Left arrow */
                                 $(p.main.container).trigger('prev.desoslide');
-                            break;
+                                break;
                             case 39: /* Right arrow */
                                 $(p.main.container).trigger('next.desoslide');
-                            break;
+                                break;
                             case 32: /* Space */
                                 e.preventDefault();
                                 $(p.main.container).trigger((!p.auto.start) ? 'play' : 'pause' +'.desoslide');
-                            break;
+                                break;
+                            }
                         }
-                    });
+                    );
                 }
 
                 /**
                 * Click on control
                 */
-                $(p.main.container).on('click', '.desoSlide-controls-wrapper a', $(p.main.container), function(e) {
-                    e.preventDefault();
+                $(p.main.container).on(
+                    'click', '.desoSlide-controls-wrapper a', $(p.main.container), function (e) {
+                        e.preventDefault();
 
-                    switch($(this).attr('href')) {
+                        switch($(this).attr('href')) {
                         case '#prev':
                             $(p.main.container).trigger('prev.desoslide');
-                        break;
+                            break;
                         case '#pause':
                             $(p.main.container).trigger('pause.desoslide');
-                        break;
+                            break;
                         case '#play':
                             $(p.main.container).trigger('play.desoslide');
-                        break;
+                            break;
                         case '#next':
                             $(p.main.container).trigger('next.desoslide');
-                        break;
+                            break;
+                        }
                     }
-                });
+                );
 
                 /**
                 * On previous
                 */
-                $(p.main.container).on('prev.desoslide', function() {
-                    /**
-                    * Pausing
-                    */
-                    app.pause();
+                $(p.main.container).on(
+                    'prev.desoslide', function () {
+                        /**
+                        * Pausing
+                        */
+                        app.pause();
 
-                    /**
-                    * Previous image
-                    */
-                    current_img--;
+                        /**
+                        * Previous image
+                        */
+                        current_img--;
 
-                    /**
-                    * Applying the out effect
-                    */
-                    app.outEffect();
+                        /**
+                        * Applying the out effect
+                        */
+                        app.outEffect();
 
-                    /**
-                    * Callback
-                    */
-                    if(p.events.prev) {
-                        p.events.prev();
+                        /**
+                        * Callback
+                        */
+                        if(p.events.prev) {
+                            p.events.prev();
+                        }
                     }
-                });
+                );
 
                 /**
                 * On pause
                 */
-                $(p.main.container).on('pause.desoslide', function() {
-                    /**
-                    * Pausing
-                    */
-                    app.pause();
+                $(p.main.container).on(
+                    'pause.desoslide', function () {
+                        /**
+                        * Pausing
+                        */
+                        app.pause();
 
-                    /**
-                    * Callback
-                    */
-                    if(p.events.pause) {
-                        p.events.pause();
+                        /**
+                        * Callback
+                        */
+                        if(p.events.pause) {
+                            p.events.pause();
+                        }
                     }
-                });
+                );
 
                 /**
                 * On play
                 */
-                $(p.main.container).on('play.desoslide', function() {
-                    /**
-                    * Playing
-                    */
-                    app.play();
+                $(p.main.container).on(
+                    'play.desoslide', function () {
+                        /**
+                        * Playing
+                        */
+                        app.play();
 
-                    /**
-                    * Callback
-                    */
-                    if(p.events.play) {
-                        p.events.play();
+                        /**
+                        * Callback
+                        */
+                        if(p.events.play) {
+                            p.events.play();
+                        }
                     }
-                });
+                );
 
                 /**
                 * On next
                 */
-                $(p.main.container).on('next.desoslide', function() {
-                    /**
-                    * Pausing
-                    */
-                    app.pause();
+                $(p.main.container).on(
+                    'next.desoslide', function () {
+                        /**
+                        * Pausing
+                        */
+                        app.pause();
 
-                    /**
-                    * Next image
-                    */
-                    current_img++;
+                        /**
+                        * Next image
+                        */
+                        current_img++;
 
-                    /**
-                    * Applying the out effect
-                    */
-                    app.outEffect();
+                        /**
+                        * Applying the out effect
+                        */
+                        app.outEffect();
 
-                    /**
-                    * Callback
-                    */
-                    if(p.events.next) {
-                        p.events.next();
+                        /**
+                        * Callback
+                        */
+                        if(p.events.next) {
+                            p.events.next();
+                        }
                     }
-                });
+                );
 
                 /**
                 * New overlay position when resizing
                 */
                 if(p.overlay !== 'none') {
-                    $(window).bind('resize', function() {
-                        delay(function() {
-                            app.addOverlay();
-                        }, 100);
-                    });
+                    $(window).bind(
+                        'resize', function () {
+                            delay(
+                                function () {
+                                    app.addOverlay();
+                                }, 100
+                            );
+                        }
+                    );
                 }
             }
 
@@ -899,17 +957,19 @@
         /**
         * All images are loaded
         */
-        $(window).load(function() {
-            /**
-            * Removing spinner
-            */
-            app.removeSpinner();
+        $(window).load(
+            function () {
+                /**
+                * Removing spinner
+                */
+                app.removeSpinner();
 
-            /**
-            * Initializing
-            */
-            app.init();
-        });
+                /**
+                * Initializing
+                */
+                app.init();
+            }
+        );
 
         /**
         * Preserving chainability

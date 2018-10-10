@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<?php if(!defined('PREPEND_PATH')) define('PREPEND_PATH', '../'); ?>
+<?php if (!defined('PREPEND_PATH')) {
+    define('PREPEND_PATH', '../');
+} ?>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -212,21 +214,28 @@
 
 					<?php $plugins = get_plugins(); ?>
 
-					<?php if(count($plugins)){ ?>
+					<?php if (count($plugins)) {
+    ?>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> <?php echo $Translation["plugins"] ; ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<?php foreach($plugins as $plugin){ ?>
+								<?php foreach ($plugins as $plugin) {
+        ?>
 									<?php
-										$plugin_icon = '';
-										if($plugin['glyphicon']) $plugin_icon = "<i class=\"glyphicon glyphicon-{$plugin['glyphicon']}\"></i> ";
-										if($plugin['icon']) $plugin_icon = "<img src=\"{$plugin['admin_path']}/{$plugin['icon']}\"> ";
-									?>
+                                        $plugin_icon = '';
+        if ($plugin['glyphicon']) {
+            $plugin_icon = "<i class=\"glyphicon glyphicon-{$plugin['glyphicon']}\"></i> ";
+        }
+        if ($plugin['icon']) {
+            $plugin_icon = "<img src=\"{$plugin['admin_path']}/{$plugin['icon']}\"> ";
+        } ?>
 									<li><a target="_blank" href="<?php echo $plugin['admin_path']; ?>"><?php echo $plugin_icon . $plugin['title']; ?></a></li>
-								<?php } ?>
+								<?php
+    } ?>
 							</ul>
 						</li>
-					<?php } ?>
+					<?php
+} ?>
 				</ul>
 
 				<div class="navbar-right">
@@ -258,16 +267,16 @@
 		<!-- /tool tips support -->
 
 <?php
-	if(!strstr($_SERVER['PHP_SELF'], 'pageSettings.php') && $adminConfig['adminPassword'] == md5('admin')){
-		$noSignup=TRUE;
-		?>
+    if (!strstr($_SERVER['PHP_SELF'], 'pageSettings.php') && $adminConfig['adminPassword'] == md5('admin')) {
+        $noSignup=true; ?>
 		<div class="alert alert-danger">
 			<p><strong><?php echo $Translation["attention"] ; ?></strong></p>
-			<p><?php if($adminConfig['adminUsername'] == 'admin'){
-					echo $Translation['security risk admin'];
-			}else{
-					echo $Translation['security risk'];
-			} ?></p>
+			<p><?php if ($adminConfig['adminUsername'] == 'admin') {
+            echo $Translation['security risk admin'];
+        } else {
+            echo $Translation['security risk'];
+        } ?></p>
 		</div>
-	<?php  } ?>
+	<?php
+    } ?>
 

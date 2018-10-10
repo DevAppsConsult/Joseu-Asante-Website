@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<?php if(!defined('PREPEND_PATH')) define('PREPEND_PATH', ''); ?>
-<?php if(!defined('datalist_db_encoding')) define('datalist_db_encoding', 'UTF-8'); ?>
+<?php if (!defined('PREPEND_PATH')) {
+    define('PREPEND_PATH', '');
+} ?>
+<?php if (!defined('datalist_db_encoding')) {
+    define('datalist_db_encoding', 'UTF-8');
+} ?>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -11,7 +15,7 @@
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title><?php echo ucwords('BLOG ADMIN'); ?> | <?php echo (isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
+		<title><?php echo ucwords('BLOG ADMIN'); ?> | <?php echo(isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
 		<link id="browser_favicon" rel="shortcut icon" href="<?php echo PREPEND_PATH; ?>resources/images/appgini-icon.png">
 
 		<link rel="stylesheet" href="<?php echo PREPEND_PATH; ?>resources/initializr/css/yeti.css">
@@ -35,28 +39,42 @@
 		<script src="<?php echo PREPEND_PATH; ?>resources/jscookie/js.cookie.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>resources/datepicker/js/datepicker.packed.js"></script>
 		<script src="<?php echo PREPEND_PATH; ?>common.js.php"></script>
-		<?php if(isset($x->TableName) && is_file(dirname(__FILE__) . "/hooks/{$x->TableName}-tv.js")){ ?>
+		<?php if (isset($x->TableName) && is_file(dirname(__FILE__) . "/hooks/{$x->TableName}-tv.js")) {
+    ?>
 			<script src="<?php echo PREPEND_PATH; ?>hooks/<?php echo $x->TableName; ?>-tv.js"></script>
-		<?php } ?>
+		<?php
+} ?>
 
 	</head>
 	<body>
 		<div class="container theme-yeti theme-compact">
-			<?php if(function_exists('handle_maintenance')) echo handle_maintenance(true); ?>
+			<?php if (function_exists('handle_maintenance')) {
+        echo handle_maintenance(true);
+    } ?>
 
-			<?php if(!$_REQUEST['Embedded']){ ?>
-				<?php if(function_exists('htmlUserBar')) echo htmlUserBar(); ?>
+			<?php if (!$_REQUEST['Embedded']) {
+        ?>
+				<?php if (function_exists('htmlUserBar')) {
+            echo htmlUserBar();
+        } ?>
 				<div style="height: 70px;" class="hidden-print"></div>
-			<?php } ?>
+			<?php
+    } ?>
 
-			<?php if(class_exists('Notification')) echo Notification::placeholder(); ?>
+			<?php if (class_exists('Notification')) {
+        echo Notification::placeholder();
+    } ?>
 
 			<!-- process notifications -->
 			<?php $notification_margin = ($_REQUEST['Embedded'] ? '15px 0px' : '-15px 0 -45px'); ?>
 			<div style="height: 60px; margin: <?php echo $notification_margin; ?>;">
-				<?php if(function_exists('showNotifications')) echo showNotifications(); ?>
+				<?php if (function_exists('showNotifications')) {
+        echo showNotifications();
+    } ?>
 			</div>
 
-			<?php if(!defined('APPGINI_SETUP') && is_file(dirname(__FILE__) . '/hooks/header-extras.php')){ include(dirname(__FILE__).'/hooks/header-extras.php'); } ?>
+			<?php if (!defined('APPGINI_SETUP') && is_file(dirname(__FILE__) . '/hooks/header-extras.php')) {
+        include(dirname(__FILE__).'/hooks/header-extras.php');
+    } ?>
 			<!-- Add header template below here .. -->
 

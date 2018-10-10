@@ -1,83 +1,82 @@
 <?php
-	@set_time_limit(0);
-	$currDir = dirname(__FILE__);
-	require("{$currDir}/incCommon.php");
-	$GLOBALS['page_title'] = $Translation['data ownership assign'];
-	include("{$currDir}/incHeader.php");
+    @set_time_limit(0);
+    $currDir = dirname(__FILE__);
+    require("{$currDir}/incCommon.php");
+    $GLOBALS['page_title'] = $Translation['data ownership assign'];
+    include("{$currDir}/incHeader.php");
 
-	// get a list of tables
-	$arrTables = getTableList();
-	$arrTablesNoOwners = array();
+    // get a list of tables
+    $arrTables = getTableList();
+    $arrTablesNoOwners = array();
 
-	// get a list of tables with records that have no owners
-	foreach($arrTables as $tn => $tc){
-		$countOwned = sqlValue("select count(1) from membership_userrecords where tableName='{$tn}'");
-		$countAll = sqlValue("select count(1) from `{$tn}`");
+    // get a list of tables with records that have no owners
+    foreach ($arrTables as $tn => $tc) {
+        $countOwned = sqlValue("select count(1) from membership_userrecords where tableName='{$tn}'");
+        $countAll = sqlValue("select count(1) from `{$tn}`");
 
-		if($countAll > $countOwned){
-			$arrTablesNoOwners[$tn] = ($countAll - $countOwned);
-		}
-	}
+        if ($countAll > $countOwned) {
+            $arrTablesNoOwners[$tn] = ($countAll - $countOwned);
+        }
+    }
 
-	// process ownership request
-	if(count($_POST)){
-		ignore_user_abort();
-		foreach($arrTablesNoOwners as $tn => $tc){
-			$groupID = intval($_POST["ownerGroup_$tn"]);
-			$memberID = makeSafe(strtolower($_POST["ownerMember_$tn"]));
-			$pkf = getPKFieldName($tn);
+    // process ownership request
+    if (count($_POST)) {
+        ignore_user_abort();
+        foreach ($arrTablesNoOwners as $tn => $tc) {
+            $groupID = intval($_POST["ownerGroup_$tn"]);
+            $memberID = makeSafe(strtolower($_POST["ownerMember_$tn"]));
+            $pkf = getPKFieldName($tn);
 
-			if($groupID){
-				$insertBegin = "insert ignore into membership_userrecords (tableName, pkValue, groupID, memberID, dateAdded, dateUpdated) values ";
-				$ts = time();
-				$assigned = 0;
-				$tempStatus = '';
+            if ($groupID) {
+                $insertBegin = "insert ignore into membership_userrecords (tableName, pkValue, groupID, memberID, dateAdded, dateUpdated) values ";
+                $ts = time();
+                $assigned = 0;
+                $tempStatus = '';
 
-				$res = sql("select `$tn`.`$pkf` from `$tn`", $eo);
-				while($row = db_fetch_row($res)){
-					$pkValue = makeSafe($row[0], false);
-					$insert .= "('$tn', '$pkValue', '$groupID', ".($memberID ? "'$memberID'" : "NULL").", $ts, $ts),";
-					if(strlen($insert) > 50000){
-						sql($insertBegin . substr($insert, 0, -1), $eo);
-						$assigned += @db_affected_rows(db_link());
-						$insert = '';
-					}
-				}
-				if($insert != ''){
-					sql($insertBegin . substr($insert, 0, -1), $eo);
-					$assigned += @db_affected_rows(db_link());
-					$insert = '';
-				}
+                $res = sql("select `$tn`.`$pkf` from `$tn`", $eo);
+                while ($row = db_fetch_row($res)) {
+                    $pkValue = makeSafe($row[0], false);
+                    $insert .= "('$tn', '$pkValue', '$groupID', ".($memberID ? "'$memberID'" : "NULL").", $ts, $ts),";
+                    if (strlen($insert) > 50000) {
+                        sql($insertBegin . substr($insert, 0, -1), $eo);
+                        $assigned += @db_affected_rows(db_link());
+                        $insert = '';
+                    }
+                }
+                if ($insert != '') {
+                    sql($insertBegin . substr($insert, 0, -1), $eo);
+                    $assigned += @db_affected_rows(db_link());
+                    $insert = '';
+                }
 
-				if ($memberID){
-					$tempStatus = $Translation["assigned table records to group and member"];
-					$tempStatus = str_replace ( "<MEMBERID>" , $memberID , $tempStatus );
-				}else{
-					$tempStatus = $Translation["assigned table records to group"];   
-				}
+                if ($memberID) {
+                    $tempStatus = $Translation["assigned table records to group and member"];
+                    $tempStatus = str_replace("<MEMBERID>", $memberID, $tempStatus);
+                } else {
+                    $tempStatus = $Translation["assigned table records to group"];
+                }
 
-				$originalValues =  array ('<NUMBER>','<TABLE>' , '<GROUP>' );
-				$number = number_format($assigned);
-				$group = sqlValue("select name from membership_groups where groupID='$groupID'");
-				$replaceValues = array ( $number , $tn , $group );
-				$tempStatus = str_replace ( $originalValues , $replaceValues , $tempStatus );
+                $originalValues =  array('<NUMBER>','<TABLE>' , '<GROUP>' );
+                $number = number_format($assigned);
+                $group = sqlValue("select name from membership_groups where groupID='$groupID'");
+                $replaceValues = array( $number , $tn , $group );
+                $tempStatus = str_replace($originalValues, $replaceValues, $tempStatus);
 
-				$status.= $tempStatus. ".<br>";
-			} 
-		}
+                $status.= $tempStatus. ".<br>";
+            }
+        }
 
-		// refresh the list of tables with records that have no owners
-		unset($arrTablesNoOwners);
-		foreach($arrTables as $tn=>$tc){
-			$countOwned=sqlValue("select count(1) from membership_userrecords where tableName='$tn'");
-			$countAll=sqlValue("select count(1) from `$tn`");
+        // refresh the list of tables with records that have no owners
+        unset($arrTablesNoOwners);
+        foreach ($arrTables as $tn=>$tc) {
+            $countOwned=sqlValue("select count(1) from membership_userrecords where tableName='$tn'");
+            $countAll=sqlValue("select count(1) from `$tn`");
 
-			if($countAll>$countOwned){
-				$arrTablesNoOwners[$tn]=($countAll-$countOwned);
-			}
-		}
-
-	}
+            if ($countAll>$countOwned) {
+                $arrTablesNoOwners[$tn]=($countAll-$countOwned);
+            }
+        }
+    }
 
 ?>
 
@@ -85,39 +84,39 @@
 
 <?php
 
-	// if all records of all tables have owners, no need to continue
-	if(!is_array($arrTablesNoOwners)){
-		echo "<div class=\"alert alert-success\"><i class=\"glyphicon glyphicon-ok\"></i> {$Translation['records ownership done']}</div>";
-		include("$currDir/incFooter.php");
-		exit;
-	}
+    // if all records of all tables have owners, no need to continue
+    if (!is_array($arrTablesNoOwners)) {
+        echo "<div class=\"alert alert-success\"><i class=\"glyphicon glyphicon-ok\"></i> {$Translation['records ownership done']}</div>";
+        include("$currDir/incFooter.php");
+        exit;
+    }
 
-	// show status of previous assignments
-	if($status!=''){
-		echo"<div class=\"alert alert-info\">$status</div>";
-	}
+    // show status of previous assignments
+    if ($status!='') {
+        echo"<div class=\"alert alert-info\">$status</div>";
+    }
 
-	// compose groups drop-down
-	$htmlGroups="<option value=\"0\">--- {$Translation['select group']} ---</option>";
-	$res=sql("select groupID, name from membership_groups order by name", $eo);
-	while($row=db_fetch_row($res)){
-		$htmlGroups.="<option value=\"$row[0]\">$row[1]</option>";
-	}
-	$htmlGroups.="</select>";
+    // compose groups drop-down
+    $htmlGroups="<option value=\"0\">--- {$Translation['select group']} ---</option>";
+    $res=sql("select groupID, name from membership_groups order by name", $eo);
+    while ($row=db_fetch_row($res)) {
+        $htmlGroups.="<option value=\"$row[0]\">$row[1]</option>";
+    }
+    $htmlGroups.="</select>";
 ?>
 
 <script>
 	var members=new Array();
 	<?php
-		$res=sql("select groupID, lcase(memberID) from membership_users order by groupID, memberID", $eo);
-		while($row=db_fetch_row($res)){
-			$members[$row[0]].="'".$row[1]."',";
-		}
+        $res=sql("select groupID, lcase(memberID) from membership_users order by groupID, memberID", $eo);
+        while ($row=db_fetch_row($res)) {
+            $members[$row[0]].="'".$row[1]."',";
+        }
 
-		foreach($members as $groupID=>$members){
-			echo "\n\tmembers[$groupID]=[".substr($members, 0, -1)."];";
-		}
-	?>
+        foreach ($members as $groupID=>$members) {
+            echo "\n\tmembers[$groupID]=[".substr($members, 0, -1)."];";
+        }
+    ?>
 
 	function populateMembers(memberSelect, groupSelect){
 		var m=document.getElementsByName(memberSelect)[0];
@@ -159,8 +158,8 @@
 
 		<tbody>
 <?php
-	foreach($arrTablesNoOwners as $tn=>$countNoOwners){
-		?>
+    foreach ($arrTablesNoOwners as $tn=>$countNoOwners) {
+        ?>
 		<tr>
 			<td><?php echo $arrTables[$tn]; ?></td>
 			<td align="right"><?php echo number_format($countNoOwners); ?>&nbsp;</td>
@@ -168,7 +167,7 @@
 			<td><select style="width: 120px;" name="ownerMember_<?php echo $tn; ?>"></select></td>
 			</tr>
 		<?php
-	}
+    }
 ?>
 		<tr><td colspan="4" class="text-center">
 			<input type="button" value="<?php echo $Translation['cancel'] ; ?>" onclick="window.location='pageHome.php';">
@@ -181,5 +180,5 @@
 	</form>
 
 <?php
-	include("$currDir/incFooter.php");
+    include("$currDir/incFooter.php");
 ?>

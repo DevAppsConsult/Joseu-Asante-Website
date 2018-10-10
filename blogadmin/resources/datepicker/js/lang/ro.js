@@ -1,5 +1,5 @@
 var fdLocale = {
-        months:[
+    months:[
                 "Ianuarie",
                 "Februarie",
                 "Martie",
@@ -13,7 +13,7 @@ var fdLocale = {
                 "Noiembrie",
                 "Decembrie"
                 ],
-        fullDay:[
+    fullDay:[
                 "Luni",
                 "Mar\u0163i",
                 "Miercuri",
@@ -31,7 +31,7 @@ var fdLocale = {
 
         firstDayOfWeek:0,
         */
-        titles:[
+    titles:[
                 "Luna anterioar\u00e3",
                 "Luna urm\u00e3toare",
                 "Anul anterior",

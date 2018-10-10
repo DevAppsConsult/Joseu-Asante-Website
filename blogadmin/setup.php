@@ -1,121 +1,130 @@
 <?php
-	/* initial preps and includes */
-	define('APPGINI_SETUP', true); /* needed in included files to tell that this is the setup script */
-	error_reporting(E_ERROR | E_WARNING | E_PARSE);
-	if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-	$curr_dir = dirname(__FILE__);
-	include("$curr_dir/settings-manager.php");
-	include("$curr_dir/defaultLang.php");
-	include("$curr_dir/language.php");
-	include("$curr_dir/db.php");
+    /* initial preps and includes */
+    define('APPGINI_SETUP', true); /* needed in included files to tell that this is the setup script */
+    error_reporting(E_ERROR | E_WARNING | E_PARSE);
+    if (function_exists('set_magic_quotes_runtime')) {
+        @set_magic_quotes_runtime(0);
+    }
+    $curr_dir = dirname(__FILE__);
+    include("$curr_dir/settings-manager.php");
+    include("$curr_dir/defaultLang.php");
+    include("$curr_dir/language.php");
+    include("$curr_dir/db.php");
 
-	/*
-		Determine execution scenario ...
-		this script is called in 1 of 5 scenarios:
-			1. to display the setup instructions no $_GET['show-form']
-			2. to display the setup form $_GET['show-form'], no $_POST['test'], no $_POST['submit']
-			3. to test the db info, $_POST['test'] no $_POST['submit']
-			4. to save setup data, $_POST['submit']
-			5. to show final success message, $_GET['finish']
-		below here, we determine which scenario is being called
-	*/
-	$submit = $test = $form = $finish = false; 
-	(isset($_POST['submit'])   ? $submit = true :
-	(isset($_POST['test'])     ?   $test = true :
-	(isset($_GET['show-form']) ?   $form = true :
-	(isset($_GET['finish'])    ? $finish = true :
-		false))));
-
-
-	/* some function definitions */
-	function undo_magic_quotes($str){
-		return (get_magic_quotes_gpc() ? stripslashes($str) : $str);
-	}
-
-	function isEmail($email){
-		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
-			return $email;
-		}else{
-			return FALSE;
-		}
-	}
-
-	function setup_allowed_username($username){
-		$username = trim(strtolower($username));
-		if(!preg_match('/^[a-z0-9][a-z0-9 _.@]{3,19}$/', $username) || preg_match('/(@@|  |\.\.|___)/', $username)) return false;
-		return $username;
-	}
+    /*
+        Determine execution scenario ...
+        this script is called in 1 of 5 scenarios:
+            1. to display the setup instructions no $_GET['show-form']
+            2. to display the setup form $_GET['show-form'], no $_POST['test'], no $_POST['submit']
+            3. to test the db info, $_POST['test'] no $_POST['submit']
+            4. to save setup data, $_POST['submit']
+            5. to show final success message, $_GET['finish']
+        below here, we determine which scenario is being called
+    */
+    $submit = $test = $form = $finish = false;
+    (isset($_POST['submit'])   ? $submit = true :
+    (isset($_POST['test'])     ?   $test = true :
+    (isset($_GET['show-form']) ?   $form = true :
+    (isset($_GET['finish'])    ? $finish = true :
+        false))));
 
 
-	/* if config file already exists, no need to continue */
-	if(!$finish && detect_config(false)){
-		@header('Location: index.php');
-		exit;
-	}
+    /* some function definitions */
+    function undo_magic_quotes($str)
+    {
+        return (get_magic_quotes_gpc() ? stripslashes($str) : $str);
+    }
+
+    function isEmail($email)
+    {
+        if (preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)) {
+            return $email;
+        } else {
+            return false;
+        }
+    }
+
+    function setup_allowed_username($username)
+    {
+        $username = trim(strtolower($username));
+        if (!preg_match('/^[a-z0-9][a-z0-9 _.@]{3,19}$/', $username) || preg_match('/(@@|  |\.\.|___)/', $username)) {
+            return false;
+        }
+        return $username;
+    }
+
+
+    /* if config file already exists, no need to continue */
+    if (!$finish && detect_config(false)) {
+        @header('Location: index.php');
+        exit;
+    }
 
 
 
-	/* include page header, unless we're testing db connection (ajax) */
-	if(session_id()){ @session_write_close(); }
-	@session_name('BLOG_ADMIN');
-	@session_start();
-	$_REQUEST['Embedded'] = 1; /* to prevent displaying the navigation bar */
-	$x = new StdClass;
-	$x->TableTitle = $Translation['Setup Data']; /* page title */
-	if(!$test) include_once("$curr_dir/header.php");
+    /* include page header, unless we're testing db connection (ajax) */
+    if (session_id()) {
+        @session_write_close();
+    }
+    @session_name('BLOG_ADMIN');
+    @session_start();
+    $_REQUEST['Embedded'] = 1; /* to prevent displaying the navigation bar */
+    $x = new StdClass;
+    $x->TableTitle = $Translation['Setup Data']; /* page title */
+    if (!$test) {
+        include_once("$curr_dir/header.php");
+    }
 
-	if($submit || $test){
+    if ($submit || $test) {
 
-		/* receive posted data */
-		if($submit){
-			$username = setup_allowed_username($_POST['username']);
-			$email = isEmail($_POST['email']);
-			$password = $_POST['password'];
-			$confirmPassword = $_POST['confirmPassword'];
-		}
-		$db_name = str_replace('`', '', $_POST['db_name']);
-		$db_password = $_POST['db_password'];
-		$db_server = $_POST['db_server'];
-		$db_username = $_POST['db_username'];
+        /* receive posted data */
+        if ($submit) {
+            $username = setup_allowed_username($_POST['username']);
+            $email = isEmail($_POST['email']);
+            $password = $_POST['password'];
+            $confirmPassword = $_POST['confirmPassword'];
+        }
+        $db_name = str_replace('`', '', $_POST['db_name']);
+        $db_password = $_POST['db_password'];
+        $db_server = $_POST['db_server'];
+        $db_username = $_POST['db_username'];
 
-		/* validate data */
-		$errors = array();
-		if($submit){
-			if(!$username){
-				$errors[] = $Translation['username invalid'];
-			}
-			if(strlen($password) < 4 || trim($password) != $password){
-				$errors[] = $Translation['password invalid'];
-			}
-			if($password != $confirmPassword){
-				$errors[] = $Translation['password no match'];
-			}
-			if(!$email){
-				$errors[] = $Translation['email invalid'];
-			}
-		}
+        /* validate data */
+        $errors = array();
+        if ($submit) {
+            if (!$username) {
+                $errors[] = $Translation['username invalid'];
+            }
+            if (strlen($password) < 4 || trim($password) != $password) {
+                $errors[] = $Translation['password invalid'];
+            }
+            if ($password != $confirmPassword) {
+                $errors[] = $Translation['password no match'];
+            }
+            if (!$email) {
+                $errors[] = $Translation['email invalid'];
+            }
+        }
 
-		/* test database connection */
-		if(!($connection = @db_connect($db_server, $db_username, $db_password))){
-			$errors[] = $Translation['Database connection error'];
-		}
-		if($connection !== false && !@db_select_db($db_name, $connection)){
-			// attempt to create the database
-			if(!@db_query("CREATE DATABASE IF NOT EXISTS `$db_name`")){
-				$errors[] = @db_error($connection);
-			}elseif(!@db_select_db($db_name, $connection)){
-				$errors[] = @db_error($connection);
-			}
-		}
+        /* test database connection */
+        if (!($connection = @db_connect($db_server, $db_username, $db_password))) {
+            $errors[] = $Translation['Database connection error'];
+        }
+        if ($connection !== false && !@db_select_db($db_name, $connection)) {
+            // attempt to create the database
+            if (!@db_query("CREATE DATABASE IF NOT EXISTS `$db_name`")) {
+                $errors[] = @db_error($connection);
+            } elseif (!@db_select_db($db_name, $connection)) {
+                $errors[] = @db_error($connection);
+            }
+        }
 
-		/* in case of validation errors, output them and exit */
-		if(count($errors)){
-			if($test){
-				echo 'ERROR!';
-				exit;
-			}
-
-			?>
+        /* in case of validation errors, output them and exit */
+        if (count($errors)) {
+            if ($test) {
+                echo 'ERROR!';
+                exit;
+            } ?>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 						<h2 class="text-danger"><?php echo $Translation['The following errors occured']; ?></h2>
@@ -124,65 +133,64 @@
 					</div>
 				</div>
 			<?php
-			include_once("$curr_dir/footer.php");
-			exit;
-		}
+            include_once("$curr_dir/footer.php");
+            exit;
+        }
 
-		/* if db test is successful, output success message and exit */
-		if($test){
-			echo 'SUCCESS!';
-			exit;
-		}
+        /* if db test is successful, output success message and exit */
+        if ($test) {
+            echo 'SUCCESS!';
+            exit;
+        }
 
-		/* create database tables */
-		$silent = false;
-		include("$curr_dir/updateDB.php");
+        /* create database tables */
+        $silent = false;
+        include("$curr_dir/updateDB.php");
 
 
-		/* attempt to save db config file */
-		$new_config = array(
-			'dbServer' => undo_magic_quotes($db_server),
-			'dbUsername' => undo_magic_quotes($db_username),
-			'dbPassword' => undo_magic_quotes($db_password),
-			'dbDatabase' => undo_magic_quotes($db_name),
+        /* attempt to save db config file */
+        $new_config = array(
+            'dbServer' => undo_magic_quotes($db_server),
+            'dbUsername' => undo_magic_quotes($db_username),
+            'dbPassword' => undo_magic_quotes($db_password),
+            'dbDatabase' => undo_magic_quotes($db_name),
 
-			'adminConfig' => array(
-				'adminUsername' => $username,
-				'adminPassword' => md5($password),
-				'notifyAdminNewMembers' => false,
-				'defaultSignUp' => 1,
-				'anonymousGroup' => 'anonymous',
-				'anonymousMember' => 'guest',
-				'groupsPerPage' => 10,
-				'membersPerPage' => 10,
-				'recordsPerPage' => 10,
-				'custom1' => 'Full Name',
-				'custom2' => 'Address',
-				'custom3' => 'City',
-				'custom4' => 'State',
-				'MySQLDateFormat' => '%m/%d/%Y',
-				'PHPDateFormat' => 'n/j/Y',
-				'PHPDateTimeFormat' => 'm/d/Y, h:i a',
-				'senderName' => 'Membership management',
-				'senderEmail' => $email,
-				'approvalSubject' => 'Your membership is now approved',
-				'approvalMessage' => "Dear member,\n\nYour membership is now approved by the admin. You can log in to your account here:\nhttp://{$_SERVER['HTTP_HOST']}" . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "\n\nRegards,\nAdmin",
-				'hide_twitter_feed' => false,
-				'maintenance_mode_message' => '<b>Our website is currently down for maintenance</b><br>\r\nWe expect to be back in a couple hours. Thanks for your patience.',
-				'mail_function' => 'mail',
-				'smtp_server' => '',
-				'smtp_encryption' => '',
-				'smtp_port' => 25,
-				'smtp_user' => '',
-				'smtp_pass' => ''
-			)
-		);
+            'adminConfig' => array(
+                'adminUsername' => $username,
+                'adminPassword' => md5($password),
+                'notifyAdminNewMembers' => false,
+                'defaultSignUp' => 1,
+                'anonymousGroup' => 'anonymous',
+                'anonymousMember' => 'guest',
+                'groupsPerPage' => 10,
+                'membersPerPage' => 10,
+                'recordsPerPage' => 10,
+                'custom1' => 'Full Name',
+                'custom2' => 'Address',
+                'custom3' => 'City',
+                'custom4' => 'State',
+                'MySQLDateFormat' => '%m/%d/%Y',
+                'PHPDateFormat' => 'n/j/Y',
+                'PHPDateTimeFormat' => 'm/d/Y, h:i a',
+                'senderName' => 'Membership management',
+                'senderEmail' => $email,
+                'approvalSubject' => 'Your membership is now approved',
+                'approvalMessage' => "Dear member,\n\nYour membership is now approved by the admin. You can log in to your account here:\nhttp://{$_SERVER['HTTP_HOST']}" . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "\n\nRegards,\nAdmin",
+                'hide_twitter_feed' => false,
+                'maintenance_mode_message' => '<b>Our website is currently down for maintenance</b><br>\r\nWe expect to be back in a couple hours. Thanks for your patience.',
+                'mail_function' => 'mail',
+                'smtp_server' => '',
+                'smtp_encryption' => '',
+                'smtp_port' => 25,
+                'smtp_user' => '',
+                'smtp_pass' => ''
+            )
+        );
 
-		$save_result = save_config($new_config);
-		if($save_result !== true){
-			// display instructions for manually creating them if saving not successful
-			$folder_path_formatted = '<strong>' . dirname(__FILE__) . '</strong>';
-			?>
+        $save_result = save_config($new_config);
+        if ($save_result !== true) {
+            // display instructions for manually creating them if saving not successful
+            $folder_path_formatted = '<strong>' . dirname(__FILE__) . '</strong>'; ?>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 						<p style="background-color: white; padding: 20px; margin-bottom: 40px; border-radius: 4px;"><img src="logo.png"></p>
@@ -192,19 +200,18 @@
 					</div>
 				</div>
 			<?php
-			exit;
-		}
+            exit;
+        }
 
 
-		/* sign in as admin if everything went ok */
-		$_SESSION['adminUsername'] = $username;
-		$_SESSION['memberID'] = $username;
-		$_SESSION['memberGroupID'] = 2; // this should work fine in most cases
+        /* sign in as admin if everything went ok */
+        $_SESSION['adminUsername'] = $username;
+        $_SESSION['memberID'] = $username;
+        $_SESSION['memberGroupID'] = 2; // this should work fine in most cases
 
 
 
-		/* redirect to finish page using javascript */
-		?>
+        /* redirect to finish page using javascript */ ?>
 		<script>
 			jQuery(function(){
 				var a = window.location.href + '?finish=1';
@@ -219,78 +226,83 @@
 		</script>
 		<?php
 
-		// exit
-		include_once("$curr_dir/footer.php");
-		exit;
-	}elseif($finish){
-		detect_config();
-		@include("$curr_dir/config.php");
-	}
+        // exit
+        include_once("$curr_dir/footer.php");
+        exit;
+    } elseif ($finish) {
+        detect_config();
+        @include("$curr_dir/config.php");
+    }
 ?>
 
 	<div class="row"><div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 	<?php
-		if(!$form && !$finish){ /* show checks and instructions */
+        if (!$form && !$finish) { /* show checks and instructions */
 
-			/* initial checks */
-			$checks = array(); /* populate with array('class' => 'warning|danger', 'message' => 'error message') */
+            /* initial checks */
+            $checks = array(); /* populate with array('class' => 'warning|danger', 'message' => 'error message') */
 
-			if(!extension_loaded('mysql') && !extension_loaded('mysqli')){
-				$checks[] = array(
-					'class' => 'danger',
-					'message' => 'ERROR: PHP is not configured to connect to MySQL on this machine. Please see <a href=http://www.php.net/manual/en/ref.mysql.php>this page</a> for help on how to configure MySQL.'
-				);
-			}
+            if (!extension_loaded('mysql') && !extension_loaded('mysqli')) {
+                $checks[] = array(
+                    'class' => 'danger',
+                    'message' => 'ERROR: PHP is not configured to connect to MySQL on this machine. Please see <a href=http://www.php.net/manual/en/ref.mysql.php>this page</a> for help on how to configure MySQL.'
+                );
+            }
 
-			if(!extension_loaded('iconv')){
-				$checks[] = array(
-					'class' => 'warning',
-					'message' => 'WARNING: PHP is not configured to use iconv on this machine. Some features of this application might not function correctly. Please see <a href=http://php.net/manual/en/book.iconv.php>this page</a> for help on how to configure iconv.'
-				);
-				?>
+            if (!extension_loaded('iconv')) {
+                $checks[] = array(
+                    'class' => 'warning',
+                    'message' => 'WARNING: PHP is not configured to use iconv on this machine. Some features of this application might not function correctly. Please see <a href=http://php.net/manual/en/book.iconv.php>this page</a> for help on how to configure iconv.'
+                ); ?>
 					<div class="alert alert-warning alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						
 					</div>
 				<?php
-			}
+            }
 
-			if(!extension_loaded('gd')){
-				$checks[] = array(
-					'class' => 'warning',
-					'message' => 'WARNING: PHP is not configured to use GD on this machine. This will prevent creating thumbnails of uploaded images. Please see <a href=http://php.net/manual/en/book.image.php>this page</a> for help on how to configure GD.'
-				);
-			}
+            if (!extension_loaded('gd')) {
+                $checks[] = array(
+                    'class' => 'warning',
+                    'message' => 'WARNING: PHP is not configured to use GD on this machine. This will prevent creating thumbnails of uploaded images. Please see <a href=http://php.net/manual/en/book.image.php>this page</a> for help on how to configure GD.'
+                );
+            }
 
-			if(!@is_writable("{$curr_dir}/images")){
-				$checks[] = array(
-					'class' => 'warning',
-					'message' => '<div style="text-direction: ltr; text-align: left;">WARNING: <dfn><abbr title="' . dirname(__FILE__) . '/images">images</abbr></dfn> folder is not writeable. This will prevent file uploads from working correctly. Please set that folder as writeable.<br><br>For example, you might need to <code>chmod 777</code> using FTP, or if this is a linux system and you have shell access, better try using <code>chown -R www-data:www-data ' . dirname(__FILE__) . '</code>, replacing <i>www-data</i> with the actual username running the server process if necessary.</div>'
-				);
-			}
+            if (!@is_writable("{$curr_dir}/images")) {
+                $checks[] = array(
+                    'class' => 'warning',
+                    'message' => '<div style="text-direction: ltr; text-align: left;">WARNING: <dfn><abbr title="' . dirname(__FILE__) . '/images">images</abbr></dfn> folder is not writeable. This will prevent file uploads from working correctly. Please set that folder as writeable.<br><br>For example, you might need to <code>chmod 777</code> using FTP, or if this is a linux system and you have shell access, better try using <code>chown -R www-data:www-data ' . dirname(__FILE__) . '</code>, replacing <i>www-data</i> with the actual username running the server process if necessary.</div>'
+                );
+            }
 
-			if(count($checks) && !isset($_POST['test'])){
-				$stop_setup = false;
-				?>
+            if (count($checks) && !isset($_POST['test'])) {
+                $stop_setup = false; ?>
 				<div class="panel panel-warning vspacer-lg">
 					<div class="panel-heading"><h3 class="panel-title">Warnings</h3></div>
 					<div class="panel-body">
-						<?php foreach($checks as $chk){ if($chk['class'] == 'danger'){ $stop_setup = true; } ?>
+						<?php foreach ($checks as $chk) {
+                    if ($chk['class'] == 'danger') {
+                        $stop_setup = true;
+                    } ?>
 							<div class="text-<?php echo $chk['class']; ?> vspacer-lg">
-								<i class="glyphicon glyphicon-<?php echo ($chk['class'] == 'danger' ? 'remove' : 'exclamation-sign'); ?>"></i>
+								<i class="glyphicon glyphicon-<?php echo($chk['class'] == 'danger' ? 'remove' : 'exclamation-sign'); ?>"></i>
 								<?php echo $chk['message']; ?>
 							</div>
-						<?php } ?>
+						<?php
+                } ?>
 						<a href="setup.php" class="btn btn-success pull-right vspacer-lg hspacer-lg"><i class="glyphicon glyphicon-refresh"></i> Recheck</a>
 					</div>
-					<?php if($stop_setup){ ?>
+					<?php if ($stop_setup) {
+                    ?>
 						<div class="panel-footer">You must fix at least the issues marked with <i class="glyphicon glyphicon-remove text-danger"></i> before continuing ...</div>
-					<?php } ?>
+					<?php
+                } ?>
 				</div>
 				<?php
-				if($stop_setup) exit;
-			}
-		?>
+                if ($stop_setup) {
+                    exit;
+                }
+            } ?>
 
 		<div id="intro1" class="instructions">
 			<p style="background-color: white; padding: 20px; margin-bottom: 40px; border-radius: 4px;"><img src="logo.png"></p>
@@ -306,7 +318,8 @@
 			<p class="text-center"><button class="btn btn-success btn-lg" id="show-login-form" type="button"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['Lets go']; ?></button></p>
 		</div>
 
-	<?php }elseif($form){ /* show setup form */ ?>
+	<?php
+        } elseif ($form) { /* show setup form */ ?>
 
 		<div class="page-header"><h1><?php echo $Translation['Setup Data']; ?></h1></div>
 
@@ -427,20 +440,21 @@
 			</div>
 		</form>
 
-	<?php }elseif($finish){ ?>
+	<?php
+        } elseif ($finish) {
+            ?>
 
 		<?php
-			// make sure this is an admin
-			if(!$_SESSION['adminUsername']){
-				?>
+            // make sure this is an admin
+            if (!$_SESSION['adminUsername']) {
+                ?>
 				<div id="manual-redir" style="width: 400px; margin: 10px auto;">If not redirected automatically, <a href="index.php">click here</a>!</div>
 				<script>
 					window.location = 'index.php';
 				</script>
 				<?php
-				exit;
-			}
-		?>
+                exit;
+            } ?>
 
 		<div class="instructions">
 			<p style="background-color: white; padding: 20px; margin-bottom: 40px; border-radius: 4px;"><img src="logo.png"></p>
@@ -458,11 +472,13 @@
 			</div>
 		</div>
 
-	<?php } ?>
+	<?php
+        } ?>
 	</div></div>
 
 	<script>
-	<?php if(!$form && !$finish){ ?>
+	<?php if (!$form && !$finish) {
+            ?>
 		$j(function() {
 			$('show-intro2').observe('click', function(){
 				$('intro1').hide();
@@ -473,7 +489,9 @@
 				window.location = a + '?show-form=1';
 			});
 		});
-	<?php }elseif($form){ ?>
+	<?php
+        } elseif ($form) {
+            ?>
 		$j(function() {
 			/* password strength feedback */
 			$('password').observe('keyup', function(){
@@ -578,7 +596,8 @@
 				}, 1000);
 			}
 		}
-	<?php } ?>
+	<?php
+        } ?>
 	</script>
 
 	<style>

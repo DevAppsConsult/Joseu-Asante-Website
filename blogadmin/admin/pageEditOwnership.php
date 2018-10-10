@@ -1,69 +1,73 @@
 <?php
-	$currDir = dirname(__FILE__);
-	require("{$currDir}/incCommon.php");
+    $currDir = dirname(__FILE__);
+    require("{$currDir}/incCommon.php");
 
-	$recID = 0;
+    $recID = 0;
 
-	// request to save changes?
-	if(isset($_REQUEST['saveChanges'])){
-		// validate data
-		$recID = intval($_REQUEST['recID']);
-		$memberID = makeSafe(strtolower($_REQUEST['memberID']));
-		###############################
+    // request to save changes?
+    if (isset($_REQUEST['saveChanges'])) {
+        // validate data
+        $recID = intval($_REQUEST['recID']);
+        $memberID = makeSafe(strtolower($_REQUEST['memberID']));
+        ###############################
 
-		/* for ajax requests coming from the users' area, get the recID */
-		if(is_ajax()){
-			$tableName = $_REQUEST['t'];
-			$pkValue = $_REQUEST['pkValue'];
+        /* for ajax requests coming from the users' area, get the recID */
+        if (is_ajax()) {
+            $tableName = $_REQUEST['t'];
+            $pkValue = $_REQUEST['pkValue'];
 
-			if(!in_array($tableName, array_keys(getTableList()))) die($Translation["invalid table"]);
+            if (!in_array($tableName, array_keys(getTableList()))) {
+                die($Translation["invalid table"]);
+            }
 
-			if(!$pkValue) die($Translation["invalid primary key"]);
-		}
+            if (!$pkValue) {
+                die($Translation["invalid primary key"]);
+            }
+        }
 
-		if($recID){
-			$tableName = sqlValue("select tableName from membership_userrecords where recID='{$recID}'");
-			$pkValue = sqlValue("select pkValue from membership_userrecords where recID='{$recID}'");
-		}
+        if ($recID) {
+            $tableName = sqlValue("select tableName from membership_userrecords where recID='{$recID}'");
+            $pkValue = sqlValue("select pkValue from membership_userrecords where recID='{$recID}'");
+        }
 
-		// update ownership
-		set_record_owner($tableName, $pkValue, $memberID);
+        // update ownership
+        set_record_owner($tableName, $pkValue, $memberID);
 
-		if(is_ajax()){
-			echo 'OK';
-			exit;
-		}
+        if (is_ajax()) {
+            echo 'OK';
+            exit;
+        }
 
-		// redirect to member editing page
-		redirect("admin/pageEditOwnership.php?recID={$recID}");
-		exit;
-	}elseif(isset($_GET['recID'])){
-		// we have an edit request for a member
-		$recID = intval($_GET['recID']);
-	}
+        // redirect to member editing page
+        redirect("admin/pageEditOwnership.php?recID={$recID}");
+        exit;
+    } elseif (isset($_GET['recID'])) {
+        // we have an edit request for a member
+        $recID = intval($_GET['recID']);
+    }
 
-	if(!$recID){
-		redirect("admin/pageViewRecords.php");
-		exit;
-	}
+    if (!$recID) {
+        redirect("admin/pageViewRecords.php");
+        exit;
+    }
 
-	$GLOBALS['page_title'] = $Translation['edit Record Ownership'];
-	include("{$currDir}/incHeader.php");
+    $GLOBALS['page_title'] = $Translation['edit Record Ownership'];
+    include("{$currDir}/incHeader.php");
 
-	// fetch record data to fill in the form below
-	$res = sql("select * from membership_userrecords where recID='{$recID}'", $eo);
-	if($row = db_fetch_assoc($res)){
-		// get record data
-		$tableName = $row['tableName'];
-		$pkValue = $row['pkValue'];
-		$memberID = strtolower($row['memberID']);
-		$dateAdded = @date($adminConfig['PHPDateTimeFormat'], $row['dateAdded']);
-		$dateUpdated = @date($adminConfig['PHPDateTimeFormat'], $row['dateUpdated']);
-		$groupID = $row['groupID'];
-	}else {
-		// no such record exists
-		die("<div class=\"alert alert-danger\">{$Translation["record not found error"]}</div>");
-	}
+    // fetch record data to fill in the form below
+    $res = sql("select * from membership_userrecords where recID='{$recID}'", $eo);
+    if ($row = db_fetch_assoc($res)) {
+        // get record data
+        $tableName = $row['tableName'];
+        $pkValue = $row['pkValue'];
+        $memberID = strtolower($row['memberID']);
+        $dateAdded = @date($adminConfig['PHPDateTimeFormat'], $row['dateAdded']);
+        $dateUpdated = @date($adminConfig['PHPDateTimeFormat'], $row['dateUpdated']);
+        $groupID = $row['groupID'];
+    } else {
+        // no such record exists
+        die("<div class=\"alert alert-danger\">{$Translation["record not found error"]}</div>");
+    }
 ?>
 
 <div class="page-header"><h1><?php echo $Translation['edit Record Ownership']; ?></h1></div>
@@ -78,8 +82,8 @@
 		</label>
 		<div class="col-xs-10 col-sm-7 col-md-8 col-lg-5">
 			<?php
-				echo bootstrapSQLSelect('groupID', "select g.groupID, g.name from membership_groups g order by name", $groupID);
-			?>
+                echo bootstrapSQLSelect('groupID', "select g.groupID, g.name from membership_groups g order by name", $groupID);
+            ?>
 		</div>
 		<div class="col-xs-2 col-sm-1">
 			<a class="btn btn-default" title="<?php echo html_attr($Translation['view all records by group']); ?>" href="pageViewRecords.php?groupID=<?php echo urlencode($groupID); ?>">
@@ -94,8 +98,8 @@
 		</label>
 		<div class="col-xs-10 col-sm-7 col-md-8 col-lg-5">
 			<?php
-				echo bootstrapSQLSelect('memberID', "select lcase(memberID), lcase(memberID) from membership_users where groupID='$groupID' order by memberID", $memberID);
-			?>
+                echo bootstrapSQLSelect('memberID', "select lcase(memberID), lcase(memberID) from membership_users where groupID='$groupID' order by memberID", $memberID);
+            ?>
 			<span class="help-block"><?php echo $Translation["switch record ownership"]; ?></span>
 		</div>
 		<div class="col-xs-2 col-sm-1">
@@ -144,12 +148,12 @@
 		<div class="col-sm-8 col-md-9 col-lg-6">
 			<div class="form-control-static">
 				<?php
-					// get pk field name
-					$pkField = getPKFieldName($tableName);
+                    // get pk field name
+                    $pkField = getPKFieldName($tableName);
 
-					$res = sql("select * from `{$tableName}` where `{$pkField}`='" . makeSafe($pkValue, false) . "'", $eo);
-					if($row = db_fetch_assoc($res)){
-						?>
+                    $res = sql("select * from `{$tableName}` where `{$pkField}`='" . makeSafe($pkValue, false) . "'", $eo);
+                    if ($row = db_fetch_assoc($res)) {
+                        ?>
 						<div style="margin-bottom: 1em;">
 							<a href="../<?php echo $tableName; ?>_view.php?SelectedID=<?php echo urlencode($pkValue); ?>&dvprint_x=1" target="_blank" class="btn btn-default">
 								<i class='glyphicon glyphicon-print'></i>
@@ -170,33 +174,35 @@
 							</thead>
 							<tbody>
 								<?php
-									foreach ($row as $field_name => $field_value){
-										$field_link = false;
-										if(@is_file("{$currDir}/../{$Translation['ImageFolder']}{$field_value}")){
-										   $field_value = "<a href=\"../{$Translation['ImageFolder']}{$field_value}\" target=\"_blank\">" . html_attr($field_value) . "</a>";
-										   $field_link = true;
-										}
-										?>
+                                    foreach ($row as $field_name => $field_value) {
+                                        $field_link = false;
+                                        if (@is_file("{$currDir}/../{$Translation['ImageFolder']}{$field_value}")) {
+                                            $field_value = "<a href=\"../{$Translation['ImageFolder']}{$field_value}\" target=\"_blank\">" . html_attr($field_value) . "</a>";
+                                            $field_link = true;
+                                        } ?>
 										<tr>
 										   <td><?php echo $field_name; ?></td>
-										   <?php if($field_link){ ?>
+										   <?php if ($field_link) {
+                                            ?>
 										       <td><?php echo $field_value; ?></td>
-										   <?php }else{ ?>
+										   <?php
+                                        } else {
+                                            ?>
 										       <td><?php echo nl2br(htmlspecialchars($field_value, ENT_NOQUOTES | ENT_COMPAT | ENT_HTML401, datalist_db_encoding)); ?></td>
-										   <?php } ?>
+										   <?php
+                                        } ?>
 										</tr>
 										<?php
-									}
-								?>
+                                    } ?>
 							</tbody>
 						</table>
 						<?php
-					}else{
-						?>
+                    } else {
+                        ?>
 						<div class="alert alert-danger"><?php echo $Translation['record not found error']; ?></div>
 						<?php
-					}
-				?>
+                    }
+                ?>
 			</div>
 		</div>
 	</div>

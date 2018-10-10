@@ -1,5 +1,5 @@
 var fdLocale = {
-        months:[
+    months:[
                 "January",
                 "February",
                 "March",
@@ -13,7 +13,7 @@ var fdLocale = {
                 "November",
                 "December"
                 ],
-        fullDay:[
+    fullDay:[
                 "Monday",
                 "Tuesday",
                 "Wednesday",
@@ -31,7 +31,7 @@ var fdLocale = {
 
         firstDayOfWeek:0,
         */
-        titles:[
+    titles:[
                 "Previous month",
                 "Next month",
                 "Previous year",

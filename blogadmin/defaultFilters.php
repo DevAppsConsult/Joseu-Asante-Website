@@ -1,34 +1,41 @@
-<?php if(!isset($Translation)){ @header('Location: index.php'); exit; } ?>
+<?php if (!isset($Translation)) {
+    @header('Location: index.php');
+    exit;
+} ?>
 
 <div class="page-header"><h1>
 	<span id="table-title-img"><img align="top" src="<?php echo $this->TableIcon; ?>" /></span> <?php echo $this->TableTitle . " " . $Translation['filters']; ?>
 </h1></div>
 
 <?php
-	/* SPM link for admin */
-	if(getLoggedAdmin()){
-		$spm_installed = false;
-		$plugins = get_plugins();
-		foreach($plugins as $pl){
-			if($pl['title'] == 'Search Page Maker') $spm_installed = true;
-		}
+    /* SPM link for admin */
+    if (getLoggedAdmin()) {
+        $spm_installed = false;
+        $plugins = get_plugins();
+        foreach ($plugins as $pl) {
+            if ($pl['title'] == 'Search Page Maker') {
+                $spm_installed = true;
+            }
+        }
 
-		if(!$spm_installed) echo Notification::show(array(
-			'message' => '<i class="glyphicon glyphicon-info-sign"></i> Wish to offer your users an easier, more-tailored search experience? <a href="https://bigprof.com/appgini/applications/search-page-maker-plugin-discount" target="_blank" class="alert-link"><i class="glyphicon glyphicon-hand-right"></i> Click here to learn how Search Page Maker plugin can help</a>.',
-			'dismiss_days' => 30,
-			'class' => 'success',
-			'id' => 'spm_notification'
-		));
-	}
+        if (!$spm_installed) {
+            echo Notification::show(array(
+            'message' => '<i class="glyphicon glyphicon-info-sign"></i> Wish to offer your users an easier, more-tailored search experience? <a href="https://bigprof.com/appgini/applications/search-page-maker-plugin-discount" target="_blank" class="alert-link"><i class="glyphicon glyphicon-hand-right"></i> Click here to learn how Search Page Maker plugin can help</a>.',
+            'dismiss_days' => 30,
+            'class' => 'success',
+            'id' => 'spm_notification'
+        ));
+        }
+    }
 ?>
 
 <!-- checkboxes for parent filterers -->
 <?php
-	foreach($this->filterers as $filterer => $caption){
-		$fltrr_name = 'filterer_' . $filterer;
-		$fltrr_val = $_REQUEST[$fltrr_name];
-		if($fltrr_val != ''){
-			?>
+    foreach ($this->filterers as $filterer => $caption) {
+        $fltrr_name = 'filterer_' . $filterer;
+        $fltrr_val = $_REQUEST[$fltrr_name];
+        if ($fltrr_val != '') {
+            ?>
 			<div class="row">
 				<div class="col-md-offset-3 col-md-7">
 					<div class="checkbox">
@@ -51,9 +58,9 @@
 				</div>
 			</div>
 			<?php
-			break; // currently, only one filterer can be applied at a time
-		}
-	}
+            break; // currently, only one filterer can be applied at a time
+        }
+    }
 ?>
 
 
@@ -67,26 +74,26 @@
 
 <!-- filter groups -->
 <?php
-	for($i = 1; $i <= (3 * $FiltersPerGroup); $i++){ // Number of filters allowed
-		$fields = '';
-		$operators = '';
+    for ($i = 1; $i <= (3 * $FiltersPerGroup); $i++) { // Number of filters allowed
+        $fields = '';
+        $operators = '';
 
-		if(($i % $FiltersPerGroup == 1) && $i != 1){
-			$seland = new Combo;
-			$seland->ListItem = array($Translation["or"], $Translation["and"]);
-			$seland->ListData = array("or", "and");
-			$seland->SelectName = "FilterAnd[$i]";
-			$seland->SelectedData = $FilterAnd[$i];
-			$seland->Render();
-			?>
+        if (($i % $FiltersPerGroup == 1) && $i != 1) {
+            $seland = new Combo;
+            $seland->ListItem = array($Translation["or"], $Translation["and"]);
+            $seland->ListData = array("or", "and");
+            $seland->SelectName = "FilterAnd[$i]";
+            $seland->SelectedData = $FilterAnd[$i];
+            $seland->Render(); ?>
 			<!-- how to combine next group with previous one: and/or? -->
-			<div class="row FilterSet<?php echo ($i - 1); ?>" style="border-bottom: dotted 1px #DDD;">
+			<div class="row FilterSet<?php echo($i - 1); ?>" style="border-bottom: dotted 1px #DDD;">
 				<div class="col-md-5 vspacer-md"></div>
 				<div class="col-md-2 vspacer-md">
 					<?php echo $seland->HTML; ?>
 				</div>
 			</div>
-		<?php } ?>
+		<?php
+        } ?>
 
 		<!-- filter rule -->
 		<div class="row FilterSet<?php echo $i; ?>" style="border-bottom: dotted 1px #DDD;">
@@ -95,41 +102,38 @@
 			<div class="col-md-1 hidden-md hidden-lg vspacer-md"><strong><?php echo $Translation["filter"] . sprintf(" %02d", $i); ?></strong></div>
 			<div class="col-md-1 vspacer-md">
 				<?php
-					// And, Or select
-					if($i % $FiltersPerGroup != 1){
-						$seland = new Combo;
-						$seland->ListItem = array($Translation["and"], $Translation["or"]);
-						$seland->ListData = array("and", "or");
-						$seland->SelectName = "FilterAnd[$i]";
-						$seland->SelectedData = $FilterAnd[$i];
-						$seland->Render();
-						echo $seland->HTML;
-					}
-				?>
+                    // And, Or select
+                    if ($i % $FiltersPerGroup != 1) {
+                        $seland = new Combo;
+                        $seland->ListItem = array($Translation["and"], $Translation["or"]);
+                        $seland->ListData = array("and", "or");
+                        $seland->SelectName = "FilterAnd[$i]";
+                        $seland->SelectedData = $FilterAnd[$i];
+                        $seland->Render();
+                        echo $seland->HTML;
+                    } ?>
 			</div>
 			<div class="col-md-2 vspacer-md">
 				<?php
-					// Fields list
-					$selfields = new Combo;
-					$selfields->SelectName = "FilterField[$i]";
-					$selfields->SelectedData = $FilterField[$i];
-					$selfields->ListItem = array_values($this->QueryFieldsFilters);
-					$selfields->ListData = array_keys($this->QueryFieldsIndexed);
-					$selfields->Render();
-					echo $selfields->HTML;
-				?>
+                    // Fields list
+                    $selfields = new Combo;
+        $selfields->SelectName = "FilterField[$i]";
+        $selfields->SelectedData = $FilterField[$i];
+        $selfields->ListItem = array_values($this->QueryFieldsFilters);
+        $selfields->ListData = array_keys($this->QueryFieldsIndexed);
+        $selfields->Render();
+        echo $selfields->HTML; ?>
 			</div>
 			<div class="col-md-2 vspacer-md">
 				<?php
-					// Operators list
-					$selop = new Combo;
-					$selop->ListItem = array($Translation["equal to"], $Translation["not equal to"], $Translation["greater than"], $Translation["greater than or equal to"], $Translation["less than"], $Translation["less than or equal to"] , $Translation["like"] , $Translation["not like"], $Translation["is empty"], $Translation["is not empty"]);
-					$selop->ListData = array_keys($GLOBALS['filter_operators']);
-					$selop->SelectName = "FilterOperator[$i]";
-					$selop->SelectedData = $FilterOperator[$i];
-					$selop->Render();
-					echo $selop->HTML;
-				?>
+                    // Operators list
+                    $selop = new Combo;
+        $selop->ListItem = array($Translation["equal to"], $Translation["not equal to"], $Translation["greater than"], $Translation["greater than or equal to"], $Translation["less than"], $Translation["less than or equal to"] , $Translation["like"] , $Translation["not like"], $Translation["is empty"], $Translation["is not empty"]);
+        $selop->ListData = array_keys($GLOBALS['filter_operators']);
+        $selop->SelectName = "FilterOperator[$i]";
+        $selop->SelectedData = $FilterOperator[$i];
+        $selop->Render();
+        echo $selop->HTML; ?>
 			</div>
 			<div class="col-md-2 vspacer-md">
 				<?php /* Comparison expression */ ?>
@@ -140,7 +144,7 @@
 			</div>
 		</div>
 		<?php
-	}
+    }
 ?>
 
 <script>
@@ -162,52 +166,53 @@
 
 <!-- sorting rules -->
 <?php
-	// Fields list
-	$sortFields = new Combo;
-	$sortFields->ListItem = $this->ColCaption;
-	$sortFields->ListData = $this->ColNumber;
+    // Fields list
+    $sortFields = new Combo;
+    $sortFields->ListItem = $this->ColCaption;
+    $sortFields->ListData = $this->ColNumber;
 
-	// sort direction
-	$sortDirs = new Combo;
-	$sortDirs->ListItem = array($Translation['ascending'], $Translation['descending']);
-	$sortDirs->ListData = array('asc', 'desc');
-	$num_rules = min(maxSortBy, count($this->ColCaption));
+    // sort direction
+    $sortDirs = new Combo;
+    $sortDirs->ListItem = array($Translation['ascending'], $Translation['descending']);
+    $sortDirs->ListData = array('asc', 'desc');
+    $num_rules = min(maxSortBy, count($this->ColCaption));
 
-	for($i = 0; $i < $num_rules; $i++){
-		$sfi = $sd = '';
-		if(isset($orderBy[$i])) foreach($orderBy[$i] as $sfi => $sd);
+    for ($i = 0; $i < $num_rules; $i++) {
+        $sfi = $sd = '';
+        if (isset($orderBy[$i])) {
+            foreach ($orderBy[$i] as $sfi => $sd);
+        }
 
-		$sortFields->SelectName = "OrderByField$i";
-		$sortFields->SelectID = "OrderByField$i";
-		$sortFields->SelectedData = $sfi;
-		$sortFields->SelectedText = '';
-		$sortFields->Render();
+        $sortFields->SelectName = "OrderByField$i";
+        $sortFields->SelectID = "OrderByField$i";
+        $sortFields->SelectedData = $sfi;
+        $sortFields->SelectedText = '';
+        $sortFields->Render();
 
-		$sortDirs->SelectName = "OrderDir$i";
-		$sortDirs->SelectID = "OrderDir$i";
-		$sortDirs->SelectedData = $sd;
-		$sortDirs->SelectedText = '';
-		$sortDirs->Render();
+        $sortDirs->SelectName = "OrderDir$i";
+        $sortDirs->SelectID = "OrderDir$i";
+        $sortDirs->SelectedData = $sd;
+        $sortDirs->SelectedText = '';
+        $sortDirs->Render();
 
-		$border_style = ($i == $num_rules - 1 ? 'solid 2px #DDD' : 'dotted 1px #DDD');
-		?>
+        $border_style = ($i == $num_rules - 1 ? 'solid 2px #DDD' : 'dotted 1px #DDD'); ?>
 		<!-- sorting rule -->
 		<div class="row" style="border-bottom: <?php echo $border_style; ?>;">
-			<div class="col-xs-2 vspacer-md hidden-md hidden-lg"><strong><?php echo ($i ? $Translation['then by'] : $Translation['order by']); ?></strong></div>
-			<div class="col-md-2 col-md-offset-2 vspacer-md hidden-xs hidden-sm text-right"><strong><?php echo ($i ? $Translation['then by'] : $Translation['order by']); ?></strong></div>
+			<div class="col-xs-2 vspacer-md hidden-md hidden-lg"><strong><?php echo($i ? $Translation['then by'] : $Translation['order by']); ?></strong></div>
+			<div class="col-md-2 col-md-offset-2 vspacer-md hidden-xs hidden-sm text-right"><strong><?php echo($i ? $Translation['then by'] : $Translation['order by']); ?></strong></div>
 			<div class="col-xs-6 col-md-4 vspacer-md"><?php echo $sortFields->HTML; ?></div>
 			<div class="col-xs-4 col-md-2 vspacer-md"><?php echo $sortDirs->HTML; ?></div>
 		</div>
 		<?php
-	}
+    }
 
-	// ownership options
-	$mi = getMemberInfo();
-	$adminConfig = config('adminConfig');
-	$isAnonymous = ($mi['group'] == $adminConfig['anonymousGroup']);
+    // ownership options
+    $mi = getMemberInfo();
+    $adminConfig = config('adminConfig');
+    $isAnonymous = ($mi['group'] == $adminConfig['anonymousGroup']);
 
-	if(!$isAnonymous){
-		?>
+    if (!$isAnonymous) {
+        ?>
 		<!-- ownership header  --> 
 		<div class="row filterByOwnership" style="border-bottom: solid 2px #DDD;">
 			<div class="col-md-offset-2 col-md-8 vspacer-lg"><strong><?php echo $Translation['Records to display']; ?></strong></div>
@@ -237,7 +242,7 @@
 			</div>
 		</div>
 		<?php
-	}
+    }
 ?>
 
 <!-- filter actions -->
@@ -246,11 +251,13 @@
 		<input type="hidden" name="apply_sorting" value="1">
 		<button type="submit" id="applyFilters" class="btn btn-success btn-block btn-lg"><i class="glyphicon glyphicon-ok"></i> <?php echo $Translation['apply filters']; ?></button>
 	</div>
-	<?php if($this->AllowSavingFilters){ ?>
+	<?php if ($this->AllowSavingFilters) {
+    ?>
 		<div class="col-md-3 vspacer-lg">
 			<button type="submit" class="btn btn-default btn-block btn-lg" id="SaveFilter" name="SaveFilter_x" value="1"><i class="glyphicon glyphicon-align-left"></i> <?php echo $Translation['save filters']; ?></button>
 		</div>
-	<?php } ?>
+	<?php
+} ?>
 	<div class="col-md-2 vspacer-lg">
 		<button onclick="jQuery('form')[0].reset();" type="submit" id="cancelFilters" class="btn btn-warning btn-block btn-lg"><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation['Cancel']; ?></button>
 	</div>

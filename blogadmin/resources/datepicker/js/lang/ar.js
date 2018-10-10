@@ -1,5 +1,5 @@
 var fdLocale = {
-        months:[
+    months:[
                 "يناير",
                 "فبراير",
                 "مارس",
@@ -13,7 +13,7 @@ var fdLocale = {
                 "نوٿمبر",
                 "ديسمبر"
                 ],
-        fullDay:[
+    fullDay:[
                 "الاثنين",
                 "الثلاثاء",
                 "الأربعاء",
@@ -26,7 +26,7 @@ var fdLocale = {
         /* Only stipulate the dayAbbr should the first letter of the fullDay not suffice        */
 
            
-        dayAbbr:[
+    dayAbbr:[
                 "الاثنين",
                 "الثلاثاء",
                 "الأربعاء",
@@ -41,7 +41,7 @@ var fdLocale = {
         firstDayOfWeek:0,
         */
         
-        titles:[
+    titles:[
                 "الشهر السابق",
                 "الشهر المقبل",
                 "السنة السابقة",

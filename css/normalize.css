@@ -6,9 +6,9 @@
  *    without disabling user zoom.
  */
 html {
-	font-family: sans-serif; /* 1 */
-	-ms-text-size-adjust: 100%; /* 2 */
-	-webkit-text-size-adjust: 100%; /* 2 */
+    font-family: sans-serif; /* 1 */
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100%; /* 2 */
 }
 
 /**
@@ -32,8 +32,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
  */
 audio, canvas, progress, video {
-	display: inline-block; /* 1 */
-	vertical-align: baseline; /* 2 */
+    display: inline-block; /* 1 */
+    vertical-align: baseline; /* 2 */
 }
 
 /**
@@ -41,8 +41,8 @@ audio, canvas, progress, video {
  * Remove excess height in iOS 5 devices.
  */
 audio:not([controls]) {
-	display: none;
-	height: 0;
+    display: none;
+    height: 0;
 }
 
 /**
@@ -88,16 +88,16 @@ dfn {font-style: italic;}
  * contexts in Firefox 4+, Safari, and Chrome.
  */
 h1 {
-	font-size: 2em;
-	margin: 0.67em 0;
+    font-size: 2em;
+    margin: 0.67em 0;
 }
 
 /**
  * Address styling not present in IE 8/9.
  */
 mark {
-	background: #ff0;
-	color: #000;
+    background: #ff0;
+    color: #000;
 }
 
 /**
@@ -109,10 +109,10 @@ small {font-size: 80%;}
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
 sub, sup {
-	font-size: 75%;
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
 }
 sup {top: -0.5em;}
 sub {bottom: -0.25em;}
@@ -142,8 +142,8 @@ figure {margin: 1em 40px;}
  * Address differences between Firefox and other browsers.
  */
 hr {
-	box-sizing: content-box;
-	height: 0;
+    box-sizing: content-box;
+    height: 0;
 }
 
 /**
@@ -155,8 +155,8 @@ pre {overflow: auto;}
  * Address odd `em`-unit font size rendering in all browsers.
  */
 code, kbd, pre, samp {
-	font-family: monospace, monospace;
-	font-size: 1em;
+    font-family: monospace, monospace;
+    font-size: 1em;
 }
 
 /* Forms
@@ -174,9 +174,9 @@ code, kbd, pre, samp {
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
  */
 button, input, optgroup, select, textarea {
-	color: inherit; /* 1 */
-	font: inherit; /* 2 */
-	margin: 0; /* 3 */
+    color: inherit; /* 1 */
+    font: inherit; /* 2 */
+    margin: 0; /* 3 */
 }
 
 /**
@@ -203,8 +203,8 @@ button,
 html input[type="button"], /* 1 */
 input[type="reset"],
 input[type="submit"] {
-	-webkit-appearance: button; /* 2 */
-	cursor: pointer; /* 3 */
+    -webkit-appearance: button; /* 2 */
+    cursor: pointer; /* 3 */
 }
 
 /**
@@ -217,8 +217,8 @@ button[disabled], html input[disabled] {cursor: default;}
  */
 button::-moz-focus-inner,
 input::-moz-focus-inner {
-	border: 0;
-	padding: 0;
+    border: 0;
+    padding: 0;
 }
 
 /**
@@ -236,8 +236,8 @@ input {line-height: normal;}
  */
 input[type="checkbox"],
 input[type="radio"] {
-	box-sizing: border-box; /* 1 */
-	padding: 0; /* 2 */
+    box-sizing: border-box; /* 1 */
+    padding: 0; /* 2 */
 }
 
 /**
@@ -253,8 +253,8 @@ input[type="number"]::-webkit-outer-spin-button {height: auto;}
  * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
  */
 input[type="search"] {
-	-webkit-appearance: textfield; /* 1 */
-	box-sizing: content-box; /* 2 */
+    -webkit-appearance: textfield; /* 1 */
+    box-sizing: content-box; /* 2 */
 }
 
 /**
@@ -269,9 +269,9 @@ input[type="search"]::-webkit-search-decoration {-webkit-appearance: none;}
  * Define consistent border, margin, and padding.
  */
 fieldset {
-	border: 1px solid #c0c0c0;
-	margin: 0 2px;
-	padding: 0.35em 0.625em 0.75em;
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
 }
 
 /**
@@ -279,8 +279,8 @@ fieldset {
  * 2. Remove padding so people aren't caught out if they zero out fieldsets.
  */
 legend {
-	border: 0; /* 1 */
-	padding: 0; /* 2 */
+    border: 0; /* 1 */
+    padding: 0; /* 2 */
 }
 
 /**
@@ -301,7 +301,7 @@ optgroup {font-weight: bold;}
  * Remove most spacing between table cells.
  */
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 td, th {padding: 0;}

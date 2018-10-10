@@ -11,114 +11,114 @@ $table_list = getTableList();
 $perm = array();
 
 // request to save changes?
-if($_POST['saveChanges'] != ''){
-	// validate data
-	$name = makeSafe($_POST['name']);
-	$description = makeSafe($_POST['description']);
-	switch($_POST['visitorSignup']){
-		case 0:
-			$allowSignup = 0;
-			$needsApproval = 1;
-			break;
-		case 2:
-			$allowSignup = 1;
-			$needsApproval = 0;
-			break;
-		default:
-			$allowSignup = 1;
-			$needsApproval = 1;
-	}
+if ($_POST['saveChanges'] != '') {
+    // validate data
+    $name = makeSafe($_POST['name']);
+    $description = makeSafe($_POST['description']);
+    switch ($_POST['visitorSignup']) {
+        case 0:
+            $allowSignup = 0;
+            $needsApproval = 1;
+            break;
+        case 2:
+            $allowSignup = 1;
+            $needsApproval = 0;
+            break;
+        default:
+            $allowSignup = 1;
+            $needsApproval = 1;
+    }
 
-	foreach($table_list as $tn => $tc){
-		$perm["{$tn}_insert"] = checkPermissionVal("{$tn}_insert");
-		$perm["{$tn}_view"] = checkPermissionVal("{$tn}_view");
-		$perm["{$tn}_edit"] = checkPermissionVal("{$tn}_edit");
-		$perm["{$tn}_delete"] = checkPermissionVal("{$tn}_delete");
-	}
+    foreach ($table_list as $tn => $tc) {
+        $perm["{$tn}_insert"] = checkPermissionVal("{$tn}_insert");
+        $perm["{$tn}_view"] = checkPermissionVal("{$tn}_view");
+        $perm["{$tn}_edit"] = checkPermissionVal("{$tn}_edit");
+        $perm["{$tn}_delete"] = checkPermissionVal("{$tn}_delete");
+    }
 
-	// new group or old?
-	if($_POST['groupID'] == ''){ // new group
-		// make sure group name is unique
-		if(sqlValue("select count(1) from membership_groups where name='{$name}'")){
-			echo "<div class=\"alert alert-danger\">{$Translation["group exists error"]}</div>";
-			include("{$currDir}/incFooter.php");
-		}
+    // new group or old?
+    if ($_POST['groupID'] == '') { // new group
+        // make sure group name is unique
+        if (sqlValue("select count(1) from membership_groups where name='{$name}'")) {
+            echo "<div class=\"alert alert-danger\">{$Translation["group exists error"]}</div>";
+            include("{$currDir}/incFooter.php");
+        }
 
-		// add group
-		sql("insert into membership_groups set name='{$name}', description='{$description}', allowSignup='{$allowSignup}', needsApproval='{$needsApproval}'", $eo);
+        // add group
+        sql("insert into membership_groups set name='{$name}', description='{$description}', allowSignup='{$allowSignup}', needsApproval='{$needsApproval}'", $eo);
 
-		// get new groupID
-		$groupID = db_insert_id(db_link());
-	} else { // old group
-		// validate groupID
-		$groupID = intval($_POST['groupID']);
+        // get new groupID
+        $groupID = db_insert_id(db_link());
+    } else { // old group
+        // validate groupID
+        $groupID = intval($_POST['groupID']);
 
-		/* force configured name and no signup for anonymous group */
-		if($groupID == $anonGroupID){
-			$name = $adminConfig['anonymousGroup'];
-			$allowSignup = 0;
-			$needsApproval = 0;
-		}
+        /* force configured name and no signup for anonymous group */
+        if ($groupID == $anonGroupID) {
+            $name = $adminConfig['anonymousGroup'];
+            $allowSignup = 0;
+            $needsApproval = 0;
+        }
 
-		// make sure group name is unique
-		if(sqlValue("select count(1) from membership_groups where name='{$name}' and groupID!='{$groupID}'")){
-			echo "<div class=\"alert alert-danger\">{$Translation["group exists error"]}</div>";
-			include("{$currDir}/incFooter.php");
-		}
+        // make sure group name is unique
+        if (sqlValue("select count(1) from membership_groups where name='{$name}' and groupID!='{$groupID}'")) {
+            echo "<div class=\"alert alert-danger\">{$Translation["group exists error"]}</div>";
+            include("{$currDir}/incFooter.php");
+        }
 
-		// update group
-		sql("update membership_groups set name='{$name}', description='{$description}', allowSignup='{$allowSignup}', needsApproval='{$needsApproval}' where groupID='{$groupID}'", $eo);
+        // update group
+        sql("update membership_groups set name='{$name}', description='{$description}', allowSignup='{$allowSignup}', needsApproval='{$needsApproval}' where groupID='{$groupID}'", $eo);
 
-		// reset then add group permissions
-		foreach($table_list as $tn => $tc){
-			sql("delete from membership_grouppermissions where groupID='{$groupID}' and tableName='{$tn}'", $eo);
-		}
-	}
+        // reset then add group permissions
+        foreach ($table_list as $tn => $tc) {
+            sql("delete from membership_grouppermissions where groupID='{$groupID}' and tableName='{$tn}'", $eo);
+        }
+    }
 
-	// add group permissions
-	if($groupID){
-		foreach($table_list as $tn => $tc){
-			$allowInsert = $perm["{$tn}_insert"];
-			$allowView = $perm["{$tn}_view"];
-			$allowEdit = $perm["{$tn}_edit"];
-			$allowDelete = $perm["{$tn}_delete"];
-			sql("insert into membership_grouppermissions set groupID='{$groupID}', tableName='{$tn}', allowInsert='{$allowInsert}', allowView='{$allowView}', allowEdit='{$allowEdit}', allowDelete='{$allowDelete}'", $eo);
-		}
-	}
+    // add group permissions
+    if ($groupID) {
+        foreach ($table_list as $tn => $tc) {
+            $allowInsert = $perm["{$tn}_insert"];
+            $allowView = $perm["{$tn}_view"];
+            $allowEdit = $perm["{$tn}_edit"];
+            $allowDelete = $perm["{$tn}_delete"];
+            sql("insert into membership_grouppermissions set groupID='{$groupID}', tableName='{$tn}', allowInsert='{$allowInsert}', allowView='{$allowView}', allowEdit='{$allowEdit}', allowDelete='{$allowDelete}'", $eo);
+        }
+    }
 
-	// redirect to group editing page
-	redirect("admin/pageEditGroup.php?groupID={$groupID}");
-} elseif($_GET['groupID'] != ''){
-	// we have an edit request for a group
-	$groupID = intval($_GET['groupID']);
+    // redirect to group editing page
+    redirect("admin/pageEditGroup.php?groupID={$groupID}");
+} elseif ($_GET['groupID'] != '') {
+    // we have an edit request for a group
+    $groupID = intval($_GET['groupID']);
 }
 
 $GLOBALS['page_title'] = $Translation['view groups'];
 include("{$currDir}/incHeader.php");
 
-if($groupID != ''){
-	// fetch group data to fill in the form below
-	$res = sql("select * from membership_groups where groupID='{$groupID}'", $eo);
-	if($row = db_fetch_assoc($res)){
-		// get group data
-		$name = $row['name'];
-		$description = $row['description'];
-		$visitorSignup = ($row['allowSignup'] == 1 && $row['needsApproval'] == 1 ? 1 : ($row['allowSignup'] == 1 ? 2 : 0));
+if ($groupID != '') {
+    // fetch group data to fill in the form below
+    $res = sql("select * from membership_groups where groupID='{$groupID}'", $eo);
+    if ($row = db_fetch_assoc($res)) {
+        // get group data
+        $name = $row['name'];
+        $description = $row['description'];
+        $visitorSignup = ($row['allowSignup'] == 1 && $row['needsApproval'] == 1 ? 1 : ($row['allowSignup'] == 1 ? 2 : 0));
 
-		// get group permissions for each table
-		$res = sql("select * from membership_grouppermissions where groupID='{$groupID}'", $eo);
-		while($row = db_fetch_assoc($res)){
-			$tn = $row['tableName'];
-			$perm["{$tn}_insert"] = $row['allowInsert'];
-			$perm["{$tn}_view"] = $row['allowView'];
-			$perm["{$tn}_edit"] = $row['allowEdit'];
-			$perm["{$tn}_delete"] = $row['allowDelete'];
-		}
-	} else {
-		// no such group exists
-		echo "<div class=\"alert alert-danger\">{$Translation["group not found error"]}</div>";
-		$groupID = 0;
-	}
+        // get group permissions for each table
+        $res = sql("select * from membership_grouppermissions where groupID='{$groupID}'", $eo);
+        while ($row = db_fetch_assoc($res)) {
+            $tn = $row['tableName'];
+            $perm["{$tn}_insert"] = $row['allowInsert'];
+            $perm["{$tn}_view"] = $row['allowView'];
+            $perm["{$tn}_edit"] = $row['allowEdit'];
+            $perm["{$tn}_delete"] = $row['allowDelete'];
+        }
+    } else {
+        // no such group exists
+        echo "<div class=\"alert alert-danger\">{$Translation["group not found error"]}</div>";
+        $groupID = 0;
+    }
 }
 ?>
 
@@ -128,20 +128,24 @@ if($groupID != ''){
 		<div class="pull-right">
 			<div class="btn-group">
 				<a href="pageViewGroups.php" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-arrow-left"></i> <span class="hidden-xs hidden-sm"><?php echo $Translation['back to groups']; ?></span></a>
-				<?php if($groupID){ ?>
+				<?php if ($groupID) {
+    ?>
 					<a href="pageViewMembers.php?groupID=<?php echo $groupID; ?>" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-user"></i> <span class="hidden-xs hidden-sm"><?php echo $Translation['view group members']; ?></span></a>
 					<a href="pageEditMember.php?groupID=<?php echo $groupID; ?>" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-plus"></i> <span class="hidden-xs hidden-sm"><?php echo $Translation['add member to group']; ?></span></a>
 					<a href="pageViewRecords.php?groupID=<?php echo $groupID; ?>" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-th"></i> <span class="hidden-xs hidden-sm"><?php echo $Translation['view group records']; ?></span></a>
-				<?php } ?>
+				<?php
+} ?>
 			</div>
 		</div>
 		<div class="clearfix"></div>
 	</h1>
 </div>
 
-<?php if($anonGroupID == $groupID){ ?>
+<?php if ($anonGroupID == $groupID) {
+        ?>
 	<div class="alert alert-warning"><?php echo $Translation["anonymous group attention"]; ?></div>
-<?php } ?> 
+<?php
+    } ?> 
 
 
 <div class="form-group">
@@ -162,15 +166,15 @@ if($groupID != ''){
 	<div class="form-group ">
 		<label for="group name" class="col-sm-4 col-md-3 col-lg-2 col-lg-offset-2 control-label"><?php echo $Translation["group name"]; ?></label>
 		<div class="col-sm-8 col-md-9 col-lg-6 ">
-			<input class="form-control" type="text" name="name" <?php echo ($anonGroupID == $groupID ? "readonly" : ""); ?> value="<?php echo html_attr($name); ?>">
+			<input class="form-control" type="text" name="name" <?php echo($anonGroupID == $groupID ? "readonly" : ""); ?> value="<?php echo html_attr($name); ?>">
 			<span class="help-block">
 				<?php
-					if($anonGroupID == $groupID){
-						echo $Translation["readonly group name"];
-					}else{
-						echo str_replace('<ANONYMOUSGROUP>', $adminConfig['anonymousGroup'], $Translation["anonymous group name"]);
-					}
-				?>
+                    if ($anonGroupID == $groupID) {
+                        echo $Translation["readonly group name"];
+                    } else {
+                        echo str_replace('<ANONYMOUSGROUP>', $adminConfig['anonymousGroup'], $Translation["anonymous group name"]);
+                    }
+                ?>
 			</span>
 		</div>
 	</div>
@@ -182,22 +186,22 @@ if($groupID != ''){
 		</div>
 	</div>
 
-	<?php if($anonGroupID != $groupID){ ?>
+	<?php if ($anonGroupID != $groupID) {
+                    ?>
 		<div class="form-group ">
 			<label for="allow visitors sign up" class="col-sm-4 col-md-3 col-lg-2 col-lg-offset-2 control-label"><?php echo $Translation["allow visitors sign up"]; ?></label>
 			<div class="col-sm-8 col-md-9 col-lg-6 ">
 				<?php
-					echo htmlRadioGroup(
-						"visitorSignup",
-						array(0, 1, 2),
-						array(
-							$Translation["admin add users"],
-							$Translation["admin approve users"],
-							$Translation["automatically approve users"]
-						), 
-						($groupID ? $visitorSignup : $adminConfig['defaultSignUp'])
-					);
-				?>
+                    echo htmlRadioGroup(
+                        "visitorSignup",
+                        array(0, 1, 2),
+                        array(
+                            $Translation["admin add users"],
+                            $Translation["admin approve users"],
+                            $Translation["automatically approve users"]
+                        ),
+                        ($groupID ? $visitorSignup : $adminConfig['defaultSignUp'])
+                    ); ?>
 			</div>
 		</div>
 
@@ -208,13 +212,14 @@ if($groupID != ''){
 		</div>
 
 		<div style="height: 3em;"></div>
-	<?php } ?>
+	<?php
+                } ?>
 
 	<?php
-		// permissions arrays common to the radio groups below
-		$arrPermVal = array(0, 1, 2, 3);
-		$arrPermText = array($Translation["no"], $Translation["owner"], $Translation["group"], $Translation["all"]);
-	?>
+        // permissions arrays common to the radio groups below
+        $arrPermVal = array(0, 1, 2, 3);
+        $arrPermText = array($Translation["no"], $Translation["owner"], $Translation["group"], $Translation["all"]);
+    ?>
 
 	<div class="table-responsive">
 		<table class="table table-striped table-bordered table-hover">
@@ -229,12 +234,13 @@ if($groupID != ''){
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($table_list as $tn => $tc){ ?>
+				<?php foreach ($table_list as $tn => $tc) {
+        ?>
 					<!-- <?php echo $tn; ?> table -->
 					<tr>
 						<th><?php echo $tc; ?></th>
 						<td>
-							<input onMouseOver="stm(<?php echo $tn; ?>_addTip, toolTipStyle);" onMouseOut="htm();" type="checkbox" name="<?php echo $tn; ?>_insert" value="1" <?php echo ($perm["{$tn}_insert"] ? "checked class=\"text-primary\"" : ""); ?>>
+							<input onMouseOver="stm(<?php echo $tn; ?>_addTip, toolTipStyle);" onMouseOut="htm();" type="checkbox" name="<?php echo $tn; ?>_insert" value="1" <?php echo($perm["{$tn}_insert"] ? "checked class=\"text-primary\"" : ""); ?>>
 						</td>
 						<td>
 							<?php echo htmlRadioGroup("{$tn}_view", $arrPermVal, $arrPermText, $perm["{$tn}_view"], 'text-primary'); ?>
@@ -246,7 +252,8 @@ if($groupID != ''){
 							<?php echo htmlRadioGroup("{$tn}_delete", $arrPermVal, $arrPermText, $perm["{$tn}_delete"], 'text-primary'); ?>
 						</td>
 					</tr>
-				<?php } ?>
+				<?php
+    } ?>
 			</tbody>
 		</table>
 	</div>

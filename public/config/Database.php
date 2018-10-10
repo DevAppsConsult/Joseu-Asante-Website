@@ -2,6 +2,7 @@
 namespace Config;
 
 use Medoo\Medoo;
+
 require '../vendor/autoload.php';
 
 
@@ -9,20 +10,21 @@ class Database
 {
     protected $database;
 
-    function __construct()
+    public function __construct()
     {
-         $this->database = new Medoo([
+        $this->database = new Medoo(
+            [
             'database_type' => 'mysql',
             'database_name' => 'blog',
             'server' => 'localhost',
             'username' => 'root',
-            'password' => '',            
-        ]);
+            'password' => '',
+            ]
+        );
     }
 
-    function getConnection()
+    public function getConnection()
     {
         return $this->database;
     }
-    
 }

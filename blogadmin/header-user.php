@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<?php if(!defined('PREPEND_PATH')) define('PREPEND_PATH', ''); ?>
-<?php if(!defined('datalist_db_encoding')) define('datalist_db_encoding', 'UTF-8'); ?>
-<?php require_once("libs/count_records.php");?>
+<?php if (!defined('PREPEND_PATH')) {
+    define('PREPEND_PATH', '');
+} ?>
+<?php if (!defined('datalist_db_encoding')) {
+    define('datalist_db_encoding', 'UTF-8');
+} ?>
+<?php require_once "libs/count_records.php";?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?php echo ucwords('BLOG ADMIN'); ?> | <?php echo (isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
+    <title><?php echo ucwords('BLOG ADMIN'); ?> | <?php echo(isset($x->TableTitle) ? $x->TableTitle : ''); ?></title>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
   <!-- Add custom CSS here -->
@@ -41,13 +45,13 @@
             <?php
             $usernow=getLoggedMemberID();
             if ($usernow=="admin") {
-            # code...show more links for admin only
-            echo'<li><a href="titles_view.php"><i class="fa fa-desktop"></i>Web Details</a></li>
+                // code...show more links for admin only
+                echo'<li><a href="titles_view.php"><i class="fa fa-desktop"></i>Web Details</a></li>
             <li><a href="links_view.php"><i class="fa fa-link"></i>Links</a></li>
             <li><a href="editors_choice_view.php"><i class="fa fa-trophy"></i>Editors Choice</a></li>
             <li><a href="../adminstats"><i class="fa fa-bar-chart-o"></i>Admin Stats</a></li>';
-          }
-          ?>
+            }
+            ?>
           </ul>
          <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown messages-dropdown">
@@ -103,24 +107,32 @@
               <li><a href="<?php echo PREPEND_PATH; ?>membership_profile.php"><i class="fa fa-user"></i> <strong>My Profile Details</strong> </a></li>
               <!--login/logout area starts-->
               <li>
-               <?php if(getLoggedAdmin()){ ?>
+                <?php if (getLoggedAdmin()) {
+                    ?>
                <a href="<?php echo PREPEND_PATH; ?>admin/pageHome.php" class="btn btn-danger navbar-btn btn-sm hidden-xs"><i class="fa fa-cog"></i> <strong><?php echo $Translation['admin area']; ?></strong></a>
                <a href="<?php echo PREPEND_PATH; ?>admin/pageHome.php" class="btn btn-danger navbar-btn btn-sm visible-xs btn-sm"><i class="fa fa-cog"></i> <strong><?php echo $Translation['admin area']; ?></strong></a>
-               <?php } ?>
-               <?php if(!$_GET['signIn'] && !$_GET['loginFailed']){ ?>
-               <?php if(getLoggedMemberID() == $adminConfig['anonymousMember']){ ?>
+                    <?php
+                } ?>
+                <?php if (!$_GET['signIn'] && !$_GET['loginFailed']) {
+                    ?>
+                    <?php if (getLoggedMemberID() == $adminConfig['anonymousMember']) {
+                        ?>
                <p class="navbar-text navbar-right">&nbsp;</p>
                <a href="<?php echo PREPEND_PATH; ?>index.php?signIn=1" class="btn btn-success navbar-btn btn-sm navbar-right"><strong><?php echo $Translation['sign in']; ?></strong></a>
                <p class="navbar-text navbar-right">
-                <?php echo $Translation['not signed in']; ?>
+                        <?php echo $Translation['not signed in']; ?>
               </p>
-              <?php }else{ ?>
+                        <?php
+                    } else {
+    ?>
               <ul class="nav navbar-nav navbar-right hidden-xs" style="min-width: 330px;">
               </ul>
               <ul class="nav navbar-nav visible-xs">
               </ul>
-              <?php } ?>
-              <?php } ?>
+    <?php
+} ?>
+                    <?php
+                } ?>
             </li>
             <!--login/logout area ends-->
             <li class="divider"></li>
@@ -138,7 +150,7 @@
               <li><a href="../index.php"><i class="icon-dashboard" style="text-decoration:none;"></i> <strong>View Website</strong></a></li>
               <li><a href="index.php"><i class="icon-dashboard" style="text-decoration:none;"></i> <strong>Dashboard</strong></a></li>
             </ol>
-            <?php include("libs/alerts.php");?>
+            <?php require "libs/alerts.php";?>
           </div>
         </div><!-- /.row -->
 

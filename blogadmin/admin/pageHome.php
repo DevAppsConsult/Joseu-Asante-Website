@@ -1,58 +1,59 @@
 <?php
-	$currDir = dirname(__FILE__);
-	require("{$currDir}/incCommon.php");
-	$GLOBALS['page_title'] = $Translation['membership management homepage'];
-	include("{$currDir}/incHeader.php");
+    $currDir = dirname(__FILE__);
+    require("{$currDir}/incCommon.php");
+    $GLOBALS['page_title'] = $Translation['membership management homepage'];
+    include("{$currDir}/incHeader.php");
 ?>
 
 <?php
-	if(!sqlValue("select count(1) from membership_groups where allowSignup=1")){
-		$noSignup=TRUE;
-		?>
+    if (!sqlValue("select count(1) from membership_groups where allowSignup=1")) {
+        $noSignup=true; ?>
 		<div class="alert alert-info">
 			<i><?php echo $Translation["attention"]; ?></i>
 			<br><?php echo $Translation["visitor sign up"]; ?>
 			</div>
 		<?php
-	}
+    }
 ?>
 
 <?php
-	// get the count of records having no owners in each table
-	$arrTables=getTableList();
+    // get the count of records having no owners in each table
+    $arrTables=getTableList();
 
-	foreach($arrTables as $tn=>$tc){
-		$countOwned=sqlValue("select count(1) from membership_userrecords where tableName='$tn' and not isnull(groupID)");
-		$countAll=sqlValue("select count(1) from `$tn`");
+    foreach ($arrTables as $tn=>$tc) {
+        $countOwned=sqlValue("select count(1) from membership_userrecords where tableName='$tn' and not isnull(groupID)");
+        $countAll=sqlValue("select count(1) from `$tn`");
 
-		if($countAll>$countOwned){
-			?>
+        if ($countAll>$countOwned) {
+            ?>
 			<div class="alert alert-info">
 				<?php echo $Translation["table data without owner"]; ?>
 				</div>
 			<?php
-			break;
-		}
-	}
+            break;
+        }
+    }
 ?>
 
 <div class="page-header"><h1><?php echo $Translation['membership management homepage']; ?></h1></div>
 
-<?php if(!$adminConfig['hide_twitter_feed']){ ?>
+<?php if (!$adminConfig['hide_twitter_feed']) {
+    ?>
 	<div class="row" id="outer-row"><div class="col-md-8">
-<?php } ?>
+<?php
+} ?>
 
 <div class="row" id="inner-row">
 
 <!-- ################# Maintenance mode ###################### -->
 <?php
-	if(maintenance_mode()){
-		$off_classes = 'btn-default locked_inactive';
-		$on_classes = 'btn-danger unlocked_active';
-	}else{
-		$off_classes = 'btn-success locked_active';
-		$on_classes = 'btn-default unlocked_inactive';
-	}
+    if (maintenance_mode()) {
+        $off_classes = 'btn-default locked_inactive';
+        $on_classes = 'btn-danger unlocked_active';
+    } else {
+        $off_classes = 'btn-success locked_active';
+        $on_classes = 'btn-default unlocked_inactive';
+    }
 ?>
 <div class="col-md-12 text-right vspacer-lg">
 	<label><?php echo $Translation['maintenance mode']; ?></label>
@@ -94,16 +95,16 @@
 	<div class="panel-body">
 	<table class="table table-striped table-hover">
 	<?php
-		$res=sql("select tableName, pkValue, dateUpdated, recID from membership_userrecords order by dateUpdated desc limit 5", $eo);
-		while($row=db_fetch_row($res)){
-			?>
+        $res=sql("select tableName, pkValue, dateUpdated, recID from membership_userrecords order by dateUpdated desc limit 5", $eo);
+        while ($row=db_fetch_row($res)) {
+            ?>
 			<tr>
 				<th style="min-width: 13em;"><?php echo @date($adminConfig['PHPDateTimeFormat'], $row[2]); ?></th>
 				<td class="remaining-width"><div class="clipped"><a href="pageEditOwnership.php?recID=<?php echo $row[3]; ?>"><img src="images/data_icon.gif" border="0" alt="<?php echo $Translation["view record details"]; ?>" title="<?php echo $Translation["view record details"]; ?>"></a> <?php echo getCSVData($row[0], $row[1]); ?></div></td>
 			</tr>
 			<?php
-		}
-	?>
+        }
+    ?>
 	</table>
 	</div>
 </div>
@@ -120,16 +121,16 @@
 	<div class="panel-body">
 	<table class="table table-striped table-hover">
 	<?php
-		$res=sql("select tableName, pkValue, dateAdded, recID from membership_userrecords order by dateAdded desc limit 5", $eo);
-		while($row=db_fetch_row($res)){
-			?>
+        $res=sql("select tableName, pkValue, dateAdded, recID from membership_userrecords order by dateAdded desc limit 5", $eo);
+        while ($row=db_fetch_row($res)) {
+            ?>
 			<tr>
 				<th style="min-width: 13em;"><?php echo @date($adminConfig['PHPDateTimeFormat'], $row[2]); ?></th>
 				<td class="remaining-width"><div class="clipped"><a href="pageEditOwnership.php?recID=<?php echo $row[3]; ?>"><img src="images/data_icon.gif" border="0" alt="<?php echo $Translation["view record details"]; ?>" title="<?php echo $Translation["view record details"]; ?>"></a> <?php echo getCSVData($row[0], $row[1]); ?></div></td>
 			</tr>
 			<?php
-		}
-	?>
+        }
+    ?>
 	</table>
 	</div>
 </div>
@@ -148,16 +149,16 @@
 	<div class="panel-body">
 	<table class="table table-striped table-hover">
 	<?php
-		$res=sql("select lcase(memberID), count(1) from membership_userrecords group by memberID order by 2 desc limit 5", $eo);
-		while($row=db_fetch_row($res)){
-			?>
+        $res=sql("select lcase(memberID), count(1) from membership_userrecords group by memberID order by 2 desc limit 5", $eo);
+        while ($row=db_fetch_row($res)) {
+            ?>
 			<tr>
 				<th class="" style="max-width: 10em;"><a href="pageEditMember.php?memberID=<?php echo urlencode($row[0]); ?>" title="<?php echo $Translation["edit member details"]; ?>"><i class="glyphicon glyphicon-pencil"></i> <?php echo $row[0]; ?></a></th>
 				<td class="remaining-width"><a href="pageViewRecords.php?memberID=<?php echo urlencode($row[0]); ?>"><img src="images/data_icon.gif" border="0" alt="<?php echo $Translation["view member records"]; ?>" title="<?php echo $Translation["view member records"]; ?>"></a> <?php echo $row[1]; ?> <?php echo $Translation["records"]; ?></td>
 			</tr>
 			<?php
-		}
-	?>
+        }
+    ?>
 	</table>
 	</div>
 </div>
@@ -183,9 +184,9 @@
 			</tr>
 		<tr>
 			<?php
-				$awaiting = intval(sqlValue("select count(1) from membership_users where isApproved=0"));
-			?>
-			<th class="" <?php echo ($awaiting ? "style=\"color: red;\"" : ""); ?>><?php echo $Translation["members awaiting approval"]; ?></th>
+                $awaiting = intval(sqlValue("select count(1) from membership_users where isApproved=0"));
+            ?>
+			<th class="" <?php echo($awaiting ? "style=\"color: red;\"" : ""); ?>><?php echo $Translation["members awaiting approval"]; ?></th>
 			<td class="remaining-width"><a href="pageViewMembers.php?status=1" title="<?php echo $Translation["view members awaiting approval"]; ?>"><i class="glyphicon glyphicon-search"></i> <?php echo $awaiting; ?></a></td>
 			</tr>
 		<tr>
@@ -204,7 +205,8 @@
 
 </div> <!-- /div.row#inner-row -->
 
-<?php if(!$adminConfig['hide_twitter_feed']){ ?>
+<?php if (!$adminConfig['hide_twitter_feed']) {
+                ?>
 		</div> <!-- /div.col-md-8 -->
 
 		<div class="col-md-4" id="twitter-feed">
@@ -243,7 +245,8 @@
 			</script>
 		</div>
 	</div> <!-- /div.row#outer-row -->
-<?php } ?>
+<?php
+            } ?>
 
 <script>
 	$j(function(){
@@ -260,6 +263,6 @@
 
 
 <?php
-	include("{$currDir}/incFooter.php");
+    include("{$currDir}/incFooter.php");
 ?>
 

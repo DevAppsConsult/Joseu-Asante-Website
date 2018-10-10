@@ -1,35 +1,34 @@
 <?php
-	$currDir=dirname(__FILE__);
-	include("$currDir/defaultLang.php");
-	include("$currDir/language.php");
-	include("$currDir/lib.php");
-	include_once("$currDir/header.php");
+    $currDir=dirname(__FILE__);
+    include("$currDir/defaultLang.php");
+    include("$currDir/language.php");
+    include("$currDir/lib.php");
+    include_once("$currDir/header.php");
 
-	$adminConfig = config('adminConfig');
+    $adminConfig = config('adminConfig');
 
-	$reset_expiry = 86400; // time validity of reset key in seconds
+    $reset_expiry = 86400; // time validity of reset key in seconds
 
 #_______________________________________________________________________________
 # Step 4: Final step; change the password
 #_______________________________________________________________________________
-	if($_POST['changePassword'] && $_POST['key']){
-		$expiry_limit = time() - $reset_expiry - 900; // give an extra tolerence of 15 minutes
-		$res = sql("select * from membership_users where pass_reset_key='" . makeSafe($_POST['key']) . "' and pass_reset_expiry>$expiry_limit limit 1", $eo);
+    if ($_POST['changePassword'] && $_POST['key']) {
+        $expiry_limit = time() - $reset_expiry - 900; // give an extra tolerence of 15 minutes
+        $res = sql("select * from membership_users where pass_reset_key='" . makeSafe($_POST['key']) . "' and pass_reset_expiry>$expiry_limit limit 1", $eo);
 
-		if($row = db_fetch_assoc($res)){
-			if($_POST['newPassword'] != $_POST['confirmPassword'] || !$_POST['newPassword']){
-				?>
+        if ($row = db_fetch_assoc($res)) {
+            if ($_POST['newPassword'] != $_POST['confirmPassword'] || !$_POST['newPassword']) {
+                ?>
 				<div class="alert alert-danger">
 					<?php echo $Translation['password no match']; ?>
 				</div>
 				<?php
 
-				include_once("$currDir/footer.php");
-				exit;
-			}
+                include_once("$currDir/footer.php");
+                exit;
+            }
 
-			sql("update membership_users set passMD5='" . md5($_POST['newPassword']) . "', pass_reset_expiry=NULL, pass_reset_key=NULL where lcase(memberID)='" . addslashes($row['memberID']) . "'", $eo);
-			?>
+            sql("update membership_users set passMD5='" . md5($_POST['newPassword']) . "', pass_reset_expiry=NULL, pass_reset_key=NULL where lcase(memberID)='" . addslashes($row['memberID']) . "'", $eo); ?>
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 					<div class="alert alert-info">
@@ -39,27 +38,27 @@
 				</div>
 			</div>
 			<?php
-		}else{
-			?>
+        } else {
+            ?>
 			<div class="alert alert-danger">
 				<?php echo $Translation['password reset invalid']; ?>
 			</div>
 			<?php
-		}
+        }
 
-		include_once("$currDir/footer.php");
-		exit;
-	}
+        include_once("$currDir/footer.php");
+        exit;
+    }
 #_______________________________________________________________________________
 # Step 3: This is the special link that came to the member by email. This is
 #         where the member enters his new password.
 #_______________________________________________________________________________
-	if($_GET['key'] != ''){
-		$expiry_limit = time() - $reset_expiry;
-		$res = sql("select * from membership_users where pass_reset_key='" . makeSafe($_GET['key']) . "' and pass_reset_expiry>$expiry_limit limit 1", $eo);
+    if ($_GET['key'] != '') {
+        $expiry_limit = time() - $reset_expiry;
+        $res = sql("select * from membership_users where pass_reset_key='" . makeSafe($_GET['key']) . "' and pass_reset_expiry>$expiry_limit limit 1", $eo);
 
-		if($row = db_fetch_assoc($res)){
-			?>
+        if ($row = db_fetch_assoc($res)) {
+            ?>
 			<div class="page-header"><h1><?php echo $Translation['password change']; ?></h1></div>
 
 			<div class="row">
@@ -89,75 +88,72 @@
 				</div>
 			</div>
 			<?php
-		}else{
-			?>
+        } else {
+            ?>
 			<div class="alert alert-danger">
 				<?php echo $Translation['password reset invalid']; ?>
 			</div>
 			<?php
-		}
+        }
 
-		include_once("$currDir/footer.php");
-		exit;
-	}
+        include_once("$currDir/footer.php");
+        exit;
+    }
 #_______________________________________________________________________________
 # Step 2: Send email to member containing the reset link
 #_______________________________________________________________________________
-	if($_POST['reset']){
-		$username = makeSafe(strtolower(trim($_POST['username'])));
-		$email = isEmail(trim($_POST['email']));
+    if ($_POST['reset']) {
+        $username = makeSafe(strtolower(trim($_POST['username'])));
+        $email = isEmail(trim($_POST['email']));
 
-		if((!$username && !$email) || ($username==$adminConfig['adminUsername'])){
-			redirect("membership_passwordReset.php?emptyData=1");
-			exit;
-		}
+        if ((!$username && !$email) || ($username==$adminConfig['adminUsername'])) {
+            redirect("membership_passwordReset.php?emptyData=1");
+            exit;
+        } ?><div class="page-header"><h1><?php echo $Translation['password reset']; ?></h1></div><?php
 
-		?><div class="page-header"><h1><?php echo $Translation['password reset']; ?></h1></div><?php
-
-		$where = '';
-		if($username){
-			$where = "lcase(memberID)='{$username}'";
-		}elseif($email){
-			$where = "email='{$email}'";
-		}
-		$res = sql("select * from membership_users where {$where} limit 1", $eo);
-		if(!$row=db_fetch_assoc($res)){
-			?>
+        $where = '';
+        if ($username) {
+            $where = "lcase(memberID)='{$username}'";
+        } elseif ($email) {
+            $where = "email='{$email}'";
+        }
+        $res = sql("select * from membership_users where {$where} limit 1", $eo);
+        if (!$row=db_fetch_assoc($res)) {
+            ?>
 			<div class="alert alert-danger">
 				<?php echo $Translation['password reset invalid']; ?>
 			</div>
 			<?php
-		}else{
-			// avoid admin password change
-			if($row['memberID']==$adminConfig['adminUsername']){
-				?>
+        } else {
+            // avoid admin password change
+            if ($row['memberID']==$adminConfig['adminUsername']) {
+                ?>
 				<div class="alert alert-danger">
 					<?php echo $Translation['password reset invalid']; ?>
 				</div>
 				<?php
 
-				include_once("$currDir/footer.php");
-				exit;
-			}
+                include_once("$currDir/footer.php");
+                exit;
+            }
 
-			// generate and store password reset key, if no valid key already exists
-			$no_valid_key = ($row['pass_reset_key'] == '' || ($row['pass_reset_key'] != '' && $row['pass_reset_expiry'] < (time() - $reset_expiry)));
-			$key = ($no_valid_key ? md5(microtime()) : $row['pass_reset_key']);
-			$expiry = ($no_valid_key ? time() + $reset_expiry : $row['pass_reset_expiry']);
-			@db_query("update membership_users set pass_reset_key='$key', pass_reset_expiry='$expiry' where memberID='" . addslashes($row['memberID']) . "'");
+            // generate and store password reset key, if no valid key already exists
+            $no_valid_key = ($row['pass_reset_key'] == '' || ($row['pass_reset_key'] != '' && $row['pass_reset_expiry'] < (time() - $reset_expiry)));
+            $key = ($no_valid_key ? md5(microtime()) : $row['pass_reset_key']);
+            $expiry = ($no_valid_key ? time() + $reset_expiry : $row['pass_reset_expiry']);
+            @db_query("update membership_users set pass_reset_key='$key', pass_reset_expiry='$expiry' where memberID='" . addslashes($row['memberID']) . "'");
 
-			// determine password reset URL
-			$ResetLink = application_url("membership_passwordReset.php?key=$key");
+            // determine password reset URL
+            $ResetLink = application_url("membership_passwordReset.php?key=$key");
 
-			// send reset instructions
-			sendmail(array(
-				'to' => $row['email'],
-				'subject' => $Translation['password reset subject'],
-				'message' => nl2br(str_replace('<ResetLink>', $ResetLink, $Translation['password reset message']))
-			));
+            // send reset instructions
+            sendmail(array(
+                'to' => $row['email'],
+                'subject' => $Translation['password reset subject'],
+                'message' => nl2br(str_replace('<ResetLink>', $ResetLink, $Translation['password reset message']))
+            ));
 
-			// display confirmation
-			?>
+            // display confirmation ?>
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 					<div class="alert alert-info">
@@ -167,17 +163,17 @@
 				</div>
 			</div>
 			<?php
-		}
+        }
 
-		include_once("$currDir/footer.php");
-		exit;
-	}
+        include_once("$currDir/footer.php");
+        exit;
+    }
 
 #_______________________________________________________________________________
 # Step 1: get the username or email of the member who wants to reset his password
 #_______________________________________________________________________________
 
-	?>
+    ?>
 	<div class="page-header"><h1><?php echo $Translation['password reset']; ?></h1></div>
 
 	<div class="row">
@@ -201,9 +197,10 @@
 					</div>
 				</div>
 
-				<?php if(is_array(getTableList()) && count(getTableList())){ /* if anon. users can see any tables ... */ ?>
+				<?php if (is_array(getTableList()) && count(getTableList())) { /* if anon. users can see any tables ... */ ?>
 					<p style="margin-top: 1.5em;"><?php echo $Translation['browse as guest']; ?></p>
-				<?php } ?>
+				<?php
+    } ?>
 			</form>
 		</div>
 	</div>
@@ -211,9 +208,11 @@
 	<script>
 		jQuery(function(){
 			jQuery('#username').focus();
-			<?php  if($_GET['emptyData']){ ?>
+			<?php  if ($_GET['emptyData']) {
+        ?>
 				jQuery('#username, #email').parent().addClass('has-error');
-			<?php } ?>
+			<?php
+    } ?>
 		});
 	</script>
 

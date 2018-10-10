@@ -1,3 +1,5 @@
-$(function() {
-  $("table").tablesorter({debug: true});
-});
+$(
+    function () {
+        $("table").tablesorter({debug: true});
+    }
+);

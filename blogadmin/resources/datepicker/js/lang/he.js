@@ -1,5 +1,5 @@
 var fdLocale = {
-        months:[
+    months:[
                 "ינואר",
                 "פברואר",
                 "מרץ",
@@ -13,7 +13,7 @@ var fdLocale = {
                 "נובמבר",
                 "דצמבר"
                 ],
-        fullDay:[
+    fullDay:[
                 "שני",
                 "שלישי",
                 "רביעי",
@@ -24,22 +24,22 @@ var fdLocale = {
                 ],
         /* Only stipulate the dayAbbr should the first letter of the fullDay not suffice
         */
-        dayAbbr:[
-		'ב',
-		'ג',
-		'ד',
-		'ה',
-		'ו',
-		'ש',
-		'א'
-		],
+    dayAbbr:[
+    'ב',
+    'ג',
+    'ד',
+    'ה',
+    'ו',
+    'ש',
+    'א'
+    ],
 
 
         /* Only stipulate the firstDayOfWeek should the first day not be Monday
         */
-        firstDayOfWeek:6,
+    firstDayOfWeek:6,
 
-        titles:[
+    titles:[
                 "חודש קודם",
                 "חודש הבא",
                 "שנה קודמת",
