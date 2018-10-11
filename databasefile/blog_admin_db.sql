@@ -1,23 +1,19 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.6
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 31, 2018 at 10:38 PM
--- Server version: 5.7.11
--- PHP Version: 5.6.19
+-- Host: localhost
+-- Generation Time: Oct 11, 2018 at 11:56 PM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
--- Database: `blog_admin_db`
+-- Database: `blog`
 --
 
 -- --------------------------------------------------------
@@ -64,10 +60,10 @@ CREATE TABLE `blogs` (
 INSERT INTO `blogs` (`id`, `title`, `tags`, `content`, `photo`, `posted`, `date`, `author`, `category`) VALUES
 (1, 'Newest Blog and content management', 'blog,php,bootstrap', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</div><div>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</div><div>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</div><div>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</div><div>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</div><div>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>', '67897900_1535648110.jpg', 'draft', NULL, NULL, '5'),
 (2, 'Benefits of livig in this world', 'life,life tips', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</div><div>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</div><div>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</div><div>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</div><div>cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</div><div>proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>', '68358700_1535632826.jpg', 'publish', '2018-04-27', 'admin', '2'),
-(3, 'The future of web developement on earth', 'web,development,earth', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style="font-size: 0.857em;">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style="font-size: 0.857em;">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style="font-size: 0.857em;">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style="font-size: 0.857em;">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style="font-size: 0.857em;">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>', '91172200_1535632606.jpg', 'publish', '2018-04-27', 'admin', '3'),
-(4, 'The subtle art of not giving a fuck-Mark Manson', 'books,reading,novels', '<span style="font-size: 12.855px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span><span style="font-size: 0.857em;">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style="font-size: 0.857em;">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style="font-size: 0.857em;">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style="font-size: 0.857em;">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style="font-size: 0.857em;">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><span style="font-size: 12.855px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span><span style="font-size: 0.857em;">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style="font-size: 0.857em;">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style="font-size: 0.857em;">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style="font-size: 0.857em;">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style="font-size: 0.857em;">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><br>', '13125200_1535632661.jpg', 'publish', '2018-04-27', 'admin', '2'),
-(5, 'The challanges of being a writter', 'witting,blogging', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style="font-size: 0.857em;">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style="font-size: 0.857em;">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style="font-size: 0.857em;">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style="font-size: 0.857em;">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style="font-size: 0.857em;">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>', '10493000_1535632722.jpg', 'publish', '2018-04-27', 'etemesi', '4'),
-(6, 'Why i ventured into writting as a proffesion', 'witting,blogging', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style="font-size: 0.857em;">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style="font-size: 0.857em;">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style="font-size: 0.857em;">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style="font-size: 0.857em;">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style="font-size: 0.857em;">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><span style="font-size: 11.0167px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span><span style="font-size: 11.0167px;">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style="font-size: 11.0167px;">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style="font-size: 11.0167px;">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style="font-size: 11.0167px;">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style="font-size: 11.0167px;">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>', '72523800_1535633263.png', 'draft', '2018-04-27', 'etemesi', '4');
+(3, 'The future of web developement on earth', 'web,development,earth', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style=\"font-size: 0.857em;\">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style=\"font-size: 0.857em;\">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style=\"font-size: 0.857em;\">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style=\"font-size: 0.857em;\">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style=\"font-size: 0.857em;\">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>', '91172200_1535632606.jpg', 'publish', '2018-04-27', 'admin', '3'),
+(4, 'The subtle art of not giving a fuck-Mark Manson', 'books,reading,novels', '<span style=\"font-size: 12.855px;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span><span style=\"font-size: 0.857em;\">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style=\"font-size: 0.857em;\">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style=\"font-size: 0.857em;\">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style=\"font-size: 0.857em;\">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style=\"font-size: 0.857em;\">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><span style=\"font-size: 12.855px;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span><span style=\"font-size: 0.857em;\">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style=\"font-size: 0.857em;\">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style=\"font-size: 0.857em;\">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style=\"font-size: 0.857em;\">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style=\"font-size: 0.857em;\">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><br>', '13125200_1535632661.jpg', 'publish', '2018-04-27', 'admin', '2'),
+(5, 'The challanges of being a writter', 'witting,blogging', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style=\"font-size: 0.857em;\">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style=\"font-size: 0.857em;\">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style=\"font-size: 0.857em;\">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style=\"font-size: 0.857em;\">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style=\"font-size: 0.857em;\">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>', '10493000_1535632722.jpg', 'publish', '2018-04-27', 'etemesi', '4'),
+(6, 'Why i ventured into writting as a proffesion', 'witting,blogging', '<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style=\"font-size: 0.857em;\">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style=\"font-size: 0.857em;\">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style=\"font-size: 0.857em;\">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style=\"font-size: 0.857em;\">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style=\"font-size: 0.857em;\">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><span style=\"font-size: 11.0167px;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span><span style=\"font-size: 11.0167px;\">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</span><span style=\"font-size: 11.0167px;\">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</span><span style=\"font-size: 11.0167px;\">consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse</span><span style=\"font-size: 11.0167px;\">cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span><span style=\"font-size: 11.0167px;\">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></div>', '72523800_1535633263.png', 'draft', '2018-04-27', 'etemesi', '4');
 
 -- --------------------------------------------------------
 
@@ -134,7 +130,7 @@ CREATE TABLE `links` (
 --
 
 INSERT INTO `links` (`id`, `facebook`, `twitter`, `googleplus`, `pinterest`, `dribble`, `comments_script`, `sharing_script`, `javascript`) VALUES
-(1, 'http://www.facebook.com', 'http://www.twitter.com', 'http://www.plus.google.com', 'http://www.pinterest.com', 'http://www.dribble.com', '<div class="fb-comments container" data-href="http://www.uoecu.org/newsview.php?id=<?php echo $row[\'id\'];?>" data-numposts="20" width="100%"></div>', '<div class="addthis_sharing_toolbox"></div>', 'javascript');
+(1, 'http://www.facebook.com', 'http://www.twitter.com', 'http://www.plus.google.com', 'http://www.pinterest.com', 'http://www.dribble.com', '<div class=\"fb-comments container\" data-href=\"http://www.uoecu.org/newsview.php?id=<?php echo $row[\'id\'];?>\" data-numposts=\"20\" width=\"100%\"></div>', '<div class=\"addthis_sharing_toolbox\"></div>', 'javascript');
 
 -- --------------------------------------------------------
 
@@ -336,6 +332,24 @@ INSERT INTO `titles` (`id`, `website_name`, `tagline`, `icon`, `keywords`, `shor
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `last_login` timestamp NULL DEFAULT NULL,
+  `subscription_expires` timestamp NULL DEFAULT NULL,
+  `forgot_code` varchar(6) NOT NULL,
+  `activation_code` varchar(6) NOT NULL,
+  `status` enum('Pending','Active','Suspended') NOT NULL DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `visitor_info`
 --
 
@@ -525,6 +539,12 @@ ALTER TABLE `titles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `visitor_info`
 --
 ALTER TABLE `visitor_info`
@@ -539,56 +559,70 @@ ALTER TABLE `visitor_info`
 --
 ALTER TABLE `banner_posts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `blogs`
 --
 ALTER TABLE `blogs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `blog_categories`
 --
 ALTER TABLE `blog_categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `editors_choice`
 --
 ALTER TABLE `editors_choice`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `links`
 --
 ALTER TABLE `links`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `membership_grouppermissions`
 --
 ALTER TABLE `membership_grouppermissions`
   MODIFY `permissionID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
 --
 -- AUTO_INCREMENT for table `membership_groups`
 --
 ALTER TABLE `membership_groups`
   MODIFY `groupID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `membership_userpermissions`
 --
 ALTER TABLE `membership_userpermissions`
   MODIFY `permissionID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `membership_userrecords`
 --
 ALTER TABLE `membership_userrecords`
   MODIFY `recID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
 -- AUTO_INCREMENT for table `titles`
 --
 ALTER TABLE `titles`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `visitor_info`
 --
 ALTER TABLE `visitor_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+COMMIT;
