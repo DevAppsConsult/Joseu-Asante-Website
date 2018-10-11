@@ -28,7 +28,12 @@ if ($action === 'user') {
             if (is_array($post)) {
                 return $user->store($post);
             }
-            $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);
+            $response->response(
+                [
+                    'status'=>206,
+                    "data"=>['error'=>'Sorry wrong parameters']
+                    ]
+            );
         } else {
             if ($url_array[1] === "register") {
                 $json = file_get_contents('php://input');
