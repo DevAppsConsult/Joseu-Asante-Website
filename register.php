@@ -4,6 +4,7 @@
 <head>
   <title><?php getwebname("titles"); echo" | "; gettagline("titles");?></title>
 
+
 <!-- Bootstrap -->
 <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900%7COpen+Sans" rel="stylesheet" />
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -62,18 +63,20 @@
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="login">
-            <form>
+            <form id="newForm" class="newForm" action="public/user">
+            <div class="ajax-message">
+            </div>
               <div class="form-group">
                 <label for="name">Your Name</label>
-                <input type="text" id="name" class="form-control form-control-lg" placeholder="Your Name">
+                <input type="text" id="name" name="name" class="form-control form-control-lg" placeholder="Your Name">
               </div>
               <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" id="email" class="form-control form-control-lg" placeholder="Email">
+                <input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="Email">
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" class="form-control form-control-lg" placeholder="Password">
+                <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Password">
               </div>
               <button type="submit" class="tg-btn">Register</button>
             </form>
@@ -114,5 +117,65 @@
   <script src="js/appear.js"></script>
   <script src="js/gmap3.js"></script>
   <script src="js/main.js"></script>
+  <script>  
+
+    $(".newForm").submit(function(e) {
+      //$("#btnSubmit").prop("disabled", true);
+
+      //window.scrollTo(0,document.body.scrollHeight);
+        sending = 1;
+        e.preventDefault();
+        var obj = { name: $("#name").val(), email: $("#email").val(), password : $("#password").val() };
+        var dat =JSON.stringify(obj);
+        console.log(dat);
+          var actionurl = e.currentTarget.action;
+          $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-spinner fa-spin"></i> Please wait loading ...</div>');
+            var settings = {
+              "async": true,
+              "crossDomain": true,
+              "url": actionurl,
+              "method": "POST",
+              "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache",
+                "postman-token": "fbdb8f20-d915-8753-b6a1-96b9cbf2de21"
+              },
+              "processData": false,
+              "data": JSON.stringify(obj),
+
+              success: function(data) {
+                    sending = 0;
+                    console.log(data.status);
+                    if(data.success)
+                    {
+                      
+                      $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-check"></i> Your account has been created, check your email for your activation code</div>');
+                      window.location= "acc_verify.php";
+                    }
+                    else
+                    {
+                      $(".ajax-message").html('<div class="alert alert-danger"><i class="fa fa-times"></i> '+data.error+'</div>');
+
+                    }
+
+                  },
+                  error: function (e) {
+                    sending = 0;
+                    $(".ajax-message").html('<div class="alert alert-danger"><i class="fa fa-times"></i> Kindly retry your request again </div>');
+
+                    $("#result").text(e.responseText);
+                    console.log("ERROR : ", e);
+
+                }
+
+            }
+
+            $.ajax(settings).done(function (response) {
+              console.log(response);
+            });       
+
+    });
+
+  </script>
 </body>
 </html>

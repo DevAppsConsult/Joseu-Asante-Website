@@ -65,7 +65,8 @@ class UserController extends Controller
         }
         //lets do activation
         $details = $user->update(['email'=>$data['email'],'activation_code'=>$data['activation_code']], ['status'=>'Active','activation_code'=>null]);
-
+        $_SESSION['user'] = $_details[0];
+        $_SESSION['user_id'] =  $_details[0]['id'];
         return $this->response->response(['status'=>200,"data"=>['success'=>'User account activated','data'=>$_details]]);
     }
     public function forgotPassword(string $email)
@@ -128,6 +129,9 @@ class UserController extends Controller
 
         // bool password_verify ( string $password , string $hash )
         if (password_verify($data['password'], $_user['password'])) {
+            $_SESSION['user'] = $_user;
+            $_SESSION['user_id'] =  $_user['id'];
+    
             return $this->response->response(['status'=>200,"data"=>['success'=>'User login','data'=>$_user]]);
         }
         return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry wrong account details','data'=>null]]);

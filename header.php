@@ -25,7 +25,12 @@
 									<a href="#">
 									</a>
 								</figure>
-								<a href="signin.php"><span>Sign In</span></a>
+								<?php if(isset($_SESSION['user_id'])): ?>
+								<a href="my_profile.php"><span>Welcome</span></a>
+<?php else: ?>
+<a href="signin.php"><span>Sign In</span></a>
+
+<?php endif; ?>
 							</div>
 						</div>
 					</div>
