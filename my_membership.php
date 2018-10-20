@@ -55,23 +55,21 @@
 										</div>
 										<div class="tg-productgrid">
 											<div class="col-xs-12 col-sm-8 col-md-9 col-lg-8">
-
-            <form action="#">
-              
-              <h3 class="subheadline">Current Plans</h3>
-              
-              <div class="card">
-              <div class="media mt-0">
-                    <div class="media-body">
-                      <a class="btn btn-danger btn-sm float-right" href="#" style="margin:10px">Cancel Plan</a>
-                      <h4 class="media-heading"><a href="plans.html">Plan <strong>Pay as you go</strong></a></h4>
-                      <p class="text-muted">Expiring on 1st August 2018</p>                      
-                      
-                    </div>
-                  </div>
-              </div>
-              <a href="plans.html" class="btn btn-success btn-sm">Upgrade Plan</a>
-            </form>
+									            <form action="#">									              
+									              <div class="card">
+									              <div class="media mt-0">
+									                    <div class="media-body">
+									                      <a class="btn btn-danger btn-sm float-right" href="#" style="margin:10px">Cancel Plan</a>
+									                      <h4 class="media-heading"><a href="plans.html">Plan <strong>Pay as you go</strong></a></h4>
+									                      <p class="text-muted">Expiring on 1st August 2018</p>                      
+									                      
+									                    </div>
+									                  </div>
+									              </div>
+									              <a href="plans.php" class="btn btn-success btn-sm">Upgrade Plan</a>
+									              <a href="plans.php" class="btn btn-success btn-sm">Subscribe Plan</a>
+									              <a href="plans.php" class="btn btn-success btn-sm">Renew Plan</a>
+									            </form>
 											</div>
 										</div>
 									</div>
