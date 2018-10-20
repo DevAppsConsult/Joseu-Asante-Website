@@ -51,24 +51,49 @@
 								<div id="tg-content" class="tg-content">
 									<div class="tg-products">
 										<div class="tg-sectionhead">
-											<h2><span>Membership </span>Current Plans</h2>
+											<h2><span>Membership </span>Current Plan</h2>
 										</div>
 										<div class="tg-productgrid">
 											<div class="col-xs-12 col-sm-8 col-md-9 col-lg-8">
-									            <form action="#">									              
+									            <form action="#">							
+													<?php $myPlan = json_decode(file_get_contents(base_url().'public/user/plan/'.$_SESSION['user_id']),true); ?>		              
 									              <div class="card">
 									              <div class="media mt-0">
 									                    <div class="media-body">
-									                      <a class="btn btn-danger btn-sm float-right" href="#" style="margin:10px">Cancel Plan</a>
-									                      <h4 class="media-heading"><a href="plans.html">Plan <strong>Pay as you go</strong></a></h4>
-									                      <p class="text-muted">Expiring on 1st August 2018</p>                      
-									                      
+														<?php
+															if(isset($myPlan['success'])) :
+														?>
+									                      <h4 class="media-heading"><a href="plans.html">Plan <strong><?php echo $myPlan['data']['plan']['name'] ?></strong></a></h4>
+																<?php 
+																	if($myPlan['data']['status'] == 'Expired')
+																	{
+																		?>
+														                      <p class="text-muted">Already Expired</p>                      									                      
+																		
+																		<?php
+																	}else{
+																?>
+
+									                      <p class="text-muted">Expiring on <?php echo $myPlan['data']['expires'] ?></p> 
+																	<?php } ?>                     									                      
+														<?php
+															else:
+																?>
+																	<h4 class="media-heading"><a href="plans.html"><strong>You are not any plan</strong></a></h4>
+																<?php
+															endif;
+														?>
 									                    </div>
 									                  </div>
 									              </div>
-									              <a href="plans.php" class="btn btn-success btn-sm">Upgrade Plan</a>
-									              <a href="plans.php" class="btn btn-success btn-sm">Subscribe Plan</a>
-									              <a href="plans.php" class="btn btn-success btn-sm">Renew Plan</a>
+													  <?php
+															if(isset($myPlan['success'])) :
+																?>
+															<a href="plans.php" class="btn btn-success btn-sm">Upgrade Plan</a>
+															<a href="plans.php" class="btn btn-success btn-sm">Renew Plan</a>
+														<?php else: ?>
+											              <a href="plans.php" class="btn btn-success btn-sm">Subscribe Plan</a>
+														<?php endif; ?>
 									            </form>
 											</div>
 										</div>

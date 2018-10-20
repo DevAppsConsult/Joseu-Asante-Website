@@ -43,7 +43,7 @@ class Extension
         if (sizeof($response) > 0) {
             return $response[0];
         }
-        return [];
+        return null;
     }
 
     public function get(array $condition, $limit="", $order="")

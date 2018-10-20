@@ -6,6 +6,7 @@ require_once __DIR__."/startup.php";
 
 use \App\Controller\UserController;
 use \App\Controller\BlogController;
+use \App\Controller\SubscriptionController;
 use \App\Module\Subscription;
 use \Config\Response;
 
@@ -18,7 +19,24 @@ $action = $url_array[0];
 $method = $_SERVER['REQUEST_METHOD'];
 $response = new Response;
 
+if ($action === 'trans') {
 
+    if ($method=='POST') {
+        $user = new SubscriptionController;
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        if (is_array($post)) {
+            return $user->completePayment($post);
+        }
+        $response->response(
+            [
+                'status'=>206,
+                "data"=>['error'=>'Sorry wrong parameters']
+                ]
+        );
+
+    }
+}else
 if ($action === 'user') {
     $user = new UserController;
     if ($method=='POST') {
@@ -86,13 +104,25 @@ if ($action === 'user') {
             }
         }
     } elseif ($method=='GET') {
-        if (!isset($url_array[1])) { // if parameter id recipe does not exist
-                           
-            return $user->index();
-        } else {
-            $user_id=intval($url_array[1]);
-            return $user->index($user_id);
+        $user = new SubscriptionController;
+
+        if ($url_array[1] === "payments") {
+            return $user->myPayments();
         }
+        if ($url_array[1] === "plan") {
+            return $user->myPlan($url_array[2]);
+        }
+        if ($url_array[1] === "renew-plan") {
+            return $user->renewPlan();
+        }
+        if ($url_array[1] === "upgrade-plan") {
+            return $user->upgradePlan($url_array[2]);
+        }
+        if ($url_array[1] === "subscribe-plan") {
+            return $user->subscribe($url_array[2]);
+        }
+    
+        
     }
 }
 

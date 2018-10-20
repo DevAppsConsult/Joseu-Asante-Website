@@ -1,3 +1,4 @@
+<?php require("libs/fetch_data.php");?>
 <!doctype html>
 <!--[if lt IE 7]>		<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>			<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -224,10 +225,11 @@
 				<div class="container">
 					  <div class="row">
 
-									<div class="tg-sectionhead" align="center">
-										<h4 style="line-height:35px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque semper, est et tincidunt hendrerit, purus felis ornare ante</h4>
-									</div>
+						<div class="tg-sectionhead" align="center">
+							<h4 style="line-height:35px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque semper, est et tincidunt hendrerit, purus felis ornare ante</h4>
+						</div>
           <div class="col-md-4">
+		  <?php $myPlan = json_decode(file_get_contents(base_url().'public/user/plan/'.$_SESSION['user_id']),true); ?>		              
             <div class="pricing-column">
               <ul>
                 <li class="title">Basic Plan</li>
@@ -235,10 +237,29 @@
                 <li>All Articles</li>
                 <li>Upgrade Option</li>
                 <li>New Article Alert</li>
-                <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#">Subscribe</a></li>
+				<?php
+					if(isset($myPlan['success'])) : 
+						if($myPlan['data']['plan']['id'] == 1)
+						{
+				?>
+					        <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewOne" onclick="renew(1); return false;">Renew</a></li>
+				<?php
+						}else{
+				 ?>
+							<li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewOne" onclick="upgrade(1); return false;">Downgrade</a></li>
+				<?php
+						}
+					else:
+					?>
+
+	                <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewOne" onclick="subscribe(1); return false;">Subscribe</a></li>					
+					<?php
+					endif;
+				?>
               </ul>
             </div>
           </div>
+
           <div class="col-md-4">
             <div class="pricing-column popular">
               <ul>
@@ -247,7 +268,25 @@
                 <li>All Articles</li>
                 <li>Upgrade Option</li>
                 <li>New Article Alert</li>
-                <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#">Subscribe</a></li>
+				<?php
+					if(isset($myPlan['success'])) : 
+
+						if($myPlan['data']['plan']['id'] == 2)
+						{
+				?>
+					        <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewTwo" onclick="renew(2); return false;">Renew</a></li>
+				<?php
+						}else{
+				 ?>
+							<li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewTwo" onclick="upgrade(2); return false;">Upgrade</a></li>
+				<?php
+						}
+					else:
+					?>
+	                <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewTwo" onclick="subscribe(2); return false;">Subscribe</a></li>					
+					<?php
+					endif;
+				?>
               </ul>
             </div>
           </div>
@@ -259,7 +298,25 @@
                 <li>All Articles</li>
                 <li>Upgrade Option</li>
                 <li>New Article Alert</li>
-                <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#">Subscribe</a></li>
+				<?php
+					if(isset($myPlan['success'])) : 
+
+						if($myPlan['data']['plan']['id'] == 3)
+						{
+				?>
+					        <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewThree" onclick="renew(3); return false;">Renew</a></li>
+				<?php
+						}else{
+				 ?>
+							<li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewThree" onclick="upgrade(3); return false;">Upgrade</a></li>
+				<?php
+						}
+					else:
+					?>
+	                <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewThree" onclick="subscribe(3); return false;">Subscribe</a></li>					
+					<?php
+					endif;
+				?>
               </ul>
             </div>
           </div>
@@ -459,6 +516,124 @@
 	<script src="js/appear.js"></script>
 	<script src="js/gmap3.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+	var global = 0;
+		function subscribe(id)
+		{
+			global = id;
+			if(id == 1)
+			{
+				$("#renewOne").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+			}
+			if(id == 2)
+			{
+				$("#renewTwo").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+				
+			}
+			if(id == 3)
+			{
+				$("#renewThree").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+			}
+			$.get( "<?php echo base_url() ?>public/user/subscribe-plan/"+id,function( data ) {
+				var temp = data.data.split('|') ;
+				//console.log(temp);
+				loadNow(temp[1],temp[0]);
+			});
+
+		}
+		
+		function renew(id)
+		{
+			if(id == 1)
+			{
+				$("#renewOne").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+			}
+			if(id == 2)
+			{
+				$("#renewTwo").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+				
+			}
+			if(id == 3)
+			{
+				$("#renewThree").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+			}
+
+		}
+
+		function upgrade(id)
+		{
+			if(id == 1)
+			{
+				$("#renewOne").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+			}
+			if(id == 2)
+			{
+				$("#renewTwo").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+				
+			}
+			if(id == 3)
+			{
+				$("#renewThree").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
+			}
+
+		}
+	</script>
+	<script type="text/javascript" src="http://flw-pms-dev.eu-west-1.elasticbeanstalk.com/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+<script>
+/*	 document.addEventListener("DOMContentLoaded", function(event) {
+  document.getElementById("submit").addEventListener("click", function(e) {
+
+  });
+});
+*/
+function loadNow(amount,code)
+{
+	var PBFKey = "FLWPUBK-967856064bfbdb1f87a9690b420b268f-X";
+    
+    getpaidSetup({
+      PBFPubKey: PBFKey,
+      customer_email: "<?php echo $_SESSION['user']['email'] ?>",
+      customer_firstname: "<?php echo explode(' ',$_SESSION['user']['name'])[0] ?>",
+      customer_lastname: "<?php echo explode(' ',$_SESSION['user']['name'])[1] ?>",
+      custom_description: "Content Subscription",
+      custom_logo: "<?php echo base_url() ?>logo.png",
+      custom_title: "Josey",
+      amount: amount,
+      country: "GH",
+      currency: "GHS",
+      txref: code,
+      onclose: function() {},
+      callback: function(response) {
+        var flw_ref = response.tx.flwRef; // collect flwRef returned and pass to a 					server page to complete status check.
+        console.log("This is the response returned after a charge", response);
+        if (
+          response.tx.chargeResponseCode == "00" ||
+          response.tx.chargeResponseCode == "0"
+        ) {
+			if(global == 1)
+			{
+				$("#renewOne").html('Thank you, check your mail for confirmation');
+			}
+			if(global == 2)
+			{
+				$("#renewTwo").html('Thank you, check your mail for confirmation');
+				
+			}
+			if(global == 3)
+			{
+				$("#renewThree").html('Thank you, check your mail for confirmation');
+			}
+
+          // redirect to a success page
+        } else {
+          // redirect to a failure page.
+        }
+      }
+    });
+}
+
+
+</script>
 </body>
 
 <!-- Mirrored from exprostudio.com/html/book_library/authordetail.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Aug 2018 20:08:03 GMT -->

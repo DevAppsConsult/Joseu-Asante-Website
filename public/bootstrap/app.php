@@ -11,3 +11,4 @@ require_once __DIR__."/../app/models/UserPlan.php";
 require_once __DIR__."/../app/controllers/Controller.php";
 require_once __DIR__."/../app/controllers/BlogController.php";
 require_once __DIR__."/../app/controllers/UserController.php";
+require_once __DIR__."/../app/controllers/SubscriptionController.php";

@@ -1,6 +1,11 @@
 <?php
 session_start();
 ob_start();
+
+function base_url()
+{
+    return 'http://localhost/joey-web/';
+}
 function gettagline($table)
 {
     include "database/db_connect.php";
