@@ -626,3 +626,122 @@ ALTER TABLE `users`
 ALTER TABLE `visitor_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 COMMIT;
+
+--
+-- Table structure for table `user_plan`
+--
+
+DROP TABLE IF EXISTS `user_plan`;
+CREATE TABLE `user_plan` (
+  `user_id` int(255) NOT NULL,
+  `plan_id` int(2) NOT NULL,
+  `start` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `end` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `user_plan`
+--
+ALTER TABLE `user_plan`
+  ADD PRIMARY KEY (`user_id`);
+COMMIT;
+
+
+--
+-- Table structure for table `plan`
+--
+
+DROP TABLE IF EXISTS `plan`;
+CREATE TABLE `plan` (
+  `id` int(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `price` double(12,2) NOT NULL,
+  `months` int(2) NOT NULL DEFAULT '1',
+  `description` text NOT NULL,
+  `status` enum('Active','Suspended') NOT NULL DEFAULT 'Active'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Truncate table before insert `plan`
+--
+
+TRUNCATE TABLE `plan`;
+--
+-- Dumping data for table `plan`
+--
+
+INSERT INTO `plan` (`id`, `name`, `price`, `months`, `description`, `status`) VALUES
+(1, 'Basic Plan', 50.00, 1, 'Full access to articles for 1 month', 'Active'),
+(2, 'Silver Plan', 80.00, 6, 'Full access to articles for 6 months', 'Active'),
+(3, 'Gold Plan', 120.00, 12, 'Full access to articles for 12 months', 'Active');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `plan`
+--
+ALTER TABLE `plan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `plan`
+--
+ALTER TABLE `plan`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+
+
+--
+-- Table structure for table `payments`
+--
+
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE `payments` (
+  `id` int(255) NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `plan_id` int(2) NOT NULL,
+  `amount` double(12,2) NOT NULL,
+  `status` enum('Pending','Cancelled','Failed','Completed') NOT NULL DEFAULT 'Pending',
+  `trans_code` varchar(150) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `external_trans_id` varchar(150) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `external_trans_code` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Truncate table before insert `payments`
+--
+
+TRUNCATE TABLE `payments`;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+COMMIT;
