@@ -225,14 +225,25 @@
     <div class="row justify-content-md-center">
       <div class="col col-md-8  col-lg-6">
       <p>Please set a new password.</p>
-            <form>
+        <form id="newForm" class="newForm" action="public/user/set-password-forgot-code">
+            <div class="ajax-message">
+            </div>
             <div class="form-group">
-            <label for="email">Enter New password</label>
-            <input type="password" id="password" class="form-control input-lg" placeholder="Password">
-          </div>
+              <label for="email">Enter Your Reset Code</label>
+              <input type="text" id="code" name="forgot_code" class="form-control input-lg" placeholder="Forgot Code">
+            </div>
+            <div class="form-group">
+              <label for="email">Enter Your Email</label>
+              <input type="email" id="email" name="email" class="form-control input-lg" placeholder="Your Email">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Enter New password</label>
+              <input type="password" id="password" name="password" class="form-control input-lg" placeholder="Password">
+            </div>
             <div class="form-group">
             <label for="email">Repeat password</label>
-            <input type="password" id="password_repeat" class="form-control input-lg" placeholder="Repeat Password">
+            <input type="password" id="password_repeat" name="forgot_password" class="form-control input-lg" placeholder="Repeat Password">
           </div>
               <button type="submit" class="btn btn-primary btn-lg">Continue</button>
             </form>
@@ -436,6 +447,65 @@
   <script src="js/gmap3.js"></script>
   <script src="js/main.js"></script>
 </body>
+
+<script>  
+$(".newForm").submit(function(e) {
+  //$("#btnSubmit").prop("disabled", true);
+
+  //window.scrollTo(0,document.body.scrollHeight);
+    sending = 1;
+    e.preventDefault();
+    var obj = { email: $("#email").val(), password : $("#password").val(), forgot_code: $('#code').val(), forgot_password: $('#password_repeat').val() };
+    var dat =JSON.stringify(obj);
+    console.log(dat);
+      var actionurl = e.currentTarget.action;
+      $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-spinner fa-spin"></i> Please wait loading ...</div>');
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": actionurl,
+          "method": "POST",
+          "headers": {
+            "content-type": "application/json",
+            "cache-control": "no-cache",
+            "postman-token": "fbdb8f20-d915-8753-b6a1-96b9cbf2de21"
+          },
+          "processData": false,
+          "data": JSON.stringify(obj),
+
+          success: function(data) {
+                sending = 0;
+                console.log(data.status);
+                if(data.success)
+                {
+                  
+                  $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-check"></i> Your password has been changed, kindly login</div>');
+                  window.location= "signin.php";
+                }
+                else
+                {
+                  $(".ajax-message").html('<div class="alert alert-danger"><i class="fa fa-times"></i> '+data.error+'</div>');
+
+                }
+
+              },
+              error: function (e) {
+                sending = 0;
+                $(".ajax-message").html('<div class="alert alert-danger"><i class="fa fa-times"></i> Kindly retry your request again </div>');
+
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+
+            }
+
+        }
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+        });       
+
+});
+</script>
 
 <!-- Mirrored from exprostudio.com/html/book_library/authordetail.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Aug 2018 20:08:03 GMT -->
 </html>

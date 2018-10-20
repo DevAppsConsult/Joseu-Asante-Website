@@ -75,13 +75,13 @@ class UserController extends Controller
         $user = new User;
         $_details = $user->get(['email'=>$email,'status'=>'Active']);
         if (sizeof($_details) == 0) {
-            return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry wrong account details','data'=>null]]);
+            return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry account email','data'=>$email]]);
         }
         $data['forgot_code'] = self::generateVerifyCode();
 
         //lets do activation
         $details = $user->update(['email'=>$email], ['forgot_code'=>$data['forgot_code']]);
-        $this->sendMail("Welcome to our website", "Hello ".$_details['name']." <br/> A password reset code has been generated for you Kindly find it below <br/> <strong>".$data['forgot_code']."</strong>", $email, $_details['name']);
+        $this->sendMail("Forgot Password", "Hello ".$_details[0]['name']." <br/> A password reset code has been generated for you Kindly find it below <br/> <strong>".$data['forgot_code']."</strong>", $email, $_details[0]['name']);
 
         return $this->response->response(['status'=>200,"data"=>['success'=>'User forgot code sent','data'=>$_details]]);
     }
@@ -96,6 +96,12 @@ class UserController extends Controller
         }
         if (!isset($data['password'])) {
             return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry password field is required','data'=>null]]);
+        }
+        if (!isset($data['forgot_password'])) {
+            return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry kindly confirm your password','data'=>null]]);
+        }
+        if ($data['forgot_password'] != $data['password']) {
+            return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry kindly confirm your password','data'=>null]]);
         }
 
         $_details = $user->get(['email'=>$data['email'],'forgot_code'=>$data['forgot_code'],'status'=>'Active']);

@@ -135,7 +135,7 @@ $(".newForm").submit(function(e) {
                 if(data.success)
                 {
                   
-                  $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-check"></i> Your login wasa success</div>');
+                  $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-check"></i> Your login was a success</div>');
                   window.location= "index.php";
                 }
                 else
