@@ -56,63 +56,28 @@
                                         <div class="tg-productgrid">
                                             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-8">
 
-            <form action="#">
-              <h3 class="subheadline">Social Connect</h3>
-              <ul class="list-group no-border list-unstyled v2" >
-                <li><i class="fa fa-fw fa-twitter icon"></i> Twitter <a class="btn btn-primary btn-sm">Disconnect</a> <span class="connected">Connected</span></li><br>
-                <li><i class="fa fa-fw fa-facebook icon"></i> Facebook <a class="btn btn-sm tg-btn tg-active">Connect</a></li><br>
-                <li><i class="fa fa-fw fa-google-plus icon"></i> Google Plus <a class="btn btn-sm tg-btn tg-active">Connect</a></li>
-              </ul>
-              <h3 class="subheadline">Delete Account</h3>
-              <p>If you are no longer interested in using your account click the button below to delete your account.</p>
-              <a href="#" class="btn btn-sm tg-btn tg-active">Delete Account</a>
-              <hr>
-              <div class="form-group action">
-                <button type="submit" class="btn btn-sm btn-primary">Save Settings</button>
-              </div>
-            </form>
+                                                <form action="#">
+                                                    <h3 class="subheadline">Social Connect</h3>
+                                                    <ul class="list-group no-border list-unstyled v2" >
+                                                        <li><i class="fa fa-fw fa-twitter icon"></i> Twitter <a class="btn btn-primary btn-sm">Disconnect</a> <span class="connected">Connected</span></li><br>
+                                                        <li><i class="fa fa-fw fa-facebook icon"></i> Facebook <a class="btn btn-sm tg-btn tg-active">Connect</a></li><br>
+                                                        <li><i class="fa fa-fw fa-google-plus icon"></i> Google Plus <a class="btn btn-sm tg-btn tg-active">Connect</a></li>
+                                                    </ul>
+                                                    <h3 class="subheadline">Delete Account</h3>
+                                                    <p>If you are no longer interested in using your account click the button below to delete your account.</p>
+                                                    <a href="#" class="btn btn-sm tg-btn tg-active">Delete Account</a>
+                                                    <hr>
+                                                    <div class="form-group action">
+                                                        <button type="submit" class="btn btn-sm btn-primary">Save Settings</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
-                                <aside id="tg-sidebar" class="tg-sidebar">
-                                    <div class="tg-widget tg-widgetsearch">
-                                        <form class="tg-formtheme tg-formsearch">
-                                            <div class="form-group">
-                                                <button type="submit"><i class="icon-magnifier"></i></button>
-                                                <input type="search" name="search" class="form-group" placeholder="Search by title, author, key...">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="tg-widget tg-catagories">
-                                        <div class="tg-widgettitle">
-                                            <h3>My Account</h3>
-                                        </div>
-                                        <div class="tg-widgetcontent">
-                                            <ul>
-                                                <li><a href="javascript:void(0);"><span>My Profile</a></li>
-                                                <li><a href="javascript:void(0);"><span>Change Password</a></li>
-                                                <li><a href="javascript:void(0);"><span>Membership</a></li>
-                                                <li><a href="javascript:void(0);"><span>Payments</a></li>
-                                                <li><a href="javascript:void(0);"><span>Account</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                  <div class="tg-widget tg-catagories">
-                    <div class="tg-widgettitle">
-                      <h3>Manage Articles</h3>
-                    </div>
-                    <div class="tg-widgetcontent">
-                      <ul>
-                        <li><a href="javascript:void(0);"><span>Browse Articles</a></li>
-                        <li><a href="javascript:void(0);"><span>Bookmarked Articles</a></li>
-                        <li><a href="javascript:void(0);"><span>My Articles</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                                </aside>
+                                <?php require_once('libs/account_side.php') ?>                                
                             </div>
                         </div>
                     </div>

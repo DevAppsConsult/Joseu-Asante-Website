@@ -147,30 +147,7 @@
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
-								<aside id="tg-sidebar" class="tg-sidebar">
-									<div class="tg-widget tg-widgetsearch">
-										<form class="tg-formtheme tg-formsearch">
-											<div class="form-group">
-												<button type="submit"><i class="icon-magnifier"></i></button>
-												<input type="search" name="search" class="form-group" placeholder="Search by title, author, key...">
-											</div>
-										</form>
-									</div>
-									<div class="tg-widget tg-catagories">
-										<div class="tg-widgettitle">
-											<h3>My Account</h3>
-										</div>
-										<div class="tg-widgetcontent">
-											<ul>
-												<li><a href="javascript:void(0);"><span>My Profile</a></li>
-												<li><a href="javascript:void(0);"><span>Change Password</a></li>
-												<li><a href="javascript:void(0);"><span>Membership</a></li>
-												<li><a href="javascript:void(0);"><span>Payments</a></li>
-												<li><a href="javascript:void(0);"><span>Account</a></li>
-											</ul>
-										</div>
-									</div>
-								</aside>
+								<?php require_once('libs/account_side.php') ?>
 							</div>
 							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
 								<aside id="tg-sidebar" class="tg-sidebar">
