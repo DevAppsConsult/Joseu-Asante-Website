@@ -51,6 +51,15 @@ if ($action === 'user') {
                 }
                 $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);
             }
+            if ($url_array[1] === "update") {
+                $json = file_get_contents('php://input');
+                $post = json_decode($json, true);
+                if (is_array($post)) {
+                    return $user->update($post);
+                }
+                $response->response(['status'=>206,"data"=>['error'=>'Sorry wrong parameters']]);
+            }
+
             if ($url_array[1] === 'activate') {
                 $json = file_get_contents('php://input');
                 $post = json_decode($json, true);

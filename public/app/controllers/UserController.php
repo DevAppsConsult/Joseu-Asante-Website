@@ -49,6 +49,26 @@ class UserController extends Controller
         $this->sendMail("Welcome to our website", "Hello ".$data['name']." <br/> Welcome to our website kindly find below your account activation code <br/> <strong>".$data['activation_code']."</strong>", $data['email'], $data['name']);
         return $this->response->response(['status'=>200,"data"=>['success'=>'User account created','data'=>$id]]);
     }
+    
+    public function update(array $data)
+    {
+        $user = new User;
+        if (!isset($data['email'])) {
+            return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry email field is required','data'=>null]]);
+        }
+        if (!isset($data['name'])) {
+            return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry name field is required','data'=>null]]);
+        }        
+        $user->update(['id'=>$data['user_id']], ['email'=>null]);
+        if (sizeof($user->get(['email'=>$data['email']])) > 0) {
+            return $this->response->response(['status'=>206,"data"=>['error'=>'Sorry this email address is not available','data'=>null]]);
+        }
+        $details = $user->update(['id'=>$data['user_id']], ['name'=>$data['name'],'email'=>$data['email']]);
+        $_details = $user->get(['email'=>$data['email']]);
+        $_SESSION['user'] =  $_details[0];        
+        $this->sendMail("Account details changed", "Hello ".$data['name']." <br/> Your account details have been updated <br/> <strong>", $data['email'], $data['name']);
+        return $this->response->response(['status'=>200,"data"=>['success'=>'User account created']]);
+    }
 
     public function activate(array $data)
     {
