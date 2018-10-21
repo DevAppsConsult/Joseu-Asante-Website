@@ -557,6 +557,11 @@
 			{
 				$("#renewThree").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
 			}
+			$.get( "<?php echo base_url() ?>public/user/renew-plan/"+id,function( data ) {
+				var temp = data.data.split('|') ;
+				//console.log(temp);
+				loadNow(temp[1],temp[0]);
+			});
 
 		}
 
@@ -575,6 +580,11 @@
 			{
 				$("#renewThree").html('<i class="fa fa-spinner fa-spin"></i> Please wait ...');
 			}
+			$.get( "<?php echo base_url() ?>public/user/upgrade-plan/"+id,function( data ) {
+				var temp = data.data.split('|') ;
+				//console.log(temp);
+				loadNow(temp[1],temp[0]);
+			});
 
 		}
 	</script>
@@ -623,7 +633,7 @@ function loadNow(amount,code)
 			{
 				$("#renewThree").html('Thank you, check your mail for confirmation');
 			}
-
+			window.location = "my_payments.php";
           // redirect to a success page
         } else {
           // redirect to a failure page.

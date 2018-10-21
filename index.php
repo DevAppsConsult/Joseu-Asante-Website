@@ -239,6 +239,9 @@
     <script src="js/appear.js"></script>
     <script src="js/gmap3.js"></script>
     <script src="js/main.js"></script>
+    <?php include("libs/security_js.php");?>
+
                         </body>
+
 
                         </html>
