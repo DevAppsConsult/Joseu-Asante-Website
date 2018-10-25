@@ -4,7 +4,7 @@ ob_start();
 
 function base_url()
 {
-    return 'http://localhost/joey-web/';
+    return 'http://localhost/article/';
 }
 function gettagline($table)
 {
@@ -350,6 +350,30 @@ function getcategoriesmenu($table)
 
     mysqli_close($con);
 }
+
+
+function getcategorieside($table)
+{
+    include "database/db_connect.php";
+    $sql="SELECT * FROM $table ";
+    if ($result=mysqli_query($con, $sql)) {
+        //count number of rows in query result
+        $rowcount=mysqli_num_rows($result);
+        //if no rows returned show no categories alert
+        if ($rowcount==0) {
+            // code...
+            echo 'No Categories';
+        }
+        //if there are rows available display all the results
+        foreach ($result as $blog_categories => $category) {
+            // code...
+            echo ' <a href="category.php?id='.$category['id'].'">'.$category['name'].'</a>';
+        }
+    }
+
+    mysqli_close($con);
+}
+
 function getcategoriesfooter($table)
 {
     include "database/db_connect.php";
@@ -513,7 +537,7 @@ function getolderposts($table)
 function getfour($table)
 {
     include "database/db_connect.php";
-    $sql="SELECT * FROM $table ORDER BY id DESC LIMIT 4";
+    $sql="SELECT * FROM $table ORDER BY id DESC LIMIT 8";
     if ($result=mysqli_query($con, $sql)) {
         //count number of rows in query result
         $rowcount=mysqli_num_rows($result);
@@ -525,32 +549,23 @@ function getfour($table)
         //if there are rows available display all the results
         foreach ($result as $thefour => $fourdata) {
             // code...
-            echo '
-										<div class="col-xs-3 col-sm-3 col-md-6 col-lg-3">
-											<div class="tg-postbook">
-												<figure class="tg-featureimg">
-													<div class="tg-bookimg">
-														<div class="tg-frontcover"><img src="blogadmin/images/'.$fourdata['photo'].'" alt="image description"></div>
-														<div class="tg-backcover"><img src="blogadmin/images/'.$fourdata['photo'].'" alt="image description"></div>
-													</div>
-													<a class="tg-btnaddtowishlist" href="javascript:void(0);">
-														<i class="icon-heart"></i>
-														<span>add to wishlist</span>
-													</a>
-												</figure>
-												<div class="tg-postbookcontent">
-													<ul class="tg-bookscategories">
-														<li><a href="javascript:void(0);">Adventure</a></li>
-														<li><a href="javascript:void(0);">Fun</a></li>
-													</ul>
-													<div class="tg-booktitle">
-														<h3><a href="javascript:void(0);">'.$fourdata['title'].'</a></h3>
-													</div>
-													<span class="tg-bookwriter">By: <a href="javascript:void(0);">'.$fourdata['author'].'</a></span>
-													<span class="tg-stars"><span></span></span>
-												</div>
-											</div>
-										</div>';
+            echo ' 
+            <article class="grid_post text-center">
+            <figure>
+                                            <a href="#" class="grid_image"><img src="blogadmin/images/'.$fourdata['photo'].'" class="img-responsive" alt=""></a>
+                                            <figcaption>
+                                                <div class="post-cat"><span>In</span> <a href="#">'.$fourdata['tags'].'</a></div>
+                                                <div class="entry-meta">
+                                                    <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i><time datetime="2018-01-21T19:00">Jan 21, 2018</time></span> 
+                                                    <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>'.$fourdata['author'].'</a></span>
+                                                </div>
+                                                <h4 class="grid_post_title"><a href="#">'.$fourdata['title'].'</a></h4>
+                                                <p>'.$fourdata['content'].'</p>
+                                                <a href="#" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
+                                                <!-- /.Post button -->
+                                            </figcaption>
+                                        </figure>
+                                        </article>';
         }
     }
 
@@ -571,34 +586,20 @@ function getonelatest($table)
         //if there are rows available display all the results
         foreach ($result as $onelatest => $onedata) {
             // code...
-            echo '<div class="tg-featureditm">
-							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 hidden-sm hidden-xs">
-								<figure><img src="blogadmin/images/'.$onedata['photo'].'" alt="image description"></figure>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-								<div class="tg-featureditmcontent">
-									<div class="tg-themetagbox"><span class="tg-themetag">featured</span></div>
-									<div class="tg-booktitle">
-										<h3><a href="single.php?id='.$onedata['id'].'">'.$onedata['title'].'</a></h3>
-									</div>
-									<span class="tg-bookwriter">By: <a href="javascript:void(0);"> '.$onedata['author'].'</a></span>
-									<span class="tg-bookwriter">On: 
-										<a href="javascript:void(0);"> '.$onedata['date'].'</a>
-									</span>
-									<span>'.$onedata['tags'].'</span>
-									<div class="tg-priceandbtn">
-										<span class="tg-bookprice">
-											<ins>$23.18</ins>
-											<del>$30.20</del>
-										</span>
-										<a class="tg-btn tg-btnstyletwo tg-active" href="single.php?id='.$onedata['id'].'">
-											<i class="fa fa-shopping-basket"></i>
-											<em>Read Article</em>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>';
+            echo ' <figure>
+                                        <a href="single.php?id='.$onedata['id'].'" class="grid_image"><img src="blogadmin/images/'.$onedata['photo'].'" class="img-responsive" alt=""></a>
+                                        <figcaption>
+                                            <div class="post-cat"><span>In</span> <a href="#">'.$onedata['tags'].'</a></div>
+                                            <div class="entry-meta">
+                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i> '.$onedata['date'].'</span> 
+                                                <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i> '.$onedata['author'].'</a></span>
+                                            </div>
+                                            <h3 class="grid_post_title"><a href="single.php?id='.$onedata['id'].'">'.$onedata['title'].'</a></h3>
+                                            <p>'.$onedata['content'].'</p>
+                                            <a href="single.php?id='.$onedata['id'].'" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
+                                            <!-- /.Post button -->
+                                        </figcaption>
+                                    </figure>';
         }
     }
 
@@ -676,28 +677,36 @@ function getcategoryblogs($table, $id)
         //if there are rows available display all the results
         foreach ($result as $categories => $cdata) {
             // code...
-            echo '
-											<div class="col-xs-6 col-sm-12 col-md-6 col-lg-4">
-												<article class="tg-post">
-													<figure>
-														<a href="single.php?id='.$cdata['id'].'">
-														<img src="blogadmin/images/'.$cdata['photo'].'" alt="image description"></a>
-													</figure>
-													<div class="tg-postcontent">
-														<ul class="tg-bookscategories">
-															<li><a href="javascript:void(0);">'.$cdata['tags'].'</a></li>
-														</ul>
-														<div class="tg-posttitle">
-															<h3><a href="single.php?id='.$cdata['id'].'">'.$cdata['title'].'</a></h3>
-														</div>
-														<span class="tg-bookwriter">By: <a href="javascript:void(0);">'.$cdata['author'].'</a></span>
-														<ul class="tg-postmetadata">
-															<li><a href="javascript:void(0);"><i class="fa fa-calendar-alt"></i> '.$cdata['date'].'</a></li>
-															<li><a href="javascript:void(0);">single.php?id='.$cdata['id'].'</a></li>
-														</ul>
-													</div>
-												</article>
-											</div>';
+            echo '<div class="media meida-md">
+                                    <div class="media-left">
+                                        <a href="single.php?id='.$cdata['id'].'"><img src="blogadmin/images/'.$cdata['photo'].'" class="media-object" alt=""></a>
+                                    </div>
+                                    <!-- /.Post image -->
+                                    <div class="media-body">
+                                        <div class="post-header">
+                                            <div class="post-cat"><span>In</span> <a href="#">'.$cdata['tags'].'</a></div>
+                                            <h3 class="media-heading"><a href="single.php?id='.$cdata['id'].'">'.$cdata['title'].'</a></h3>
+                                            <div class="entry-meta">
+                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i> '.$cdata['date'].'</span> 
+                                                <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>'.$cdata['author'].'</a></span>
+                                            </div>
+                                            <!-- /.Post meta -->
+                                        </div>
+                                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.</p>
+                                        <div class="element-block">
+                                            <a href="single.php?id='.$cdata['id'].'" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
+                                            <!-- /.Post button -->
+                                            <div class="post_share">
+                                                <a class="smedia facebook fa fa-facebook" href="#"></a>
+                                                <a class="smedia twitter fa fa-twitter" href="#"></a>
+                                                <a class="smedia googleplus fa fa-google-plus" href="#"></a>
+                                                <a class="smedia linkedin fa fa-linkedin" href="#"></a>
+                                                <a class="smedia pinterest fa fa-pinterest-p" href="#"></a>
+                                            </div>
+                                            <!-- /.Post social share -->
+                                        </div>
+                                    </div>
+                                </div>';
         }
     }
 

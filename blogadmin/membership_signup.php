@@ -4,7 +4,7 @@
     require "{$currDir}/defaultLang.php";
     require "{$currDir}/language.php";
     require "{$currDir}/lib.php";
-    require_once "{$currDir}/header.php";
+    require_once "{$currDir}/header-login.php";
 
     $adminConfig = config('adminConfig');
 
@@ -105,29 +105,36 @@ if ($_POST['signUp'] != '') {
 
 <?php if (!$noSignup) {
     ?>
-    <div class="row">
-        <div class="hidden-xs col-sm-4 col-md-6 col-lg-8" id="signup_splash">
-            <!-- customized splash content here -->
-        </div>
 
-        <div class="col-sm-8 col-md-6 col-lg-4">
-            <div class="panel panel-success">
-
-                <div class="panel-heading">
-                    <h1 class="panel-title"><strong><?php echo $Translation['sign up here']; ?></strong></h1>
+<main id="tg-main" class="tg-main tg-haslayout">
+      <!--************************************
+          Contact Us Start
+      *************************************-->
+      <div class="tg-sectionspace tg-haslayout">
+        <div class="container">
+          <div class="row">
+            <div class="tg-contactus">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="tg-sectionhead">
+                  <h2><span>Please <?php echo $Translation['sign up here']; ?></span></h2>
                 </div>
-
-                <div class="panel-body">
-                    <form method="post" action="membership_signup.php">
-                        <div class="form-group">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <div class="container">
+    <div class="row justify-content-md-center align-items-center">
+      <div class="col-sm-offset-3 col col-md-6">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="login">
+          <form method="post" action="membership_signup.php">
+           
+              <div class="form-group">
                             <label for="username" class="control-label"><?php echo $Translation['username']; ?></label>
                             <input class="form-control input-lg" type="text" required="" placeholder="<?php echo $Translation['username']; ?>" id="username" name="newUsername">
                             <span id="usernameAvailable" class="help-block hidden pull-left"><i class="glyphicon glyphicon-ok"></i> <?php echo str_ireplace(array("'", '"', '<memberid>'), '', $Translation['user available']); ?></span>
                             <span id="usernameNotAvailable" class="help-block hidden pull-left"><i class="glyphicon glyphicon-remove"></i> <?php echo str_ireplace(array("'", '"', '<memberid>'), '', $Translation['username invalid']); ?></span>
                             <div class="clearfix"></div>
                         </div>
-
-                        <div class="row">
+             <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="password" class="control-label"><?php echo $Translation['password']; ?></label>
@@ -159,8 +166,11 @@ if ($_POST['signUp'] != '') {
                                 if ($adminConfig['custom'.$cf] != '') {
                                     ?>
                                         <div class="row form-group">
-                                           <div class="col-sm-3"><label class="control-label" for="custom<?php echo $cf; ?>"><?php echo $adminConfig['custom'.$cf]; ?></label></div>
-                                           <div class="col-sm-9"><input class="form-control" type="text" placeholder="<?php echo $adminConfig['custom'.$cf]; ?>" id="custom<?php echo $cf; ?>" name="custom<?php echo $cf; ?>"></div>
+                                           <div class="col-sm-3">
+                                            <label class="control-label" for="custom<?php echo $cf; ?>"><?php echo $adminConfig['custom'.$cf]; ?></label></div>
+                                           <div class="col-sm-9">
+                                            <input class="form-control" type="text" placeholder="<?php echo $adminConfig['custom'.$cf]; ?>" id="custom<?php echo $cf; ?>" name="custom<?php echo $cf; ?>">
+                                        </div>
                                         </div>
                                     <?php
                                 }
@@ -168,16 +178,25 @@ if ($_POST['signUp'] != '') {
                         } ?>
 
                         <div class="row">
-                            <div class="col-sm-offset-3 col-sm-6">
-                                <button class="btn btn-primary btn-lg btn-block" value="signUp" id="submit" type="submit" name="signUp"><?php echo $Translation['sign up']; ?></button>
+                            <div class="">
+                                <button class="tg-btn btn-sm btn-block" value="signUp" id="submit" type="submit" name="signUp"><?php echo $Translation['sign up']; ?></button>
                             </div>
                         </div>
-
-                    </form>
-                </div> <!-- /div class="panel-body" -->
-            </div> <!-- /div class="panel ..." -->
-        </div> <!-- /div class="col..." -->
-    </div> <!-- /div class="row" -->
+            </form>
+          </div>
+        </div>
+        <div> </div>
+      </div>
+  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--************************************
+        Main End
+    *************************************-->
 
     <script>
         $j(function() {

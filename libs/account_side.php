@@ -1,34 +1,21 @@
-
-                                <aside id="tg-sidebar" class="tg-sidebar">
-                                    <div class="tg-widget tg-widgetsearch">
-                                        <form class="tg-formtheme tg-formsearch">
-                                            <div class="form-group">
-                                                <button type="submit"><i class="icon-magnifier"></i></button>
-                                                <input type="search" name="search" class="form-group" placeholder="Search by title, author, key...">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="tg-widget tg-catagories">
-                                        <div class="tg-widgettitle">
-                                            <h3>My Account</h3>
-                                        </div>
-                                        <div class="tg-widgetcontent">
+<aside class="col-sm-4 col-md-3 rightSidebar">
+                                <div class="about-card">
+                                    <div class="ui divider"><h3>My Account</h3></div>
+                                    <div class="tg-widgetcontent">
                                             <ul>
-                                                <li><a href="my_profile.php"><span>My Profile</a></li>
-                                                <li><a href="my_membership.php"><span>Membership</a></li>
-                                                <li><a href="my_payments.php"><span>Payments</a></li>
+                                                <li><a href="my_profile.php" class="btn btn-sm btn-default btn-block"><span>My Profile</a></li>
+                                                <li style="margin-top:10px"><a href="my_membership.php" class="btn btn-sm btn-default btn-block"><span>Membership</a></li>
+                                                <li style="margin-top:10px"><a href="my_payments.php" class="btn btn-sm btn-default btn-block"><span>Payments</a></li>
                                             </ul>
-                                        </div>
                                     </div>
-                                    <div class="tg-widget tg-catagories">
-                                        <div class="tg-widgettitle">
-                                        <h3>Manage Articles</h3>
-                                        </div>
-                                        <div class="tg-widgetcontent">
-                                        <ul>
-                                            <li><a href="index.php"><span>Browse Articles</a></li>
-                                            <li><a href="bookmark.php"><span>Bookmarked Articles</a></li>
-                                        </ul>
-                                        </div>
+                                </div>
+                                <div class="about-card">
+                                    <div class="ui divider"><h3>Manage Articles</h3></div>
+                                    <div class="tg-widgetcontent">
+                                            <ul>
+                                                <li><a href="index.php" class="btn btn-sm btn-default btn-block"><span>Browse Articles</a></li>
+                                                <li style="margin-top:10px"><a href="bookmark.php" class="btn btn-sm btn-default btn-block"><span>Bookmarked Articles</a></li>
+                                            </ul>
                                     </div>
-                                </aside>
+                                </div>
+                            </aside>

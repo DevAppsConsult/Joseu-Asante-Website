@@ -4,41 +4,43 @@ define("ROW_PER_PAGE", 6);
 require_once('database/db.php');//db config file
 ?>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
+    
 <head>
-	<title>Search|<?php getwebname("titles"); echo"|"; gettagline("titles");?></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="utf-8">
-	<link id="browser_favicon" rel="shortcut icon" href="blogadmin/images/<?php geticon("titles"); ?>">
-	<meta charset="utf-8" name="description" content="<?php getshortdescription("titles");?>">
-	<meta name="keywords" content="<?php getkeywords("titles");?>" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Search | <?php getwebname("titles"); echo" | "; gettagline("titles");?></title>
+        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/animsition.min.css" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+        <link href="assets/themify-icons/themify-icons.css" rel="stylesheet">
+        <link href="assets/css/bootsnav.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.carousel.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.theme.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.transitions.css" rel="stylesheet">
+        <link href="assets/css/magnific-popup.css" rel="stylesheet">
+        <link href="assets/css/fluidbox.min.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
+
 <script>
-		addEventListener("load", function () {
-			setTimeout(hideURLbar, 0);
-		}, false);
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
 
-		function hideURLbar() {
-			window.scrollTo(0, 1);
-		}
-	</script>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/owl.carousel.css">
-	<link rel="stylesheet" href="css/transitions.css">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/color-purple.css">
-	<link rel="stylesheet" href="css/responsive.css">
-	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-</head>
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    </head>
+    <body>
+        <div class="main-content animsition">
+            <div class="page-outer-wrap">
+                <?php include("top-header.php"); ?>
 
-<body oncontextmenu="return false">
-	<!--Header-->
-	<?php include("header.php");?>
-	<!--//header-->
-	<?php
+    <?php
     $search_keyword = '';
     if (!empty($_POST['search']['keyword'])) {
         $search_keyword = $_POST['search']['keyword'];
@@ -80,149 +82,172 @@ require_once('database/db.php');//db config file
     $pdo_statement->execute();
     $result = $pdo_statement->fetchAll();
     ?>
-	<div class="tg-innerbanner tg-haslayout tg-parallax tg-bginnerbanner" data-z-index="-100" data-appear-top-offset="600" data-parallax="scroll" data-image-src="images/parallax/bgparallax-07.jpg">
-			
-		</div>
-	<!--/main-->
+                <!-- /.End of search  -->
 
-
-		<main id="tg-main" class="tg-main tg-haslayout">
-			<!--************************************
-					News Grid Start
-			*************************************-->
-			<div class="tg-sectionspace tg-haslayout">
-				<div class="container">
-					<div class="row">
-						<div id="tg-twocolumns" class="tg-twocolumns">
-							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 pull-right">
-								<div id="tg-content" class="tg-content">
-									<div class="tg-newsgrid">
-										<div class="tg-sectionhead">
-											<h2><span>Search Results</span> 
-												<?php  if ($row_count==0) {
+                <div class="clearfix"></div>
+                <!-- /.End of navigation -->
+                <div class="parallax page_header"  data-parallax-bg-image="assets/img/author-header.jpg" data-parallax-direction="left">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Post Left Right Sidebar</h3>
+                                <ol class="breadcrumb">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">Post Formats</a></li>
+                                    <li class="active">Post</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.End of page header -->
+                <div class="page-content">
+                    <div class="container">
+                        <div class="row">
+                            <main class="col-sm-8 col-md-9 content p_r_40">
+                                     <div>
+                    <h2><span>Search Results</span> 
+                                                <?php  if ($row_count==0) {
         # code...
         echo "<p style=color:#E9573F><b>sorry your search for:<u style=color:black>$search_keyword</u> returned zero results</b></p>";
         echo "<p><b style=color:#4FC1E9>Suggestions<b><br>Your search item is not available on Our Website<br>Try being more specific with key words<br>Enter key word using title<br>Try search using category<br>Try again later<br></p>";
         echo "<p><a href=\"http://www.google.com/search?q="
                             . $search_keyword . "\" target=\"_blank\" title=\"Look up 
-    						" . $search_keyword . " on Google\" style=color:#37BC9B>Click here</a> to try the 
-    						search on google</p>";
+                            " . $search_keyword . " on Google\" style=color:#37BC9B>Click here</a> to try the 
+                            search on google</p>";
     } else {
                             echo "<p style=color:#4FC1E9><b>you searched for:<u style=color:black> $search_keyword</u></b></p>";
                             echo "<p style=color:#37BC9B><b>Results($row_count)..</b></p>";
                         }
-                        ?>
-    				</h2>
-										</div>
-										
-										<div class="row">
-						<?php
+                        ?></h2>
+                </div>
+                               <?php
                         if (!empty($result)) {
                             foreach ($result as $row) {
                                 ?>
-											<div class="col-xs-6 col-sm-12 col-md-6 col-lg-4">
-												<article class="tg-post">
-													<figure><a href="javascript:void(0);"><img src="blogadmin/images/<?php echo $row['photo']; ?>" alt="image description"></a></figure>
-													<div class="tg-postcontent">
-														<ul class="tg-bookscategories">
-															<li><a href="javascript:void(0);"><?php echo $row['tags']; ?></a></li>
-														</ul>
-														<div class="tg-themetagbox"><span class="tg-themetag">featured</span></div>
-														<div class="tg-posttitle">
-															<h3><a href="javascript:void(0);"><?php echo $row['title']; ?></a></h3>
-														</div>
-														<span class="tg-bookwriter">By: <a href="javascript:void(0);"><?php echo $row['author']; ?></a></span>
-														<ul class="tg-postmetadata">
-															<li><a href="javascript:void(0);"><i class="fa fa-calendar-alt"></i><i> <?php echo $row['date']; ?></i></a></li>
-															<li><a href="single.php?id=<?php echo $row['id']; ?>"><i class="fa fa-eye"></i><i>Read More</i></a></li>
-														</ul>
-													</div>
-												</article>
-											</div>
-											
-						<?php
+                                 <div class="media meida-md">
+                                    <div class="media-left">
+                                        <a href="single.php?id=<?php echo $row['id']; ?>"><img src="blogadmin/images/<?php echo $row['photo']; ?>" class="media-object" alt=""></a>
+                                    </div>
+                                    <!-- /.Post image -->
+                                    <div class="media-body">
+                                        <div class="post-header">
+                                            <div class="post-cat"><span>In</span> <a href="#"><?php echo $row['tags']; ?></a></div>
+                                            <h3 class="media-heading"><a href="single.php?id=<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></h3>
+                                            <div class="entry-meta">
+                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i><?php echo $row['date']; ?></span> 
+                                                <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i><?php echo $row['author']; ?></a></span>
+                                            </div>
+                                            <!-- /.Post meta -->
+                                        </div>
+                                        <p><?php echo $row['content']; ?></p>
+                                        <div class="element-block">
+                                            <a href="single.php?id=<?php echo $row['id']; ?>" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
+                                            <!-- /.Post button -->
+                                            <div class="post_share">
+                                                <a class="smedia facebook fa fa-facebook" href="#"></a>
+                                                <a class="smedia twitter fa fa-twitter" href="#"></a>
+                                                <a class="smedia googleplus fa fa-google-plus" href="#"></a>
+                                                <a class="smedia linkedin fa fa-linkedin" href="#"></a>
+                                                <a class="smedia pinterest fa fa-pinterest-p" href="#"></a>
+                                            </div>
+                                            <!-- /.Post social share -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.End of media left post -->
+                                <?php
                             }
                         }
                               ?>
-                              
                               <?php echo $per_page_html; ?>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
-								<aside id="tg-sidebar" class="tg-sidebar">
-									<div class="tg-widget tg-widgetsearch">
-										<form class="tg-formtheme tg-formsearch">
-											<div class="form-group">
-												<button type="submit"><i class="icon-magnifier"></i></button>
-												<input type="search" name="search" class="form-group" placeholder="Search Here">
-											</div>
-										</form>
-									</div>
-									<div class="tg-widget tg-catagories">
-										<div class="tg-widgettitle">
-											<h3>Categories</h3>
-										</div>
-										<div class="tg-widgetcontent">
-											<ul>
-												<?php countcategories();?>
-											</ul>
-										</div>
-									</div>
-									<div class="tg-widget tg-widgettrending">
-										<div class="tg-widgettitle">
-											<h3>Trending Posts</h3>
-										</div>
-										<div class="tg-widgetcontent">
-											<ul>
-												<li>
-													<article class="tg-post">
-														<figure><a href="javascript:void(0);"><img src="images/products/img-04.jpg" alt="image description"></a></figure>
-														<div class="tg-postcontent">
-															<div class="tg-posttitle">
-																<h3><a href="javascript:void(0);">Where The Wild Things Are</a></h3>
-															</div>
-															<span class="tg-bookwriter">By: <a href="javascript:void(0);">Kathrine Culbertson</a></span>
-														</div>
-													</article>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</aside>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--************************************
-					News Grid End
-			*************************************-->
-		</main>
-		<!--************************************
-				Main End
-		*************************************-->
-	<!--//main-->
-	<!--footer-->
-	<?php include("footer.php") ?>
-	
+                                <!-- /.End of Load more 
+                                <ul class="pagination">
+                                    <li class="disabled"><a href="#">&#8701;</a></li>
+                                    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li class="page-numbers"><span>...</span></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&#8702;</a></li>
+                                </ul>
+                                <!-- /.End of pagination -->
+                            </main>
+                            <?php include("aside.php"); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="newslatter">
+                    <div class="container">
+                        <h3>Sign Up for Our <em>Newsletter</em></h3>
+                        <p>Subscribe now to get notified about exclusive offers<br> from The .... every week!</p>
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Your email address" name="q">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Sign Up</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /. End of news latter -->
+                <div class="insta-content">
+                    <div class="insta-link"><a href="#" rel="me" target="_blank" class="">Follow Me!</a></div>
+                    <div id="ri-grid" class="ri-grid ri-grid-size-2">
+                        <img class="ri-loading-image" src="assets/img/loading.gif" alt=""/>
+                        <ul>
+                            <li><a href="#"><img src="assets/img/instagram/01.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/02.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/03.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/04.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/05.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/06.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/07.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/08.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/09.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/10.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/11.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/12.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/13.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/14.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/15.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/16.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/17.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/18.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/19.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/20.jpg" alt=""/></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /. End of instagram -->
+            </div>
+            <?php require "footer.php";?>
+            <!-- /.End of footer -->
+        </div>
+        <?php require "authentication.php";?>
+        <!-- /.End of Sign up  Sing in -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/animsition.min.js"></script>
+        <script src="assets/js/bootsnav.js"></script>
+        <script src="assets/js/macy.js"></script>
+        <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/ResizeSensor.min.js"></script>
+        <script src="assets/js/theia-sticky-sidebar.min.js"></script>
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="assets/owl-carousel/owl.carousel.min.js"></script>
+        <script src="assets/js/modernizr.custom.js"></script>
+        <script src="assets/js/jquery.gridrotator.min.js"></script>
+        <script src="assets/js/parallax-background.min.js"></script>
+        <script src="assets/js/jquery.simpleSocialShare.min.js"></script>
+        <script src="assets/js/jquery.fluidbox.min.js"></script>
+        <script src="assets/js/retina.min.js"></script>
+        <script src="assets/js/jquery.shuffle.min.js"></script>
+        <script src="assets/js/readingTime.min.js"></script>
+        <script src="assets/js/custom.js"></script>
+    </body>
 
-	<script src="js/vendor/jquery-library.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="https://maps.google.com/maps/api/js?key=AIzaSyCR-KEWAVCn52mSdeVeTqZjtqbmVJyfSus&amp;language=en"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.vide.min.js"></script>
-	<script src="js/countdown.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/parallax.js"></script>
-	<script src="js/countTo.js"></script>
-	<script src="js/appear.js"></script>
-	<script src="js/gmap3.js"></script>
-	<script src="js/main.js"></script>
-
-
-
-</body>
-
+<!-- Mirrored from osruhtml.bdtask.com/osru_demo/post-list+left-right.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 11 Sep 2018 17:33:22 GMT -->
 </html>

@@ -1,8 +1,8 @@
 <?php
     $dbServer = 'localhost';
     $dbUsername = 'root';
-    $dbPassword = 'root';
-    $dbDatabase = 'blog_admin_db';
+    $dbPassword = '';
+    $dbDatabase = 'josey_article';
 
     $adminConfig = array(
         'adminUsername' => "admin",

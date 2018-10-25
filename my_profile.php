@@ -1,57 +1,68 @@
-<?php require("libs/fetch_data.php");?>
+<?php require "libs/fetch_data.php";?>
 <?php require('libs/check_login.php') ?>
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
+    
 <head>
-  <title><?php getwebname("titles"); echo" | "; gettagline("titles");?></title>
-
-<!-- Bootstrap -->
-<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900%7COpen+Sans" rel="stylesheet" />
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/icomoon.css">
-  <link rel="stylesheet" href="css/jquery-ui.css">
-  <link rel="stylesheet" href="css/owl.carousel.css">
-  <link rel="stylesheet" href="css/transitions.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/color-purple.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-</head>
-<body oncontextmenu="return false">
-  <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
-  <?php include("header.php");?>		<!--************************************
-				Inner Banner Start
-		*************************************-->
-		<div class="tg-innerbanner tg-haslayout tg-parallax tg-bginnerbanner" data-z-index="-100" data-appear-top-offset="600" data-parallax="scroll" data-image-src="images/parallax/bgparallax-07.jpg">
-			
-		</div>
-		<!--************************************
-				Inner Banner End
-		*************************************-->
-		<!--************************************
-				Main Start
-		*************************************-->
-		<main id="tg-main" class="tg-main tg-haslayout">
-			<!--************************************
-					News Grid Start
-			*************************************-->
-			<div class="tg-sectionspace tg-haslayout">
-				<div class="container">
-					<div class="row">
-						<div id="tg-twocolumns" class="tg-twocolumns">
-							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 pull-right">
-								<div id="tg-content" class="tg-content">
-									<div class="tg-products">
-										<div class="tg-sectionhead">
-											<h2><span>My profile </span>Manage your public profile</h2>
-										</div>
-										<div class="tg-productgrid">
-											<div class="col-xs-12 col-sm-8 col-md-9 col-lg-8">
-											<form id="newForm" class="newForm" action="public/user/update">
-											<div class="ajax-message">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title><?php getwebname("titles"); echo" | "; gettagline("titles");?></title>
+        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/animsition.min.css" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+        <link href="assets/themify-icons/themify-icons.css" rel="stylesheet">
+        <link href="assets/css/bootsnav.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.carousel.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.theme.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.transitions.css" rel="stylesheet">
+        <link href="assets/css/magnific-popup.css" rel="stylesheet">
+        <link href="assets/css/fluidbox.min.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="main-content animsition">
+            <div class="page-outer-wrap">
+                <?php include("top-header.php"); ?>
+                <div class="clearfix"></div>
+                <!-- /.End of navigation -->
+                <div class="parallax page_header"  data-parallax-bg-image="assets/img/author-header.jpg" data-parallax-direction="left">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>My Account Settings</h3>
+                                <ol class="breadcrumb">
+                                    <li><a href="#">Home</a></li>
+                                    <li class="active">Profile</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.End of page header -->
+                <div class="page-content">
+                    <div class="container">
+                        <div class="row">
+                            <?php require_once('libs/account_side.php') ?>
+                            <main class="col-sm-8 col-md-9 content p_l_40">
+                                
+                                 
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="error-text">
+                                    <h4><span>My profile</h4>
+                                    <p>Manage your public profile</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="error-desc">
+                                   <form id="newForm" class="newForm" action="public/user/update">
+                                            <div class="ajax-message">
             </div>
 
               <h3 class="subheadline">Basic Information</h3>
@@ -59,63 +70,100 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="name" id="name" class="form-control form-control-lg" placeholder="" value="<?php echo $_SESSION['user']['name'] ?>">
-                    <input type="hidden" name="id" id="id" class="form-control form-control-lg" placeholder="" value="<?php echo $_SESSION['user_id'] ?>">
+                    <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder="" value="<?php echo $_SESSION['user']['name'] ?>">
+                    <input type="hidden" name="id" id="id" class="form-control form-control-sm" placeholder="" value="<?php echo $_SESSION['user_id'] ?>">
                   </div>
                 </div>
                 
               </div>
               <div class="form-group">
                 <label>Your Email</label>
-                <input type="text" name="email" id="email" class="form-control form-control-lg" value="<?php echo $_SESSION['user']['email'] ?>">
+                <input type="text" name="email" id="email" class="form-control form-control-sm" value="<?php echo $_SESSION['user']['email'] ?>">
               </div>
               <hr>
               <div class="form-group action">
                 <button type="submit" class="btn btn-sm tg-btn tg-active">Update</button>
               </div>
             </form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
-							<?php require_once('libs/account_side.php') ?> 
-							</div>
-							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
-								                               
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--************************************
-					News Grid End
-			*************************************-->
-		</main>
-		<!--************************************
-				Main End
-		*************************************-->
-          <?php include("footer.php");?>
-          <!---->
-	</div>
-	<!--************************************
-			Wrapper End
-	*************************************-->
-	<script src="js/vendor/jquery-library.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="https://maps.google.com/maps/api/js?key=AIzaSyCR-KEWAVCn52mSdeVeTqZjtqbmVJyfSus&amp;language=en"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.vide.min.js"></script>
-	<script src="js/countdown.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/parallax.js"></script>
-	<script src="js/countTo.js"></script>
-	<script src="js/appear.js"></script>
-	<script src="js/gmap3.js"></script>
-	<script src="js/main.js"></script>
-
-	<script>  
+                                </div>
+                            </div>
+                        </div>
+                    
+                            </main>
+                        </div>
+                    </div>
+                </div>
+                <div class="newslatter">
+                    <div class="container">
+                        <h3>Sign Up for Our <em>Newsletter</em></h3>
+                        <p>Subscribe now to get notified about exclusive offers<br> from The .... every week!</p>
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Your email address" name="q">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Sign Up</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /. End of news latter -->
+                <div class="insta-content">
+                    <div class="insta-link"><a href="#" rel="me" target="_blank" class="">Follow Me!</a></div>
+                    <div id="ri-grid" class="ri-grid ri-grid-size-2">
+                        <img class="ri-loading-image" src="assets/img/loading.gif" alt=""/>
+                        <ul>
+                            <li><a href="#"><img src="assets/img/instagram/01.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/02.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/03.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/04.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/05.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/06.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/07.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/08.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/09.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/10.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/11.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/12.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/13.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/14.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/15.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/16.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/17.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/18.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/19.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/20.jpg" alt=""/></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /. End of instagram -->
+            </div>
+            <?php require "footer.php";?>
+            <!-- /.End of footer -->
+        </div>
+        <?php require "authentication.php";?>
+        <!-- /.End of Sign up  Sing in -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/animsition.min.js"></script>
+        <script src="assets/js/bootsnav.js"></script>
+        <script src="assets/js/macy.js"></script>
+        <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/ResizeSensor.min.js"></script>
+        <script src="assets/js/theia-sticky-sidebar.min.js"></script>
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="assets/owl-carousel/owl.carousel.min.js"></script>
+        <script src="assets/js/modernizr.custom.js"></script>
+        <script src="assets/js/jquery.gridrotator.min.js"></script>
+        <script src="assets/js/parallax-background.min.js"></script>
+        <script src="assets/js/jquery.simpleSocialShare.min.js"></script>
+        <script src="assets/js/jquery.fluidbox.min.js"></script>
+        <script src="assets/js/retina.min.js"></script>
+        <script src="assets/js/jquery.shuffle.min.js"></script>
+        <script src="assets/js/readingTime.min.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script>  
 $(".newForm").submit(function(e) {
     sending = 1;
     e.preventDefault();
@@ -170,5 +218,6 @@ $(".newForm").submit(function(e) {
 
 });
 </script>
-</body>
+    </body>
+
 </html>

@@ -1,156 +1,239 @@
 <?php require("libs/fetch_data.php");?>
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html lang="en">
+    
 <head>
-	<title><?php getwebname("titles"); echo"|"; gettagline("titles");?> | Contact</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="utf-8">
-	<link id="browser_favicon" rel="shortcut icon" href="blogadmin/images/<?php geticon("titles"); ?>">
-	<meta charset="utf-8" name="description" content="<?php getshortdescription("titles");?>">
-	<meta name="keywords" content="<?php getkeywords("titles");?>" />
-	<script>
-		addEventListener("load", function () {
-			setTimeout(hideURLbar, 0);
-		}, false);
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title><?php getwebname("titles"); echo" | "; gettagline("titles");?> | Contact</title>
+        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/animsition.min.css" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+        <link href="assets/themify-icons/themify-icons.css" rel="stylesheet">
+        <link href="assets/css/bootsnav.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.carousel.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.theme.css" rel="stylesheet">
+        <link href="assets/owl-carousel/owl.transitions.css" rel="stylesheet">
+        <link href="assets/css/magnific-popup.css" rel="stylesheet">
+        <link href="assets/css/fluidbox.min.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="main-content animsition">
+            <div class="page-outer-wrap">                
+                <?php include("top-header.php"); ?>
+                <div class="clearfix"></div>
+                <!-- /.End of navigation -->
+                <div class="map-content">
+                    <!-- The element that will contain our Google Map. This is used in both the Javascript and CSS above. -->
+                    <div id="map" class="gmap2"></div>
+                </div>
+                <!--End of map content-->
+                <div class="page-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="contact-info">
+                                    <div class="contact-address">
+                                        <div class="contact-text">
+                                            <h3>Contact Info</h3>
+                                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                                                Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at 
+                                                Hampden-Sydney College in Virginia.</p>
+                                        </div>
+                                        <div class="address-info">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img src="assets/img/icon/agenda.png" class="img-responsive" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="addon-title">Address</h4>
+                                                    <div class="addon-text"> <?php getcontacts("titles","1");?><br>
+                                                        <!--San Francisco, CA 94103--></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="address-info">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img src="assets/img/icon/email.png" class="img-responsive" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="addon-title">Email Address</h4>
+                                                    <div class="addon-text"><a href="http://osruhtml.bdtask.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04777174746b7670446b7776716a6173772a676b69"><?php getcontacts("titles","2");?></a><br>
+                                                       <!-- <a href="http://osruhtml.bdtask.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="92dbfcf4fdd2fde1e0e7fcf7e5e1bcf1fdff">[email&#160;protected]</a>--></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="address-info">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img src="assets/img/icon/phone.png" class="img-responsive" alt="">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="addon-title">Phone Number</h4>
+                                                    <div class="addon-text">Support: <?php getcontacts("titles","3");?><!--<br>
+                                                        Sales: +098 765 4321--></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-		function hideURLbar() {
-			window.scrollTo(0, 1);
-		}
-	</script>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/owl.carousel.css">
-	<link rel="stylesheet" href="css/transitions.css">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/color-purple.css">
-	<link rel="stylesheet" href="css/responsive.css">
-	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-</head>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="contact-form">
+                                    <h3>Feedback</h3>
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                                        Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at 
+                                        Hampden-Sydney College in Virginia.</p>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="textarea" rows="5"></textarea>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-sm-3 col-md-2 col-form-label">Name *</label>
+                                        <div class="col-sm-6 col-md-5">
+                                            <input class="form-control" id="name2" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email" class="col-sm-3 col-md-2 col-form-label">Email *</label>
+                                        <div class="col-sm-6 col-md-5">
+                                            <input class="form-control" id="email2" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="website" class="col-sm-3 col-md-2 col-form-label">Website</label>
+                                        <div class="col-sm-6 col-md-5">
+                                            <input class="form-control" id="website" type="text">
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn link-btn">Submit ⇾</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="height_30"></div>
+                </div>
+                <div class="newslatter">
+                    <div class="container">
+                        <h3>Sign Up for Our <em>Newsletter</em></h3>
+                        <p>Subscribe now to get notified about exclusive offers<br> from The .... every week!</p>
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Your email address" name="q">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Sign Up</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /. End of news latter -->
+                <div class="insta-content">
+                    <div class="insta-link"><a href="#" rel="me" target="_blank" class="">Follow Me!</a></div>
+                    <div id="ri-grid" class="ri-grid ri-grid-size-2">
+                        <img class="ri-loading-image" src="assets/img/loading.gif" alt=""/>
+                        <ul>
+                            <li><a href="#"><img src="assets/img/instagram/01.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/02.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/03.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/04.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/05.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/06.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/07.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/08.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/09.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/10.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/11.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/12.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/13.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/14.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/15.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/16.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/17.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/18.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/19.jpg" alt=""/></a></li>
+                            <li><a href="#"><img src="assets/img/instagram/20.jpg" alt=""/></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /. End of instagram -->
+            </div>
+            <?php require "footer.php";?>
+            <!-- /.End of footer -->
+        </div>
+        <?php require "authentication.php";?>
+        <!-- /.End of Sign up  Sing in -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/animsition.min.js"></script>
+        <script src="assets/js/bootsnav.js"></script>
+        <script src="assets/js/macy.js"></script>
+        <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/ResizeSensor.min.js"></script>
+        <script src="assets/js/theia-sticky-sidebar.min.js"></script>
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="assets/owl-carousel/owl.carousel.min.js"></script>
+        <script src="assets/js/modernizr.custom.js"></script>
+        <script src="assets/js/jquery.gridrotator.min.js"></script>
+        <script src="assets/js/parallax-background.min.js"></script>
+        <script src="assets/js/jquery.simpleSocialShare.min.js"></script>
+        <script src="assets/js/jquery.fluidbox.min.js"></script>
+        <script src="assets/js/retina.min.js"></script>
+        <script src="assets/js/jquery.shuffle.min.js"></script>
+        <script src="assets/js/readingTime.min.js"></script>
+        <script src="assets/js/custom.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcMXKkIZSG1Ev3nNkDE5vZpfT_KG9zBT8"></script>
+        <script>
+            // When the window has finished loading create our google map below
+            google.maps.event.addDomListener(window, 'load', init);
 
-<body oncontextmenu="return false">
-	<!--Header-->
-	<?php include("header.php");?>
-	<!--//header-->
-	<!--/banner-->
-	<div class="tg-innerbanner tg-haslayout tg-parallax tg-bginnerbanner" data-z-index="-100" data-appear-top-offset="600" data-parallax="scroll" data-image-src="images/parallax/bgparallax-07.jpg">
-			
-		</div>
-	<!--//banner-->
-	<!--/main-->
-		<!--************************************
-				Main Start
-		*************************************-->
-		<main id="tg-main" class="tg-main tg-haslayout">
-			<!--************************************
-					Contact Us Start
-			*************************************-->
-			<div class="tg-sectionspace tg-haslayout">
-				<div class="container">
-					<div class="row">
-						<div class="tg-contactus">
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<div class="tg-sectionhead">
-									<h2><span>Say Hello!</span>Get In Touch With Us</h2>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<div id="tg-locationmap" class="tg-locationmap tg-map"></div>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-								<form class="tg-formtheme tg-formcontactus">
-									<fieldset>
-										<div class="form-group">
-											<input type="text" name="first-name" class="form-control" placeholder="First Name*">
-										</div>
-										<div class="form-group">
-											<input type="text" name="last-name" class="form-control" placeholder="Last Name*">
-										</div>
-										<div class="form-group">
-											<input type="email" name="email" class="form-control" placeholder="Last Name*">
-										</div>
-										<div class="form-group">
-											<input type="text" name="subject" class="form-control" placeholder="Subject (optional)">
-										</div>
-										<div class="form-group tg-hastextarea">
-											<textarea placeholder="Comment"></textarea>
-										</div>
-										<div class="form-group">
-											<button type="submit" class="tg-btn tg-active">Submit</button>
-										</div>
-									</fieldset>
-								</form>
-								<div class="tg-contactdetail">
-									<div class="tg-sectionhead">
-										<h2>Get In Touch With Us</h2>
-									</div>
-									<ul class="tg-contactinfo">
-										<li>
-											<i class="icon-apartment"></i>
-											<address>Office Address</address>
-										</li>
-										<li>
-											<i class="icon-phone-handset"></i>
-											<span>
-												<em>0000 00000 - 000 - 00</em>
-												<em>+0 0000 - 0000 - 00</em>
-											</span>
-										</li>
-										<li>
-											<i class="icon-clock"></i>
-											<span>24/7 online</span>
-										</li>
-										<li>
-											<i class="icon-envelope"></i>
-											<span>
-												<em><a href="mailto:support@domain.com">support@domain.com</a></em>
-												<em><a href="mailto:info@domain.com">info@domain.com</a></em>
-											</span>
-										</li>
-									</ul>
-									<ul class="tg-socialicons">
-										<li class="tg-facebook"><a href="javascript:void(0);"><i class="fa fa-facebook"></i></a></li>
-										<li class="tg-twitter"><a href="javascript:void(0);"><i class="fa fa-twitter"></i></a></li>
-										<li class="tg-linkedin"><a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a></li>
-										<li class="tg-googleplus"><a href="javascript:void(0);"><i class="fa fa-google-plus"></i></a></li>
-										<li class="tg-rss"><a href="javascript:void(0);"><i class="fa fa-rss"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--************************************
-					Contact Us End
-			*************************************-->
-		</main>
-		<!--************************************
-				Main End
-		*************************************-->
-			<!--//main-->
-			<!--footer-->
-			<?php include("footer.php");?>
-			<!---->
-			<!-- js -->
-	
-	<script src="js/vendor/jquery-library.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="https://maps.google.com/maps/api/js?key=AIzaSyCR-KEWAVCn52mSdeVeTqZjtqbmVJyfSus&amp;language=en"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.vide.min.js"></script>
-	<script src="js/countdown.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="js/parallax.js"></script>
-	<script src="js/countTo.js"></script>
-	<script src="js/appear.js"></script>
-	<script src="js/gmap3.js"></script>
-	<script src="js/main.js"></script>
+            function init() {
+                // Basic options for a simple Google Map
+                // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+                var mapOptions = {
+                    // How zoomed in you want the map to start at (always required)
+                    zoom: 6,
+                    // The latitude and longitude to center the map (always required)
+                    center: new google.maps.LatLng(23.8103968, 90.41256666), //Dhaka
 
+                    // How you would like to style the map. 
+                    // This is where you would paste any style found on Snazzy Maps.
+                    styles: [{"featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{"color": "#444444"}]}, {"featureType": "landscape", "elementType": "all", "stylers": [{"color": "#f2f2f2"}]}, {"featureType": "poi", "elementType": "all", "stylers": [{"visibility": "off"}]}, {"featureType": "road", "elementType": "all", "stylers": [{"saturation": -100}, {"lightness": 45}]}, {"featureType": "road.highway", "elementType": "all", "stylers": [{"visibility": "simplified"}]}, {"featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{"visibility": "off"}]}, {"featureType": "transit", "elementType": "all", "stylers": [{"visibility": "off"}]}, {"featureType": "water", "elementType": "all", "stylers": [{"color": "#d17c78"}, {"visibility": "on"}]}]
+                };
 
-							</body>
+                // image from external URL
+                var myIcon = 'assets/img/icon/marker.png';
 
-							</html>
+                //preparing the image so it can be used as a marker
+                //https://developers.google.com/maps/documentation/javascript/reference#Icon
+                //includes hacky fix "size" to allow for wobble
+                var catIcon = {
+                    url: myIcon
+                };
+
+                // Get the HTML DOM element that will contain your map 
+                // We are using a div with id="map" seen below in the <body>
+                var mapElement = document.getElementById('map');
+
+                // Create the Google Map using our element and options defined above
+                var map = new google.maps.Map(mapElement, mapOptions);
+
+                // Let's also add a marker while we're at it
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(23.8103968, 90.41256666), //Dhaka
+                    map: map,
+                    icon: catIcon,
+                    title: 'Snazzy!',
+                    animation: google.maps.Animation.DROP,
+                });
+            }
+        </script>
+    </body>
+
+</html>
