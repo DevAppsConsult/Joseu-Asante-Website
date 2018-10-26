@@ -93,7 +93,6 @@
              <?php require "footer.php";?>
         </div>
         <!-- /.End of main content -->
-        <?php require "authentication.php";?>
         <!-- /.End of Sign up  Sing in -->
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="assets/js/jquery.min.js"></script>
@@ -115,6 +114,8 @@
         <script src="assets/js/jquery.shuffle.min.js"></script>
         <script src="assets/js/readingTime.min.js"></script>
         <script src="assets/js/custom.js"></script>
+        <?php require "authentication.php";?>
+
         <script>
             var masonry = new Macy({
                 container: '.grid-content',

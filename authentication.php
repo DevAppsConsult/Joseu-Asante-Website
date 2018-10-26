@@ -18,15 +18,15 @@
                                     </div>
                                     <div class="ui horizontal divider">Or </div>-->
                                     <p>Sign in Using Your Email Address</p>
-                                    <form id="newForm" class="newForm" action="public/user/login">
+                                    <form id="newLogin" class="newLogin" action="public/user/login">
 
-                                    <div class="ajax-message">
+                                    <div class="ajax-message1">
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" type="email" id="email" placeholder="Email">
+                                        <input class="form-control" type="email1" id="email1" placeholder="Email">
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" type="password" id="password" placeholder="Password">
+                                        <input class="form-control" type="password1" id="password1" placeholder="Password">
                                     </div>
                                     <div class="block-content">
 
@@ -73,17 +73,17 @@
         </div>
 
 <script> 
-$(".newForm").submit(function(e) {
+$(".newLogin").submit(function(e) {
   //$("#btnSubmit").prop("disabled", true);
 
   //window.scrollTo(0,document.body.scrollHeight);
     sending = 1;
     e.preventDefault();
-    var obj = { email: $("#email").val(), password : $("#password").val() };
+    var obj = { email: $("#email1").val(), password : $("#password1").val() };
     var dat =JSON.stringify(obj);
     console.log(dat);
       var actionurl = e.currentTarget.action;
-      $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-spinner fa-spin"></i> Please wait loading ...</div>');
+      $(".ajax-message1").html('<div class="alert alert-success"><i class="fa fa-spinner fa-spin"></i> Please wait loading ...</div>');
         var settings = {
           "async": true,
           "crossDomain": true,
@@ -103,19 +103,19 @@ $(".newForm").submit(function(e) {
                 if(data.success)
                 {
                   
-                  $(".ajax-message").html('<div class="alert alert-success"><i class="fa fa-check"></i> Your login was a success</div>');
+                  $(".ajax-message1").html('<div class="alert alert-success"><i class="fa fa-check"></i> Your login was a success</div>');
                   window.location= "index.php";
                 }
                 else
                 {
-                  $(".ajax-message").html('<div class="alert alert-danger"><i class="fa fa-times"></i> '+data.error+'</div>');
+                  $(".ajax-message1").html('<div class="alert alert-danger"><i class="fa fa-times"></i> '+data.error+'</div>');
 
                 }
 
               },
               error: function (e) {
                 sending = 0;
-                $(".ajax-message").html('<div class="alert alert-danger"><i class="fa fa-times"></i> Kindly retry your request again </div>');
+                $(".ajax-message1").html('<div class="alert alert-danger"><i class="fa fa-times"></i> Kindly retry your request again </div>');
 
                 $("#result").text(e.responseText);
                 console.log("ERROR : ", e);

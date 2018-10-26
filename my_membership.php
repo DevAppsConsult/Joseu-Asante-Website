@@ -157,7 +157,6 @@
             <?php require "footer.php";?>
             <!-- /.End of footer -->
         </div>
-        <?php require "authentication.php";?>
         <!-- /.End of Sign up  Sing in -->
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
@@ -179,6 +178,8 @@
         <script src="assets/js/jquery.shuffle.min.js"></script>
         <script src="assets/js/readingTime.min.js"></script>
         <script src="assets/js/custom.js"></script>
+        <?php require "authentication.php";?>
+
     </body>
 
 </html>
