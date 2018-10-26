@@ -53,79 +53,49 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="error-text">
-                                    <h4>Payments Settings</h4>
-                                    <p>Setup or review your membership plan.</p>
+                                    <h4>Payments History</h4>
+                                    <p>Review your payment history.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="error-desc">
-                                                                <form action="#">
+            <form action="#">
               <div class="form-group">
-                <div class="checkbox">
-                  <input type="checkbox" id="private_message" checked="">
-                  <label for="private_message">Allow auto debit from default payment source on renewal</label>
-                </div>
+               
               </div>
-              <h3 class="subheadline">Credit Cards &amp; Gateways</h3>
+              <h3 class="subheadline">All &amp; Payment History</h3>
               <ul class="list-group no-border list-unstyled v2">
-                <li><i class="fa fa-fw fa-cc-paypal icon"></i> Paypal <a href="#" class="btn btn-sm set-default">Set as default</a></li><br>
-                <li><i class="fa fa-fw fa-cc-stripe icon"></i> Stripe <a href="#" class="btn btn-link set-default">Set as default</a></li><br>
-                <li><i class="fa fa-fw fa-credit-card icon hidden-xs"></i> <span class="card-number">**** **** **** 2132</span><a class="btn btn-primary" style="margin-left:20px"><i class="fa fa-trash-o"></i></a> <span class="default">Default</span></li><br>
-                <li><i class="fa fa-fw fa-credit-card icon hidden-xs"></i> <span class="card-number">**** **** **** 5643</span><a class="btn btn-primary" style="margin-left:20px"><span><i class="fa fa-trash-o"></i></span></a> <a href="#" class="btn btn-link set-default">Set as default</a></li><br>
-                <li><i class="fa fa-fw fa-credit-card icon hidden-xs"></i> <span class="card-number">**** **** **** 9843</span><a class="btn btn-primary" style="margin-left:20px"><i class="fa fa-trash-o"></i></a> <a href="#" class="btn btn-link set-default">Set as default</a></li>
+                  <?php 
+                  $history = json_decode(file_get_contents(base_url().'public/user/payments/'.$_SESSION['user_id']),true); 
+                  $data = $history['data'];
+                  foreach($data as $hist):
+                    if($hist['status'] == "Pending"){
+                   ?>
+                <li><i class="fa fa-spinner fa-spin "></i> <?php echo $hist['amount']." GhC On ".$hist['created_at']." ".$hist['status'];  ?> </li><br>
+                    <?php }elseif($hist['status'] == "Completed"){
+                        ?>
+                <li><i class="fa fa-check "></i> <?php echo $hist['amount']." GhC On ".$hist['created_at']." ".$hist['status'];  ?></li><br>                        
+                        <?php
+                    }else{
+                        ?>
+                <li><i class="fa fa-times "></i> <?php echo $hist['amount']." GhC On ".$hist['created_at']." ".$hist['status'];  ?></li><br>                        
+                        
+                        <?php
+                    } ?>
+                  <?php endforeach; ?>
               </ul>
               <h3 class="subheadline">Add Credit Card</h3>
               <div class="card">
-              <div class="form-group">
-              <label>Card Number</label>
-                <div class="input-group input-group-lg"> <span class="input-group-addon"><i class="icon fa fa-fw fa-credit-card-alt"></i></span>
-                  <input type="text" class="form-control form-control-lg" id="cc_number" value="">
-                </div>
-              </div>
+             
               <div class="row">
               <div class="col-md-8">
-             <label>Expiration Date (Month/Year)</label>
              <div class="row">
-             <div class="col-md-7">
-             <div class="form-group">
-             <select class="form-control form-control-lg ui-select">
-             <option value="jan">January</option>
-             <option value="feb">February</option>
-             <option value="mar">March</option>
-             <option value="apr">April</option>
-             <option value="may">May</option>
-             <option value="jun">June</option>
-             <option value="jul">July</option>
-             <option value="aug">August</option>
-             <option value="sep">September</option>
-             <option value="oct">October</option>
-             <option value="nov">November</option>
-             <option value="dec">December</option>
-             </select>
-             </div>
-             </div>
+            
              <div class="col-md-5">
              <div class="form-group">
-             <select class="form-control form-control-lg ui-select">
-             <option value="2015">2015</option>
-             <option value="2016">2016</option>
-             <option value="2017">2017</option>
-             <option value="2018">2018</option>
-             <option value="2019">2019</option>
-             <option value="2020">2020</option>
-             <option value="2021">2021</option>
-             <option value="2022">2022</option>
-             <option value="2023">2023</option>
-             <option value="2024">2024</option>
-             <option value="2025">2025</option>
-             <option value="2026">2026</option>
-             <option value="2027">2027</option>
-             <option value="2028">2028</option>
-             <option value="2029">2029</option>
-             <option value="2030">2030</option>
-             </select>
+             
              </div>
              </div>
              </div>

@@ -107,7 +107,7 @@ if ($action === 'user') {
         $user = new SubscriptionController;
 
         if ($url_array[1] === "payments") {
-            return $user->myPayments();
+            return $user->myPayments($url_array[2]);
         }
         if ($url_array[1] === "plan") {
             return $user->myPlan($url_array[2]);

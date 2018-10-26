@@ -4,7 +4,7 @@ ob_start();
 
 function base_url()
 {
-    return 'http://localhost/article/';
+    return 'http://localhost/joey-web/';
 }
 function gettagline($table)
 {
@@ -26,6 +26,10 @@ function gettagline($table)
     }
 
     mysqli_close($con);
+}
+function getPayments()
+{
+    
 }
 function geticon($table)
 {

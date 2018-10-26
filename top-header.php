@@ -26,9 +26,22 @@
                                         <a href="#"><i class="fa fa-linkedin"></i></a>
                                         <a href="#"><i class="fa fa-youtube-play"></i></a>
                                     </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#user-modal">Login / Register</a>
-                                    </li>
+                                        <?php if(isset($_SESSION) && isset($_SESSION['user_id'])): ?>
+                                        <li>
+
+                                            <a href="my_profile.php">My Account</a>
+                                            </li>
+                                        <li>
+
+                                            <a href="logout.php">Logout</a>
+                                            </li>
+
+                                            <?php else: ?>
+
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#user-modal">Login / Register</a>
+                                            </li>
+
+                                            <?php endif; ?>
                                 </ul>
                             </div>
                         </div>

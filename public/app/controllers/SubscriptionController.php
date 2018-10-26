@@ -55,15 +55,13 @@ CREATE TABLE `plan` (
         return $this->response->response(['status'=>200,"data"=>['success'=>'Users retrieved','data'=>Plan::getAll()]]);
     }
 
-    public function myPayments()
+    public function myPayments($id)
     {
         //$_SESSION['user_id']
-        if(isset($_SESSION) && isset($_SESSION['user_id']))
-        {
+  
             $payment = new Payment;
-            $payments = $payment->get(['user_id'=>$_SESSION['user_id']]);
+            $payments = $payment->get(['user_id'=>$id]);
             return $this->response->response(['status'=>200,"data"=>['success'=>'User payments retrieved','data'=>$payments]]);    
-        }
         return $this->response->response(['status'=>404,"data"=>['error'=>'Payments not found','data'=>null]]);    
 
     }
