@@ -51,7 +51,7 @@
                 <div class="logo-wrapper">
                     <div class="container">
                         <div class="header-logo">
-                            <a href="index.html" class="logo-img">
+                            <a href="index.php" class="logo-img">
                                 <img src="assets/img/logo3.png" alt="">
                             </a>
                         </div>
@@ -75,7 +75,7 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                                 <i class="fa fa-bars"></i>
                             </button>
-                            <a class="navbar-brand" href="index.html"><img src="assets/img/logo3.png" class="logo" alt=""></a>
+                            <a class="navbar-brand" href="index.php"><img src="assets/img/logo3.png" class="logo" alt=""></a>
                         </div>
                         <!-- End Header Navigation -->
                         <!-- Collect the nav links, forms, and other content for toggling -->

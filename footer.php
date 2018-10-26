@@ -10,7 +10,7 @@
                         </div>
                         <!-- /.footer Copyright -->
                         <div class="footer-credits">
-                            <p>Admin area:<a target="_blank" href="blogadmin/index.php?signIn=1"> Login </a></p>
+                            <p>Admin area:<a target="_blank" href="blogadmin/index.php"> Login </a></p>
                         </div>
                         <!-- /.footer Credits -->
                     </div>
