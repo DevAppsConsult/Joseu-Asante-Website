@@ -30,16 +30,18 @@
                                         <li>
 
                                             <a href="my_profile.php">My Account</a>
-                                            </li>
+                                        </li>
                                         <li>
-
-                                            <a href="logout.php">Logout</a>
-                                            </li>
-
-                                            <?php else: ?>
-
-                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#user-modal">Login / Register</a>
-                                            </li>
+                                            <div class="weather-top">
+                                                <i class="fa fa-sign-out"></i>
+                                                 <a href="logout.php">Logout</a>
+                                            </div>
+                                        </li> 
+                                        <?php else: ?>
+                                        <li>
+                                           
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#user-modal"> Login / Register</a>
+                                        </li>
 
                                             <?php endif; ?>
                                 </ul>
