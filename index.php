@@ -38,12 +38,12 @@
                                 <!-- /.End of grid post -->
                                 <div class="grid-content">
                                     
-                                       <?php getfour("blogs");?>
+                                       <?php getblogPosts("blogs"); ?>
                                     
                                     <!-- /.End of grid post -->
                                 </div>
                                 <div class="text-center">
-                                    <ul class="pagination">
+                                    <!--<ul class="pagination">
                                         <li class="disabled"><a href="#">&#8701;</a></li>
                                         <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
                                         <li><a href="#">2</a></li>

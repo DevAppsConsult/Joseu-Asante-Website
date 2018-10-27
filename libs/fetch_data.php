@@ -4,7 +4,7 @@ ob_start();
 
 function base_url()
 {
-    return 'http://localhost/joey-web/';
+    return 'http://localhost/article/';
 }
 function gettagline($table)
 {
@@ -500,6 +500,46 @@ function getblogridposts($table)
 
     mysqli_close($con);
 }
+
+function getblogPosts($table)
+{
+    include "database/db_connect.php";
+    $sql="SELECT * FROM $table WHERE posted='publish' ORDER BY id DESC LIMIT 8";
+    if ($result=mysqli_query($con, $sql)) {
+        //count number of rows in query result
+        $rowcount=mysqli_num_rows($result);
+        //if no rows returned show no news alert
+        if ($rowcount==0) {
+            // code...
+            echo 'No Posts To Fetch';
+        }
+        //if there are rows available display all the results
+        foreach ($result as $bloggrid => $griditem) {
+            // code...
+            echo '<article class="grid_post text-center">
+            <figure>
+                                            <a href="single.php?id='.$griditem['id'].'" class="grid_image"><img src="blogadmin/images/'.$griditem['photo'].'" class="img-responsive" alt=""></a>
+                                            <figcaption>
+                                                <div class="post-cat"><span>In</span> <a href="#">'.$griditem['tags'].'</a></div>
+                                                <div class="entry-meta">
+                                                    <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i>'.$griditem['date'].'</span> 
+                                                    <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>'.$griditem['author'].'</a></span>
+                                                </div>
+                                                <h4 class="grid_post_title"><a href="single.php?id='.$griditem['id'].'">'.$griditem['title'].'</a></h4>
+                                                <p>'.$griditem['content'].'</p>
+                                                <a href="single.php?id='.$griditem['id'].'" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
+                                                <!-- /.Post button -->
+                                            </figcaption>
+                                        </figure>
+                                        </article>
+
+                                ';
+        }
+    }
+
+    mysqli_close($con);
+}
+
 function getolderposts($table)
 {
     include "database/db_connect.php";
@@ -630,34 +670,25 @@ function geteditorschoice($table)
                 // code...
                 foreach ($result as $posts => $postdata) {
                     // code...display actual posts
-                    echo '<div class="item">
-							<div class="tg-postbook">
-								<figure class="tg-featureimg">
-									<div class="tg-bookimg">
-											<div class="tg-frontcover"><img src="blogadmin/images/'.$postdata['photo'].'" alt="image description"></div>
-									</div>
-									<div class="tg-hovercontent">
-											<div class="tg-description">
-												<p>Consectetur adipisicing elit sed do eiusmod tempor incididunt labore toloregna aliqua enim adia minim veniam, quis nostrud.</p>
-											</div>
-											<strong class="tg-bookpage">'.$postdata['date'].'</strong>
-											<strong class="tg-bookcategory">Category: Adventure, Fun</strong>
-											<strong class="tg-bookprice">Price: $23.18</strong>
-											<div class="tg-ratingbox"><span class="tg-stars"><span></span></span></div>
-										</div>
-									</figure>
-									<div class="tg-postbookcontent">
-										<div class="tg-booktitle">
-											<h3><a href="single.php?id='.$postdata['id'].'">'.$postdata['title'].'</a></h3>
-										</div>
-										<span class="tg-bookwriter">By: <a href="javascript:void(0);">Drusilla Glandon</a></span>
-										<a class="tg-btn tg-btnstyletwo" href="single.php?id='.$postdata['id'].'">
-											<i class="fa fa-shopping-basket"></i>
-											<em>Read Article</em>
-										</a>
-									</div>
-								</div>
-							</div>';
+                    echo '
+
+                            <article class="grid_post text-center">
+            <figure>
+                                            <a href="single.php?id='.$postdata['id'].'" class="grid_image"><img src="blogadmin/images/'.$postdata['photo'].'" class="img-responsive" alt=""></a>
+                                            <figcaption>
+                                                <div class="post-cat"><span>In</span> <a href="#">'.$postdata['tags'].'</a></div>
+                                                <div class="entry-meta">
+                                                    <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i>'.$postdata['date'].'</span> 
+                                                    <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>'.$postdata['author'].'</a></span>
+                                                </div>
+                                                <h4 class="grid_post_title"><a href="single.php?id='.$postdata['id'].'">'.$postdata['title'].'</a></h4>
+                                                <p>'.$fourdata['content'].'</p>
+                                                <a href="single.php?id='.$postdata['id'].'" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
+                                                <!-- /.Post button -->
+                                            </figcaption>
+                                        </figure>
+                                        </article>
+                    ';
                 }
             }
             // code...

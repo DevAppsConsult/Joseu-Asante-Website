@@ -15,7 +15,7 @@ class Database
         $this->database = new Medoo(
             [
             'database_type' => 'mysql',
-            'database_name' => 'blog',
+            'database_name' => 'josey_article',
             'server' => 'localhost',
             'username' => 'root',
             'password' => '',

@@ -103,7 +103,7 @@
                                 </li>
                                 <!-- /.End of tab category menu -->
                                 <li>
-                                    <a href="#">Blog</a>
+                                    <a href="posts.php">Posts</a>
                                 </li>
                                 <!-- /.End of category menu -->
                                 <li><a href="contact.php">Contact</a></li>
