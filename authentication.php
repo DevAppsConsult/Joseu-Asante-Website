@@ -23,10 +23,10 @@
                                     <div class="ajax-message1">
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" type="email1" id="email1" placeholder="Email">
+                                        <input class="form-control" type="email" id="email1" placeholder="Email">
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" type="password1" id="password1" placeholder="Password">
+                                        <input class="form-control" type="password" id="password1" placeholder="Password">
                                     </div>
                                     <div class="block-content">
 
