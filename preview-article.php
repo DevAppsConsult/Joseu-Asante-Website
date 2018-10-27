@@ -90,7 +90,22 @@ $roo=mysqli_fetch_assoc($feedback);?>
                                                             <!-- /.Post meta -->
                                                         </div>
                                                         <p><?php echo $row['content']; ?></p>
-                                                        <a href="#" onclick="alert('Login and subscribe to read this article')" class="btn link-btn">Subscribe & Read Full Story ⇾</a><!-- /.Post button -->
+                                                        <?php
+                                                        if(!isset($_SESSION) || !isset($_SESSION['user_id']))
+                                                        {
+                                                            ?>
+                                                                    <a href="#" onclick="alert('Login and subscribe to read this article')" class="btn link-btn">Subscribe & Read Full Story ⇾</a><!-- /.Post button -->
+                                                            
+                                                            <?php
+                                                        }
+                                                        else
+                                                        {
+                                                            ?>
+                                                                    <a href="<?php echo 'single.php?id'.$_GET['id'] ?>" class="btn link-btn">Subscribe & Read Full Story ⇾</a><!-- /.Post button -->
+
+                                                            <?php
+                                                        }
+                                                        ?>
                                                     </figcaption>
                                                 </figure>
                                             </div>
