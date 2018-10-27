@@ -4,7 +4,7 @@
 
 // DB CONNECT INFO
 $db_host = "localhost";
-$db_name = "josey_article";
+$db_name = "blog";
 $db_user = "root";
 $db_pw = "";
 
