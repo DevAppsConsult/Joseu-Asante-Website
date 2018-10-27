@@ -90,7 +90,7 @@ $roo=mysqli_fetch_assoc($feedback);?>
                                                             <!-- /.Post meta -->
                                                         </div>
                                                         <p><?php echo $row['content']; ?></p>
-                                                        <a href="#" class="btn link-btn">Subscribe & Read Full Story ⇾</a><!-- /.Post button -->
+                                                        <a href="#" onclick="alert('Login and subscribe to read this article')" class="btn link-btn">Subscribe & Read Full Story ⇾</a><!-- /.Post button -->
                                                     </figcaption>
                                                 </figure>
                                             </div>
