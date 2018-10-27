@@ -1,6 +1,6 @@
 <?php 
 require("libs/fetch_data.php");
-//require('libs/validate.php')  
+require('libs/validate.php')  
 ?>
 <?php //code to get the item using its id
 include("database/conn.php");//database config file
