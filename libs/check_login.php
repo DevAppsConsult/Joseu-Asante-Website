@@ -1,6 +1,6 @@
 <?php
-if(!isset($_SESSION))
+if(!isset($_SESSION) || !isset($_SESSION['user_id']))
 {
-    header('Location: signin.php');
+    header('Location: index.php');
     exit();
 }

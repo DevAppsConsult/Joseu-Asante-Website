@@ -1,5 +1,5 @@
 <?php require "libs/fetch_data.php";?>
-<?php require('libs/check_login.php') ?>
+<?php require 'libs/check_login.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
