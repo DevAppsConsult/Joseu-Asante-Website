@@ -2,7 +2,7 @@
     $dbServer = 'localhost';
     $dbUsername = 'root';
     $dbPassword = '';
-    $dbDatabase = 'blog';
+    $dbDatabase = 'josey_article';
 
     $adminConfig = array(
         'adminUsername' => "admin",

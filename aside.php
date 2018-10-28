@@ -5,7 +5,7 @@
                                     <figure>
                                         <img src="assets/img/about-avatar2.jpg" class="img-responsive center-block" alt="">
                                     </figure>
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                                    <p><?php getshortdescription("titles");?></p>
                                     <img src="assets/img/signature.png" class="img-responsive center-block" alt="">
                                 </div>
                                 <!-- /.End of about -->
@@ -15,65 +15,7 @@
                                         <span class="title-shape title-shape-dark"></span>
                                     </div>
                                     <!--  /.End of title -->
-                                    <div class="media latest_post">
-                                        <a class="media-left" href="#">
-                                            <img src="assets/img/100x70-1.jpg" class="media-object" alt="">
-                                        </a>
-                                        <div class="media-body">
-                                            <h6 class="media-heading"><a href="#">The <em>Best Street-Style</em> Pics From Copenhagen</a></h6>
-                                            <div class="entry-meta">
-                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i><time datetime="2018-01-21T19:00">Jan 21, 2018</time> </span> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.latest post -->
-                                    <div class="media latest_post">
-                                        <a class="media-left" href="#">
-                                            <img src="assets/img/100x70-2.jpg" class="media-object" alt="">
-                                        </a>
-                                        <div class="media-body">
-                                            <h6 class="media-heading"><a href="#">The <em>Best Street-Style</em> Pics From Copenhagen</a></h6>
-                                            <div class="entry-meta">
-                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i><time datetime="2018-01-21T19:00">Jan 21, 2018</time> </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.latest post -->
-                                    <div class="media latest_post">
-                                        <a class="media-left" href="#">
-                                            <img src="assets/img/100x70-3.jpg" class="media-object" alt="">
-                                        </a>
-                                        <div class="media-body">
-                                            <h6 class="media-heading"><a href="#">The <em>Best Street-Style</em> Pics From Copenhagen</a></h6>
-                                            <div class="entry-meta">
-                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i><time datetime="2018-01-21T19:00">Jan 21, 2018</time> </span> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.latest post -->
-                                    <div class="media latest_post">
-                                        <a class="media-left" href="#">
-                                            <img src="assets/img/100x70-4.jpg" class="media-object" alt="">
-                                        </a>
-                                        <div class="media-body">
-                                            <h6 class="media-heading"><a href="#">The <em>Best Street-Style</em> Pics From Copenhagen</a></h6>
-                                            <div class="entry-meta">
-                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i><time datetime="2018-01-21T19:00">Jan 21, 2018</time> </span> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.latest post -->
-                                    <div class="media latest_post">
-                                        <a class="media-left" href="#">
-                                            <img src="assets/img/100x70-5.jpg" class="media-object" alt="">
-                                        </a>
-                                        <div class="media-body">
-                                            <h6 class="media-heading"><a href="#">The <em>Best Street-Style</em> Pics From Copenhagen</a></h6>
-                                            <div class="entry-meta">
-                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i><time datetime="2018-01-21T19:00">Jan 21, 2018</time> </span> 
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php getfourSide("blogs");?>
                                     <!-- /.latest post -->
                                 </div>
                                 <!-- /.End of latest post -->
@@ -101,7 +43,7 @@
                                         <span class="title-shape title-shape-dark"></span>
                                     </div>
                                     <!--  /.End of title -->
-                                    <a href="#"><?php getcategorieside("blog_categories"); ?></a>
+                                    <?php getcategorieside("blog_categories"); ?>
                                 </div>
                                 <!-- /.End of tags -->
                                 <div class="fb_like">

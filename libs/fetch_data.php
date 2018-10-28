@@ -347,8 +347,8 @@ function getcategoriesmenu($table)
         //if there are rows available display all the results
         foreach ($result as $blog_categories => $category) {
             // code...
-            echo '<a class="dropdown-item" href="category.php?id='.$category['id'].'">'.$category['name'].'</a>
-			<div class="dropdown-divider"></div>';
+            echo '<li><a href="category.php?id='.$category['id'].'">'.$category['name'].'</a>
+			</li>';
         }
     }
 
@@ -526,12 +526,66 @@ function getblogPosts($table)
                                                     <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>'.$griditem['author'].'</a></span>
                                                 </div>
                                                 <h4 class="grid_post_title"><a href="single.php?id='.$griditem['id'].'">'.$griditem['title'].'</a></h4>
-                                                <p>'.$griditem['content'].'</p>
+                                                <div class="msg-lmt"><p>'.$griditem['content'].'</p></div>
                                                 <a href="single.php?id='.$griditem['id'].'" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
                                                 <!-- /.Post button -->
                                             </figcaption>
                                         </figure>
                                         </article>
+
+                                ';
+        }
+    }
+
+    mysqli_close($con);
+}
+
+function getAllarticles($table)
+{
+    include "database/db_connect.php";
+    $sql="SELECT * FROM $table WHERE posted='publish' ORDER BY id DESC LIMIT 8";
+    if ($result=mysqli_query($con, $sql)) {
+        //count number of rows in query result
+        $rowcount=mysqli_num_rows($result);
+        //if no rows returned show no news alert
+        if ($rowcount==0) {
+            // code...
+            echo 'No Posts To Fetch';
+        }
+        //if there are rows available display all the results
+        foreach ($result as $bloggrid => $griditem) {
+            // code...
+            echo '
+                    <div class="media meida-md">
+                                <div class="media-left">
+                                    <a href="single.php?id='.$griditem['id'].'"><img src="blogadmin/images/'.$griditem['photo'].'" class="media-object" alt=""></a>
+                                </div>
+                                <!-- /.Post image -->
+                                <div class="media-body">
+                                    <div class="post-header">
+                                        <div class="post-cat"><span>In</span> <a href="#">'.$griditem['tags'].'</a></div>
+                                        <h3 class="media-heading"><a href="single.php?id='.$griditem['id'].'">'.$griditem['title'].'</a></h3>
+                                        <div class="entry-meta">
+                                            <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i>'.$griditem['date'].'</span> 
+                                            <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>'.$griditem['author'].'</a></span>
+                                        </div>
+                                        <!-- /.Post meta -->
+                                    </div>
+                                    <p>'.$griditem['content'].'</p>
+                                    <div class="element-block">
+                                        <a href="single.php?id='.$griditem['id'].'" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
+                                        <!-- /.Post button -->
+                                        <div class="post_share">
+                                            <a class="smedia facebook fa fa-facebook" href="#"></a>
+                                            <a class="smedia twitter fa fa-twitter" href="#"></a>
+                                            <a class="smedia googleplus fa fa-google-plus" href="#"></a>
+                                            <a class="smedia linkedin fa fa-linkedin" href="#"></a>
+                                            <a class="smedia pinterest fa fa-pinterest-p" href="#"></a>
+                                        </div>
+                                        <!-- /.Post social share -->
+                                    </div>
+                                </div>
+                            </div>
 
                                 ';
         }
@@ -615,6 +669,41 @@ function getfour($table)
 
     mysqli_close($con);
 }
+
+function getfourSide($table)
+{
+    include "database/db_connect.php";
+    $sql="SELECT * FROM $table ORDER BY id DESC LIMIT 4";
+    if ($result=mysqli_query($con, $sql)) {
+        //count number of rows in query result
+        $rowcount=mysqli_num_rows($result);
+        //if no rows returned show no posts alert
+        if ($rowcount==0) {
+            // code...
+            echo 'No posts to fetch';
+        }
+        //if there are rows available display all the results
+        foreach ($result as $thefour => $fourside) {
+            // code...
+            echo ' 
+
+                <div class="media latest_post">
+                                        <a class="media-left" href="single.php?id='.$fourside['id'].'">
+                                            <img src="blogadmin/images/'.$fourside['photo'].'" width="100px" height="70px" class="media-object" alt="">
+                                        </a>
+                                        <div class="media-body">
+                                            <h6 class="media-heading"><a href="single.php?id='.$fourside['id'].'">'.$fourside['title'].'</a></h6>
+                                            <div class="entry-meta">
+                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i> '.$fourside['date'].' </span> 
+                                            </div>
+                                        </div>
+                                    </div>';
+        }
+    }
+
+    mysqli_close($con);
+}
+
 function getonelatest($table)
 {
     include "database/db_connect.php";
@@ -639,7 +728,7 @@ function getonelatest($table)
                                                 <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i> '.$onedata['author'].'</a></span>
                                             </div>
                                             <h3 class="grid_post_title"><a href="single.php?id='.$onedata['id'].'">'.$onedata['title'].'</a></h3>
-                                            <p>'.$onedata['content'].'</p>
+                                            <div class="txt-lmt"><p>'.$onedata['content'].'</p></div>
                                             <a href="single.php?id='.$onedata['id'].'" class="btn link-btn btn-outline btn-rounded">Reading &#8702;</a>
                                             <!-- /.Post button -->
                                         </figcaption>
@@ -769,24 +858,19 @@ function getpopularposts($table)
                 // code...
                 foreach ($result as $allblogs => $specificblog) {
                     // code...display the results
-                    echo '<div class="blog-grids row mb-3">
-							<div class="col-md-5 blog-grid-left">
-								<a href="single.php?id='.$specificblog['id'].'">
-									<img src="blogadmin/images/'.$specificblog['photo'].'" class="img-fluid"/>
-								</a>
-							</div>
-							<div class="col-md-7 blog-grid-right">
-
-								<h5>
-									<a href="single.php?id='.$specificblog['id'].'">'.$specificblog['title'].' </a>
-								</h5>
-								<div class="sub-meta">
-									<span>
-										<i class="far fa-clock"></i> '.$specificblog['date'].'</span>
-								</div>
-							</div>
-							
-						</div>';
+                    echo '
+                            <div class="media latest_post">
+                                        <a class="media-left" href="single.php?id='.$specificblog['id'].'">
+                                            <img src="assets/img/'.$specificblog['photo'].'" width="100px" height="70px" class="media-object" alt="">
+                                        </a>
+                                        <div class="media-body">
+                                            <h6 class="media-heading"><a href="single.php?id='.$specificblog['id'].'">'.$specificblog['title'].'</a></h6>
+                                            <div class="entry-meta">
+                                                <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i> '.$specificblog['date'].' </span> 
+                                            </div>
+                                        </div>
+                                    </div>
+                    ';
                 }
             }
         }

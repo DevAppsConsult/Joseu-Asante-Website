@@ -35,7 +35,7 @@ require_once('database/db.php');//db config file
         }
     </script>
     </head>
-    <body>
+    <body class="null">
         <div class="main-content animsition">
             <div class="page-outer-wrap">
                 <?php include("top-header.php"); ?>
@@ -90,11 +90,10 @@ require_once('database/db.php');//db config file
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h3>Post Left Right Sidebar</h3>
+                                <h3>Search</h3>
                                 <ol class="breadcrumb">
                                     <li><a href="#">Home</a></li>
-                                    <li><a href="#">Post Formats</a></li>
-                                    <li class="active">Post</li>
+                                    <li class="active">Search Results</li>
                                 </ol>
                             </div>
                         </div>
@@ -177,50 +176,7 @@ require_once('database/db.php');//db config file
                         </div>
                     </div>
                 </div>
-                <div class="newslatter">
-                    <div class="container">
-                        <h3>Sign Up for Our <em>Newsletter</em></h3>
-                        <p>Subscribe now to get notified about exclusive offers<br> from The .... every week!</p>
-                        <form class="navbar-form" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Your email address" name="q">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">Sign Up</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- /. End of news latter -->
-                <div class="insta-content">
-                    <div class="insta-link"><a href="#" rel="me" target="_blank" class="">Follow Me!</a></div>
-                    <div id="ri-grid" class="ri-grid ri-grid-size-2">
-                        <img class="ri-loading-image" src="assets/img/loading.gif" alt=""/>
-                        <ul>
-                            <li><a href="#"><img src="assets/img/instagram/01.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/02.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/03.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/04.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/05.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/06.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/07.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/08.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/09.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/10.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/11.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/12.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/13.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/14.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/15.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/16.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/17.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/18.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/19.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/20.jpg" alt=""/></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /. End of instagram -->
+                <?php include("footer-banner.php"); ?>
             </div>
             <?php require "footer.php";?>
             <!-- /.End of footer -->

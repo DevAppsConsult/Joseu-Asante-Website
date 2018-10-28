@@ -1,4 +1,4 @@
 <?php
-$dsn='mysql:host=localhost;dbname=blog';//dbname and host
+$dsn='mysql:host=localhost;dbname=josey_article';//dbname and host
 $username='root';//username
 $password='';//password

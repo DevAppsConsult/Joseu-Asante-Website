@@ -32,7 +32,7 @@ $roo=mysqli_fetch_assoc($feedback);?>
         <link href="assets/css/fluidbox.min.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
     </head>
-    <body>
+    <body class="null">
         <div class="main-content animsition">
             <div class="page-outer-wrap">
                 <?php include("top-header.php"); ?>
@@ -48,11 +48,10 @@ $roo=mysqli_fetch_assoc($feedback);?>
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h3>Post Classic</h3>
+                                <h3><?php echo $row['title']; ?></h3>
                                 <ol class="breadcrumb">
                                     <li><a href="#">Home</a></li>
-                                    <li><a href="#">Post Formats</a></li>
-                                    <li class="active">Classic</li>
+                                    <li><a href="#"><?php echo $row['title']; ?></a></li>
                                 </ol>
                             </div>
                         </div>
@@ -89,7 +88,7 @@ $roo=mysqli_fetch_assoc($feedback);?>
                                                             </div>
                                                             <!-- /.Post meta -->
                                                         </div>
-                                                        <p><?php echo $row['content']; ?></p>
+                                                        <div class="truncate"><p><?php echo $row['content']; ?></p></div>
                                                         <?php
                                                         if(!isset($_SESSION) || !isset($_SESSION['user_id']))
                                                         {
@@ -118,57 +117,15 @@ $roo=mysqli_fetch_assoc($feedback);?>
                         </div>
                     </div>
                 </div>
-                <div class="newslatter">
-                    <div class="container">
-                        <h3>Sign Up for Our <em>Newsletter</em></h3>
-                        <p>Subscribe now to get notified about exclusive offers<br> from The .... every week!</p>
-                        <form class="navbar-form" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Your email address" name="q">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">Sign Up</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- /. End of news latter -->
-                <div class="insta-content">
-                    <div class="insta-link"><a href="#" rel="me" target="_blank" class="">Follow Me!</a></div>
-                    <div id="ri-grid" class="ri-grid ri-grid-size-2">
-                        <img class="ri-loading-image" src="assets/img/loading.gif" alt=""/>
-                        <ul>
-                            <li><a href="#"><img src="assets/img/instagram/01.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/02.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/03.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/04.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/05.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/06.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/07.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/08.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/09.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/10.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/11.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/12.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/13.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/14.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/15.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/16.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/17.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/18.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/19.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/20.jpg" alt=""/></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /. End of instagram -->
+                <?php include("footer-banner.php"); ?>
             </div>
             <?php require "footer.php";?>
             <!-- /.End of footer -->
         </div>
         <!-- /.End of Sign up  Sing in -->
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
+        <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/animsition.min.js"></script>
         <script src="assets/js/bootsnav.js"></script>

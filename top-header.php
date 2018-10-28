@@ -13,7 +13,7 @@
 	                                    </li>
                                         <li><a href="contact.php">Contact</a></li>
                                         <li><a href="about-me.php">about</a></li>
-                                        <li><a href="#">Subscribe now!</a></li>
+                                        <li><a href="plans.php">Subscribe now!</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -89,21 +89,20 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle">Categories</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#"><?php getcategoriesmenu("blog_categories"); ?></a></li>
-                                        <li class="dropdown">
-                                        </li>
+                                       <?php getcategoriesmenu("blog_categories"); ?>
+                                       
                                     </ul>
                                 </li>
                                 <li class="dropdown megamenu-fw megamenu-video">
                                     <a href="about-me.php">About Us</a>
                                 </li>
-                                <!--/.End of video menu -->
+                                <!--/.End of video menu
                                 <li>
                                     <a href="authors.php">The Authors</a>
                                 </li>
                                 <!-- /.End of tab category menu -->
                                 <li>
-                                    <a href="posts.php">Posts</a>
+                                    <a href="posts.php">Articles</a>
                                 </li>
                                 <!-- /.End of category menu -->
                                 <li><a href="contact.php">Contact</a></li>

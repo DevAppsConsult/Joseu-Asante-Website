@@ -21,7 +21,7 @@
         <link href="assets/css/fluidbox.min.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
     </head>
-    <body class="blog-layout">
+    <body class="blog-layout null">
         <div class="main-content animsition">
             <div class="page-outer-wrap">
                 <?php include("top-header.php"); ?>
@@ -60,34 +60,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="insta-content">
-                    <div class="insta-link"><a href="#" rel="me" target="_blank" class="">Follow Me!</a></div>
-                    <div id="ri-grid" class="ri-grid ri-grid-size-2">
-                        <img class="ri-loading-image" src="assets/img/loading.gif" alt=""/>
-                        <ul>
-                            <li><a href="#"><img src="assets/img/instagram/01.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/02.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/03.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/04.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/05.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/06.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/07.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/08.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/09.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/10.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/11.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/12.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/13.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/14.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/15.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/16.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/17.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/18.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/19.jpg" alt=""/></a></li>
-                            <li><a href="#"><img src="assets/img/instagram/20.jpg" alt=""/></a></li>
-                        </ul>
-                    </div>
-                </div>
+               
+               <?php include("footer-banner.php"); ?>
                 <!-- /. End of instagram -->
             </div>
              <?php require "footer.php";?>

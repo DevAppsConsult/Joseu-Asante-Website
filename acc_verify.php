@@ -21,7 +21,7 @@
         <link href="assets/css/fluidbox.min.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
     </head>
-    <body>
+    <body class="null">
         <div class="main-content animsition">
             <div class="page-outer-wrap">
                 
