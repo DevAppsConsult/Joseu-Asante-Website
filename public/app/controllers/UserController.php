@@ -17,7 +17,7 @@ class UserController extends Controller
         parent::__construct();
     }
 
-    public function index(int $id = 0)
+    public function index( $id = 0)
     {
         $user = new User;
         if ($id != 0) {
@@ -28,7 +28,7 @@ class UserController extends Controller
     }
 
     
-    public function store(array $data)
+    public function store($data = [])
     {
         $user = new User;
         if (!isset($data['email'])) {
@@ -50,7 +50,7 @@ class UserController extends Controller
         return $this->response->response(['status'=>200,"data"=>['success'=>'User account created','data'=>$id]]);
     }
     
-    public function update(array $data)
+    public function update($data = [])
     {
         $user = new User;
         if (!isset($data['email'])) {
@@ -70,7 +70,7 @@ class UserController extends Controller
         return $this->response->response(['status'=>200,"data"=>['success'=>'User account created']]);
     }
 
-    public function activate(array $data)
+    public function activate($data = [])
     {
         $user = new User;
         if (!isset($data['email'])) {
@@ -89,7 +89,7 @@ class UserController extends Controller
         $_SESSION['user_id'] =  $_details[0]['id'];
         return $this->response->response(['status'=>200,"data"=>['success'=>'User account activated','data'=>$_details]]);
     }
-    public function forgotPassword(string $email)
+    public function forgotPassword( $email ="")
     {
         $data = array();
         $user = new User;
@@ -105,7 +105,7 @@ class UserController extends Controller
 
         return $this->response->response(['status'=>200,"data"=>['success'=>'User forgot code sent','data'=>$_details]]);
     }
-    public function setForgotPassword(array $data)
+    public function setForgotPassword($data = [])
     {
         $user = new User;
         if (!isset($data['email'])) {
@@ -134,11 +134,11 @@ class UserController extends Controller
         return $this->response->response(['status'=>200,"data"=>['success'=>'User account password updated','data'=>$_details]]);
     }
 
-    public function changePassword(array $data)
+    public function changePassword($data = [])
     {
     }
 
-    public function login(array $data)
+    public function login($data = [])
     {
         $user = new User;
         if (!isset($data['email'])) {

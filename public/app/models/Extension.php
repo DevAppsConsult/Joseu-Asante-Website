@@ -22,7 +22,7 @@ class Extension
         return $response;
     }
 
-    public function first(array $condition = [])
+    public function first( $condition = [])
     {
         $query = "";
         if (sizeof($condition) != 0) {
@@ -46,7 +46,7 @@ class Extension
         return null;
     }
 
-    public function get(array $condition, $limit="", $order="")
+    public function get( $condition = [], $limit="", $order="")
     {
         $query = "";
         if (sizeof($condition) != 0) {
@@ -72,19 +72,19 @@ class Extension
         return $response;
     }
 
-    public function new(array $items)
+    public function new($items = [])
     {
         $this->connection->insert($this->table, $items);
         return $this->connection->id();
     }
 
-    public function update(array $conditions, array $items)
+    public function update($conditions = [],  $items = [])
     {
         $this->connection->update($this->table, $items, $conditions);
         return true;
     }
 
-    public function remove(array $condition)
+    public function remove($condition = []) 
     {
         $this->connection->delete($this->table, $condition);
         return true;
