@@ -107,7 +107,7 @@ CREATE TABLE `plan` (
         return $this->response->response(['status'=>404,"data"=>['error'=>'Plan not found','data'=>null]]);    
     }
 
-    public function upgradePlan(int $planId)
+    public function upgradePlan( $planId)
     {
         if(isset($_SESSION) && isset($_SESSION['user_id']))
         {
@@ -127,7 +127,7 @@ CREATE TABLE `plan` (
         return $this->response->response(['status'=>404,"data"=>['error'=>'Plan not found','data'=>null]]);    
     }
 
-    public function subscribe(int $planId)
+    public function subscribe( $planId)
     {
         if(isset($_SESSION) && isset($_SESSION['user_id']))
         {
@@ -164,7 +164,7 @@ CREATE TABLE `plan` (
 
     }
 
-    private function initPayment(array $userPlan)
+    private function initPayment( $userPlan = [])
     {
         $payment = new Payment;
         $plan = new Plan;
@@ -184,7 +184,7 @@ CREATE TABLE `plan` (
         return $_trans_code.'|'.$amount;
     }
 
-    public function completePayment(array $trans)
+    public function completePayment( $trans =[])
     {
         if(isset($trans['txRef']) && isset($trans['status']))
         {
