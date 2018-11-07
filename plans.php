@@ -48,15 +48,16 @@
                         <div class="tg-sectionhead" align="center">
                             <h4 style="line-height:35px;">Select you prefered plan</h4>
                         </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
           <?php $myPlan = json_decode(file_get_contents(base_url().'public/user/plan/'.$_SESSION['user_id']),true); ?>                    
             <div class="pricing-column">
               <ul>
                 <li class="title">Basic Plan</li>
-                <li class="price">$ 0.00 / month</li>
-                <li>All Articles</li>
+                <li class="price">$ 0.00 / book</li>
+                <li>Single Book</li>
                 <li>Upgrade Option</li>
-                <li>New Article Alert</li>
+                <li>4 months book reading period</li>
+
                 <?php
                     if(isset($myPlan['success'])) : 
                         if($myPlan['data']['plan']['id'] == 1)
@@ -79,45 +80,14 @@
               </ul>
             </div>
           </div>
-
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="pricing-column popular">
-              <ul>
-                <li class="title">Silver Plan <small>Most Popular</small></li>
-                <li class="price">$ 0.00 / 6 months</li>
-                <li>All Articles</li>
-                <li>Upgrade Option</li>
-                <li>New Article Alert</li>
-                <?php
-                    if(isset($myPlan['success'])) : 
-
-                        if($myPlan['data']['plan']['id'] == 2)
-                        {
-                ?>
-                            <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewTwo" onclick="renew(2); return false;">Renew</a></li>
-                <?php
-                        }else{
-                 ?>
-                            <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewTwo" onclick="upgrade(2); return false;">Upgrade</a></li>
-                <?php
-                        }
-                    else:
-                    ?>
-                    <li class="action"><a class="btn btn-primary btn-lg btn-block" href="#" id="renewTwo" onclick="subscribe(2); return false;">Subscribe</a></li>                  
-                    <?php
-                    endif;
-                ?>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="pricing-column">
               <ul>
                 <li class="title">Gold Plan</li>
                 <li class="price">$ 0.00 / Year</li>
-                <li>All Articles</li>
+                <li>3 Books</li>
+                <li>A year reading period</li>
                 <li>Upgrade Option</li>
-                <li>New Article Alert</li>
                 <?php
                     if(isset($myPlan['success'])) : 
 

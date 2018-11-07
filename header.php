@@ -70,7 +70,7 @@
 									</div>
 									<div id="tg-navigation" class="collapse navbar-collapse tg-navigation">
 										<ul><li class="menu-item-has-children">
-											<a href="javascript:void(0);">All Categories</a>
+											<a href="javascript:void(0);">Books</a>
 											<div class="mega-menu">
 												<ul class="tg-themetabnav" role="tablist">
 													<li role="presentation">

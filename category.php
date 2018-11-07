@@ -44,11 +44,10 @@ $row = mysqli_fetch_assoc($result);?>
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h3>Post Left Right Sidebar</h3>
+                                <h3>Chapters In Search Catergory</h3>
                                 <ol class="breadcrumb">
                                     <li><a href="#">Home</a></li>
-                                    <li><a href="#">Post Formats</a></li>
-                                    <li class="active">Post</li>
+                                    <li class="active">Chapters</li>
                                 </ol>
                             </div>
                         </div>
@@ -59,7 +58,7 @@ $row = mysqli_fetch_assoc($result);?>
                     <div class="container">
 
                                         <div class="tg-sectionhead">
-                                            <h2><span>Articles In Search Catergory</span></h2>
+                                            <h2><span>Chapters In Search Catergory</span></h2>
                                         </div>
                         <div class="row">
                             
@@ -70,7 +69,7 @@ $row = mysqli_fetch_assoc($result);?>
             ?>
                                 
                                 <!-- /.End of media left post -->
-                                <!-- /.End of Load more -->
+                                <!-- /.End of Load more 
                                 <ul class="pagination">
                                     <li class="disabled"><a href="#">&#8701;</a></li>
                                     <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>

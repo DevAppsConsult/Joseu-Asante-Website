@@ -378,6 +378,44 @@ function getcategorieside($table)
     mysqli_close($con);
 }
 
+
+function getbooktitles($table)
+{
+    include "database/db_connect.php";
+    $sql="SELECT blogs.id as blog_id, blog_categories.id as book_id, blog_categories.name as book_name, blogs.title as title, blogs.tags as tags, blogs.content as content, blogs.photo as photo, blogs.posted as posted, blogs.date as date, blogs.author as author from blogs,blog_categories where blogs.id  = blog_categories.id ";
+    if ($result=mysqli_query($con, $sql)) {
+        //count number of rows in query result
+        $rowcount=mysqli_num_rows($result);
+        //if no rows returned show no categories alert
+        if ($rowcount==0) {
+            // code...
+            echo 'No Books';
+        }
+        //if there are rows available display all the results
+        foreach ($result as $blog_categories => $category) {
+            // code...
+            echo '<article class="grid_post text-center">
+            <figure>
+                                            <a href="category.php?id='.$category['book_id'].'" class="grid_image"><img src="blogadmin/images/'.$category['photo'].'" class="img-responsive" width="520px" height="400px" alt=""></a>
+                                            <figcaption>
+                                                <div class="post-cat"><span>In</span> <a href="#">'.$category['tags'].'</a></div>
+                                                <div class="entry-meta">
+                                                    <span class="entry-date"><i class="fa fa-calendar-o" aria-hidden="true"></i>'.$category['date'].'</span> 
+                                                    <span class="comment-link"><a href="#"><i class="fa fa-user" aria-hidden="true"></i>'.$category['author'].'</a></span>
+                                                </div>
+                                                <h4 class="grid_post_title"><a href="category.php?id='.$category['book_id'].'">'.$category['book_name'].'</a></h4>
+                                                <a href="category.php?id='.$category['book_id'].'" class="btn link-btn btn-outline btn-rounded">Read Book &#8702;</a>
+                                                <!-- /.Post button -->
+                                            </figcaption>
+                                        </figure>
+                                        </article>';
+        }
+    }
+
+    mysqli_close($con);
+}
+
+
 function getcategoriesfooter($table)
 {
     include "database/db_connect.php";
@@ -518,7 +556,7 @@ function getblogPosts($table)
             // code...
             echo '<article class="grid_post text-center">
             <figure>
-                                            <a href="single.php?id='.$griditem['id'].'" class="grid_image"><img src="blogadmin/images/'.$griditem['photo'].'" class="img-responsive" alt=""></a>
+                                            <a href="single.php?id='.$griditem['id'].'" class="grid_image"><img src="blogadmin/images/'.$griditem['photo'].'" class="img-responsive" width="520px" height="400px" alt=""></a>
                                             <figcaption>
                                                 <div class="post-cat"><span>In</span> <a href="#">'.$griditem['tags'].'</a></div>
                                                 <div class="entry-meta">
@@ -720,7 +758,7 @@ function getonelatest($table)
         foreach ($result as $onelatest => $onedata) {
             // code...
             echo ' <figure>
-                                        <a href="single.php?id='.$onedata['id'].'" class="grid_image"><img src="blogadmin/images/'.$onedata['photo'].'" class="img-responsive" alt=""></a>
+                                        <a href="single.php?id='.$onedata['id'].'" class="grid_image"><img src="blogadmin/images/'.$onedata['photo'].'" class="img-responsive" width="825px" height="630px" alt=""></a>
                                         <figcaption>
                                             <div class="post-cat"><span>In</span> <a href="#">'.$onedata['tags'].'</a></div>
                                             <div class="entry-meta">

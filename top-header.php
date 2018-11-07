@@ -87,7 +87,7 @@
                                     <a href="index.php">Home</a>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle">Categories</a>
+                                    <a href="#" class="dropdown-toggle">Books</a>
                                     <ul class="dropdown-menu">
                                        <?php getcategoriesmenu("blog_categories"); ?>
                                        
@@ -102,7 +102,7 @@
                                 </li>
                                 <!-- /.End of tab category menu -->
                                 <li>
-                                    <a href="posts.php">Articles</a>
+                                    <a href="posts.php">All Posts</a>
                                 </li>
                                 <!-- /.End of category menu -->
                                 <li><a href="contact.php">Contact</a></li>
@@ -118,7 +118,7 @@
                         <input class="search__input" name="search" type="search" placeholder="Search and hit enter..."/>
                         <span class="search__info">Hit enter to search or ESC to close</span>
                     </form>
-                    <div class="search__related">
+                    <!--<div class="search__related">
                         <div class="search__suggestion">
                             <h3>May We Suggest?</h3>
                             <p>#drone #funny #catgif #broken #lost #hilarious #good #red #blue #nono #why #yes #yesyes #aliens #green</p>
@@ -131,5 +131,5 @@
                             <h3>Needle, Where Art Thou?</h3>
                             <p>#broken #lost #good #red #funny #hilarious #catgif #blue #nono #why #yes #yesyes #aliens #green #drone</p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>

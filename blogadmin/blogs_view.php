@@ -26,6 +26,7 @@
         "`blogs`.`title`" => "title",
         "IF(    CHAR_LENGTH(`blog_categories1`.`name`), CONCAT_WS('',   `blog_categories1`.`name`), '') /* Category */" => "category",
         "`blogs`.`tags`" => "tags",
+        "`blogs`.`price`" => "price",
         "`blogs`.`content`" => "content",
         "`blogs`.`photo`" => "photo",
         "if(`blogs`.`date`,date_format(`blogs`.`date`,'%m/%d/%Y'),'')" => "date",
@@ -51,6 +52,7 @@
         "`blogs`.`title`" => "title",
         "IF(    CHAR_LENGTH(`blog_categories1`.`name`), CONCAT_WS('',   `blog_categories1`.`name`), '') /* Category */" => "category",
         "`blogs`.`tags`" => "tags",
+        "`blogs`.`price`" => "price",
         "`blogs`.`content`" => "content",
         "`blogs`.`photo`" => "photo",
         "if(`blogs`.`date`,date_format(`blogs`.`date`,'%m/%d/%Y'),'')" => "date",
@@ -63,6 +65,7 @@
         "`blogs`.`title`" => "Title",
         "IF(    CHAR_LENGTH(`blog_categories1`.`name`), CONCAT_WS('',   `blog_categories1`.`name`), '') /* Category */" => "Category",
         "`blogs`.`tags`" => "Tags",
+        "`blogs`.`price`" => "price",
         "`blogs`.`content`" => "Content",
         "`blogs`.`date`" => "Date",
         "`blogs`.`author`" => "Author",
@@ -75,6 +78,7 @@
         "`blogs`.`title`" => "title",
         "IF(    CHAR_LENGTH(`blog_categories1`.`name`), CONCAT_WS('',   `blog_categories1`.`name`), '') /* Category */" => "category",
         "`blogs`.`tags`" => "tags",
+        "`blogs`.`price`" => "price",
         "`blogs`.`content`" => "content",
         "if(`blogs`.`date`,date_format(`blogs`.`date`,'%m/%d/%Y'),'')" => "date",
         "`blogs`.`author`" => "author",
@@ -107,13 +111,13 @@
     $x->QuickSearchText = $Translation["quick search"];
     $x->ScriptFileName = "blogs_view.php";
     $x->RedirectAfterInsert = "blogs_view.php?SelectedID=#ID#";
-    $x->TableTitle = "Blogs";
+    $x->TableTitle = "Articles";
     $x->TableIcon = "resources/table_icons/feed.png";
     $x->PrimaryKey = "`blogs`.`id`";
 
     $x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150);
-    $x->ColCaption = array("Title", "Category", "Tags", "Content", "Photo", "Date", "Author", "Status");
-    $x->ColFieldName = array('title', 'category', 'tags', 'content', 'photo', 'date', 'author', 'posted');
+    $x->ColCaption = array("Title", "Category", "Tags", "Price", "Content", "Photo", "Date", "Author", "Status");
+    $x->ColFieldName = array('title', 'category', 'tags', "price", 'content', 'photo', 'date', 'author', 'posted');
     $x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9);
 
     // template paths below are based on the app main directory

@@ -38,7 +38,7 @@
                                 <!-- /.End of grid post -->
                                 <div class="grid-content">
                                     
-                                       <?php getblogPosts("blogs"); ?>
+                                       <?php getbooktitles("blogs"); ?>
                                     
                                     <!-- /.End of grid post -->
                                 </div>

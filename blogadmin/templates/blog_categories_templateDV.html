@@ -1,7 +1,7 @@
 <!-- Edit this file to change the layout of the detail view form -->
 
 <a name="detail-view"></a>
-<div class="panel-heading"><h3 class="panel-title"><strong><%%DETAIL_VIEW_TITLE%%></strong></h3></div>
+<div class="panel-heading"><h3 class="panel-title"><strong>Book Title</strong></h3></div>
 
 <div class="panel-body" id="blog_categories_dv_container">
 	<!-- child links -->
@@ -32,9 +32,29 @@
 					<hr class="hidden-md hidden-lg">
 					<label for="name" class="control-label col-lg-3">Name<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#name-description"></i></label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="name-description"><div class="alert alert-info">enter category name</div></span>
+						<span class="help-block collapse" id="name-description"><div class="alert alert-info">enter book title</div></span>
 
 						<input maxlength="40" type="text" class="form-control" name="name" id="name" value="<%%VALUE(name)%%>" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<hr class="hidden-md hidden-lg">
+					<label class="control-label col-lg-3">Photo (825 x 630) <span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#photo-description"></i></label>
+					<div class="col-lg-9">
+						<span class="help-block collapse" id="photo-description"><div class="alert alert-info">Maximum file size allowed: 5000 KB.<br>Allowed file types: jpg, jpeg, gif, png</div></span>
+
+						<div class="form-control-static"><div class="pull-left">
+
+						<a href="<%%TRANSLATION(ImageFolder)%%><%%VALUE(photo)%%>" data-lightbox="blogs_dv"><img src="thumbnail.php?i=<%%VALUE(photo)%%>&t=blogs&f=photo&v=dv" class="img-thumbnail" id="photo-image"></a>
+</div>
+
+												<div class="pull-right" style="overflow-x: hidden;">
+							<div class="hidden-md hidden-lg vspacer-lg"></div>
+							<%%UPLOADFILE(photo)%%>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+
 					</div>
 				</div>
 
