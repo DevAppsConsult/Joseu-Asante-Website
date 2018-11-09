@@ -4,6 +4,8 @@ use App\Model\User;
 use App\Model\Payment;
 use App\Model\Plan;
 use App\Model\UserPlan;
+use App\Model\BlogCategories;
+use App\Model\UserBookSubscription;
 use Carbon\Carbon;
 
 class SubscriptionController extends Controller
@@ -87,8 +89,57 @@ CREATE TABLE `plan` (
                     $payments['status'] ='Active';
                 return $this->response->response(['status'=>200,"data"=>['success'=>'User plan retrieved','data'=>$payments]]);        
             }
-            return $this->response->response(['status'=>206,"data"=>['error'=>'Plan not found 2','data'=>null]]);    
-        
+            return $this->response->response(['status'=>206,"data"=>['error'=>'Plan not found 2','data'=>null]]);           
+    }
+
+    public function myBooks()
+    {
+        if(isset($_SESSION) && isset($_SESSION['user_id']))
+        {
+            $payment = new UserBookSubscription;
+            $payments = $payment->get(['user_plan'=>$_SESSION['user_id']]);
+            if($payments)
+            {
+                $activeBookings = [];
+                foreach($payments as $payment)
+                {
+                    if(!$this->hasExpired($payment['expires_at']))
+                    {
+                        $activeBookings[] = $payment['book_id'];
+                    }
+                }
+                return $this->response->response(['status'=>200,"data"=>['success'=>'Books retrieved','data'=>$activeBookings]]);    
+            }
+            return $this->response->response(['status'=>404,"data"=>['error'=>'User has no subscriptions','data'=>[]]]);    
+        }
+        return $this->response->response(['status'=>404,"data"=>['error'=>'User not logged in','data'=>null]]);    
+    }
+
+    private function hasExpired($date)
+    {
+        $date = Carbon::parse($date);
+        if($date->isPast())
+            return true;
+        return false;
+    }
+    
+    public function isMyBook($user_id,$id)
+    {
+            $payment = new UserBookSubscription;
+            $payments = $payment->get(['book_id'=>$id,'user_plan'=>$user_id]);
+            if($payments)
+            {
+                $activeBookings = [];
+                foreach($payments as $payment)
+                {
+                    if(!$this->hasExpired($payment['expires_at']))
+                    {
+                        $activeBookings[] = $payment['book_id'];
+                    }
+                }
+                return $this->response->response(['status'=>200,"data"=>['success'=>'User is subscribed','data'=>$activeBookings]]);    
+            }
+            return $this->response->response(['status'=>200,"data"=>['error'=>'User has no subscriptions','data'=>[]]]);    
     }
 
     public function renewPlan()
@@ -202,7 +253,51 @@ CREATE TABLE `plan` (
                 $data= [];
                 $data['end'] = Carbon::parse($_plan['end'])->addMonths($myPlan['plans'])->toDateTimeString();
                 $userPlan = new UserPlan;
+                //
                 $userPlan->update(['user_id'=>$trans['user_id'],'plan_id'=>$trans['plan_id']],$data);
+                //lets add the book subscription
+                $subscription = new UserBookSubscription;
+                $currentBook = new BlogCategories;
+                //$_user = $subscription->first(['plan_id'=>$trans['user_id']]);
+                //if($_user)
+                {
+                    // `id`, `user_plan`, `book_id`, `start_at`, `expires_at`
+                    
+                    $data = [];
+                    $data['user_plan'] = $trans['user_id'];
+                    $currentTime = Carbon::now();
+                    $data['start_at'] = $currentTime->toDateTimeString();
+                    if($trans['plan_id'] == 1)
+                    {
+                        $plan = new Plan;
+                        $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
+                        $data['expires_at'] = $currentTime->toDateTimeString();
+                        $data['book_id'] = $currentBook->last()['id'];
+                        $subscription->new($data);
+                    }
+                    if($trans['plan_id'] == 3)
+                    {
+                        $plan = new Plan;
+                        $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
+                        $data['expires_at'] = $currentTime->toDateTimeString();
+                        $data['book_id'] = $currentBook->last()['id'];
+                        $subscription->new($data);
+
+                        $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
+                        $data['expires_at'] = $currentTime->toDateTimeString();
+                        $data['book_id'] = $currentBook->last()['id']+1;
+                        $subscription = new UserBookSubscription;
+                        $subscription->new($data);
+                        $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
+                        $data['expires_at'] = $currentTime->toDateTimeString();
+                        $data['book_id'] = $currentBook->last()['id']+2;
+                        $subscription = new UserBookSubscription;
+                        $subscription->new($data);
+                    }
+                }
+
+                return $this->response->response(['status'=>200,"data"=>['success'=>'Done','data'=>"Completed"]]);    
+
            }
            else
            {
@@ -215,8 +310,12 @@ CREATE TABLE `plan` (
 
     }
 
-    public function getPayments()
+    public function getPlans()
     {
+        //lets do activation
+        $plan = new Plan;
+
+        return $this->response->response(['status'=>200,"data"=>['success'=>'Plans have been retrieved','data'=>$plan->getAll()]]);
 
     }
 

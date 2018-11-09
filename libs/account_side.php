@@ -1,4 +1,4 @@
-<aside class="col-sm-4 col-md-3 rightSidebar">
+                            <aside class="col-sm-4 col-md-3 rightSidebar">
                                 <div class="about-card">
                                     <div class="ui divider"><h3>My Account</h3></div>
                                     <div class="tg-widgetcontent">
@@ -13,8 +13,8 @@
                                     <div class="ui divider"><h3>Manage Articles</h3></div>
                                     <div class="tg-widgetcontent">
                                             <ul>
-                                                <li><a href="index.php" class="btn btn-sm btn-default btn-block"><span>Browse Articles</a></li>
-                                                <li style="margin-top:10px"><a href="bookmark.php" class="btn btn-sm btn-default btn-block"><span>Bookmarked Articles</a></li>
+                                                <li><a href="index.php" class="btn btn-sm btn-default btn-block"><span>Browse Books</a></li>
+                                                <li style="margin-top:10px"><a href="bookmark.php" class="btn btn-sm btn-default btn-block"><span>Subscribed Books</a></li>
                                             </ul>
                                     </div>
                                 </div>

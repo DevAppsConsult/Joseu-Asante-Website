@@ -1,11 +1,35 @@
 <?php
 session_start();
 ob_start();
-
+require('check_login.php');
 function base_url()
 {
-    return 'http://localhost/article/';
+    return 'http://localhost/joey-web/';
 }
+
+function getMyBooks()
+{
+    $allPlans = json_decode(file_get_contents(base_url().'public/user/my-books'),true); 
+    if(isset($allPlans['error']))
+    {
+        return [];
+    }
+    return $allPlans['data'];
+}
+function isMyBook($id)
+{
+    $allPlans = json_decode(file_get_contents(base_url().'public/user/is-my-book/'.$id),true); 
+    if(isset($allPlans['error']))
+    {
+       // return [];
+       return false;
+    }
+    if(isset($allPlans['success']))
+        return true;
+    //return $allPlans['data'];
+    return false;
+}
+
 function gettagline($table)
 {
     include "database/db_connect.php";

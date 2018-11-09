@@ -109,6 +109,19 @@ if ($action === 'user') {
         if ($url_array[1] === "payments") {
             return $user->myPayments($url_array[2]);
         }
+
+        if ($url_array[1] === "is-my-book") {
+            return $user->isMyBook($url_array[2],$url_array[3]);
+        }
+
+        if ($url_array[1] === "my-books") {
+            return $user->myBooks();
+        }
+
+        if ($url_array[1] === "all-plans") {
+            return $user->getPlans();
+        }
+
         if ($url_array[1] === "plan") {
             return $user->myPlan($url_array[2]);
         }

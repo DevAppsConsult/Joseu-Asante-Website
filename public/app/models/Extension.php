@@ -21,6 +21,29 @@ class Extension
         $response = $this->connection->query("SELECT * FROM ".$this->table)->fetchAll(\PDO::FETCH_ASSOC);
         return $response;
     }
+    public function last( $condition = [])
+    {
+        $query = "";
+        if (sizeof($condition) != 0) {
+            $query = " WHERE ";
+        }
+        foreach ($condition as $key => $value) {
+            if ($query != " WHERE ") {
+                $query .= "AND ";
+            }
+            if (is_string($value)) {
+                $query .= $key." = '".$value."' ";
+            } else {
+                $query .= $key." = ".$value." ";
+            }
+        }
+        
+        $response = $this->connection->query("SELECT * FROM ".$this->table.$query)->fetchAll(\PDO::FETCH_ASSOC);
+        if (sizeof($response) > 0) {
+            return $response[sizeof($response)-1];
+        }
+        return null;
+    }
 
     public function first( $condition = [])
     {

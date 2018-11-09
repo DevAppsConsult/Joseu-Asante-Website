@@ -49,11 +49,14 @@
                             <h4 style="line-height:35px;">Select you prefered plan</h4>
                         </div>
           <div class="col-md-6">
-          <?php $myPlan = json_decode(file_get_contents(base_url().'public/user/plan/'.$_SESSION['user_id']),true); ?>                    
+          <?php 
+            $myPlan = json_decode(file_get_contents(base_url().'public/user/plan/'.$_SESSION['user_id']),true); 
+            $allPlans = json_decode(file_get_contents(base_url().'public/user/all-plans'),true); 
+            ?>                    
             <div class="pricing-column">
               <ul>
                 <li class="title">Basic Plan</li>
-                <li class="price">$ 0.00 / book</li>
+                <li class="price">GhC <?php echo $allPlans['data'][0]['price'] ?> / book</li>
                 <li>Single Book</li>
                 <li>Upgrade Option</li>
                 <li>4 months book reading period</li>
@@ -84,7 +87,7 @@
             <div class="pricing-column popular">
               <ul>
                 <li class="title">Gold Plan</li>
-                <li class="price">$ 0.00 / Year</li>
+                <li class="price">GhC <?php echo ($allPlans['data'][1]['price']) ?> / Year</li>
                 <li>3 Books</li>
                 <li>A year reading period</li>
                 <li>Upgrade Option</li>
