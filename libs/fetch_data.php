@@ -9,7 +9,7 @@ function base_url()
 
 function getMyBooks()
 {
-    $allPlans = json_decode(file_get_contents(base_url().'public/user/my-books'),true); 
+    $allPlans = json_decode(file_get_contents(base_url().'public/user/my-books/'.$_SESSION['user_id']),true); 
     if(isset($allPlans['error']))
     {
         return [];

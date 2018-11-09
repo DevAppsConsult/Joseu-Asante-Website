@@ -115,7 +115,7 @@ if ($action === 'user') {
         }
 
         if ($url_array[1] === "my-books") {
-            return $user->myBooks();
+            return $user->myBooks($url_array[2]);
         }
 
         if ($url_array[1] === "all-plans") {

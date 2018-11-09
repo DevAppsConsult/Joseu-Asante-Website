@@ -92,12 +92,10 @@ CREATE TABLE `plan` (
             return $this->response->response(['status'=>206,"data"=>['error'=>'Plan not found 2','data'=>null]]);           
     }
 
-    public function myBooks()
+    public function myBooks($id)
     {
-        if(isset($_SESSION) && isset($_SESSION['user_id']))
-        {
             $payment = new UserBookSubscription;
-            $payments = $payment->get(['user_plan'=>$_SESSION['user_id']]);
+            $payments = $payment->get(['user_plan'=>$id]);
             if($payments)
             {
                 $activeBookings = [];
@@ -105,14 +103,14 @@ CREATE TABLE `plan` (
                 {
                     if(!$this->hasExpired($payment['expires_at']))
                     {
-                        $activeBookings[] = $payment['book_id'];
+                        $book = new BlogCategories;
+                        $book = $book->first(['id'=>$payment['book_id']]);
+                        $activeBookings[] = ['name'=>$book['name'],'id'=>$book['id']];
                     }
                 }
                 return $this->response->response(['status'=>200,"data"=>['success'=>'Books retrieved','data'=>$activeBookings]]);    
             }
             return $this->response->response(['status'=>404,"data"=>['error'=>'User has no subscriptions','data'=>[]]]);    
-        }
-        return $this->response->response(['status'=>404,"data"=>['error'=>'User not logged in','data'=>null]]);    
     }
 
     private function hasExpired($date)
