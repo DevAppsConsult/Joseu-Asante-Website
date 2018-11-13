@@ -95,7 +95,7 @@ class Extension
         return $response;
     }
 
-    public function new($items = [])
+    public function addNew($items = [])
     {
         $this->connection->insert($this->table, $items);
         return $this->connection->id();

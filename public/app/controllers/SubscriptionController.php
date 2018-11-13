@@ -199,7 +199,7 @@ CREATE TABLE `plan` (
             $data['plan_id'] =  $planId;
             $data['start'] = Carbon::now()->toDateTimeString();
             $data['end'] = Carbon::now()->toDateTimeString();
-            $details = $payment->new($data);
+            $details = $payment->addNew($data);
             $payment = new UserPlan;
             $payments = $payment->first(['user_id'=>$_SESSION['user_id']]);
             $paymentResponse = self::initPayment($payments);
@@ -229,7 +229,7 @@ CREATE TABLE `plan` (
         $data['external_trans_id'] = "" ;
         $data['external_trans_code'] = "" ;
         $data['created_at'] = Carbon::now()->toDateTimeString(); 
-        $payment->new($data);
+        $payment->addNew($data);
         return $_trans_code.'|'.$amount;
     }
 
@@ -271,7 +271,7 @@ CREATE TABLE `plan` (
                         $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
                         $data['expires_at'] = $currentTime->toDateTimeString();
                         $data['book_id'] = $currentBook->last()['id'];
-                        $subscription->new($data);
+                        $subscription->addNew($data);
                     }
                     if($trans['plan_id'] == 3)
                     {
@@ -279,18 +279,18 @@ CREATE TABLE `plan` (
                         $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
                         $data['expires_at'] = $currentTime->toDateTimeString();
                         $data['book_id'] = $currentBook->last()['id'];
-                        $subscription->new($data);
+                        $subscription->addNew($data);
 
                         $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
                         $data['expires_at'] = $currentTime->toDateTimeString();
                         $data['book_id'] = $currentBook->last()['id']+1;
                         $subscription = new UserBookSubscription;
-                        $subscription->new($data);
+                        $subscription->addNew($data);
                         $currentTime->addMonths($plan->first(['id'=>$trans['plan_id']])['months']);
                         $data['expires_at'] = $currentTime->toDateTimeString();
                         $data['book_id'] = $currentBook->last()['id']+2;
                         $subscription = new UserBookSubscription;
-                        $subscription->new($data);
+                        $subscription->addNew($data);
                     }
                 }
 

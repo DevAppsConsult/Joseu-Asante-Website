@@ -45,7 +45,7 @@ class UserController extends Controller
         }
         $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
         $data['activation_code'] = self::generateVerifyCode();
-        $id = $user->new($data);
+        $id = $user->addNew($data);
         $this->sendMail("Welcome to our website", "Hello ".$data['name']." <br/> Welcome to our website kindly find below your account activation code <br/> <strong>".$data['activation_code']."</strong>", $data['email'], $data['name']);
         return $this->response->response(['status'=>200,"data"=>['success'=>'User account created','data'=>$id]]);
     }
