@@ -11,11 +11,11 @@ use \App\Module\Subscription;
 use \Config\Response;
 
 $url_array = explode('/', $_SERVER['REQUEST_URI']);
-var_dump($url_array);
-exit();
+//var_dump($url_array);
+//exit();
 array_shift($url_array); // remove first value as it's empty
 array_shift($url_array); // remove first value as it's empty
-array_shift($url_array); // remove first value as it's empty
+//array_shift($url_array); // remove first value as it's empty
 $action = $url_array[0];
 // get the method
 $method = $_SERVER['REQUEST_METHOD'];
