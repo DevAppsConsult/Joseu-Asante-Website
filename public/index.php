@@ -11,6 +11,8 @@ use \App\Module\Subscription;
 use \Config\Response;
 
 $url_array = explode('/', $_SERVER['REQUEST_URI']);
+var_dump($url_array);
+exit();
 array_shift($url_array); // remove first value as it's empty
 array_shift($url_array); // remove first value as it's empty
 array_shift($url_array); // remove first value as it's empty
