@@ -30,7 +30,7 @@ class Controller
             //Recipients
             $mail->setFrom('devappst.info@devappsconsult.com', 'Devapps Team');
             $mail->addAddress($recipient, $recipient_name);     // Add a recipient
-            $mail->addBCC('isaacbremang@gmail.com');
+            $mail->addBCC($recipient);
         
             //Content
             $mail->isHTML(true);                                  // Set email format to HTML
