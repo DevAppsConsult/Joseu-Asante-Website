@@ -227,7 +227,7 @@
 */
 function loadNow(amount,code)
 {
-    var PBFKey = "FLWPUBK-967856064bfbdb1f87a9690b420b268f-X";
+    var PBFKey = "FLWPUBK-b47f6eb139d9f647871f171ac06f78fa-X";
     
     getpaidSetup({
       PBFPubKey: PBFKey,
